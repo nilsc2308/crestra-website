@@ -15,14 +15,13 @@
 ## Geprüft (2.10.2026)
 | Punkt | Ergebnis |
 |---|---|
-| JS-Fehler | 0 – alle 19 Seiten, Chromium + WebKit, 1400 px + 390 px |
+| JS-Fehler | 0 – alle 15 Seiten, Chromium + WebKit, 1400 px + 390 px |
 | Horizontales Scrollen | keins (scrollWidth = clientWidth überall) |
 | Formular | Pflichtfelder + E-Mail-Prüfung, Branche per `?branche=` vorgewählt, Senden → danke.html, Eintrag in Supabase angekommen (Test gelöscht); Ersatz per E-Mail-Link, wenn Senden scheitert; Honeypot |
 | Datenbank | Tabelle `anfragen`: anonym nur Einfügen, Lesen gesperrt (getestet) |
 | Links | 23 interne/externe Links ohne Fehler |
 | Ladegröße Startseite bis „load“ | 643 KB (Ziel Desktop < 900 KB erfüllt; Handy-Ziel 500 KB knapp verfehlt – größter Posten: Newsreader-Kursivschrift 147 KB) |
 | Cookies | keine; nur sessionStorage für das Intro; Schriften lokal; kein Tracking → kein Banner nötig |
-| Szene Handy-Probe | 20 Schritte Desktop + Handy fotografiert: keine überlappenden Texte, Bildwechsel als Schiebe-Übergang |
 | Meta | Titel ≤ 65, Beschreibungen ≤ 155 Zeichen (vom Generator erzwungen), Canonical, OG + og.jpg 1200×630 |
 | Strukturierte Daten | ProfessionalService auf allen Seiten, FAQPage, Article |
 | sitemap.xml, robots.txt, favicon.svg, apple-touch-icon.png, 404 | vorhanden |

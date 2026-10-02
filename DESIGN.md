@@ -30,3 +30,7 @@ Pillen, Karten-Schatten, Eyebrows mit Nummern, Zähler, Bento, Laufschrift, Cust
 
 **Regler:** Dichte 4 (luftig, aber kompakte Abschnitte) · Kontrast 7 (klares Hell/Dunkel) ·
 Bewegung 6 (eine starke Szene, sonst ruhige Reveals – die Arbeiten sollen wirken, nicht die Effekte).
+
+## Änderung 2.10.2026 abends (Nils' Feedback)
+- Alle Handy-Rahmen entfernt (Einstieg, Arbeiten, Handy-Probe-Szene, Ansichts-Umschalter): „sehen aus, als würde die Website nicht aufs Handy passen“. Lehre: keine Handy-Mockups mit verkleinerten Screenshots.
+- Keine Branchen-Einschränkung mehr: 4 Branchenseiten + Menü „Branchen“ gestrichen, neuer dunkler Abschnitt „Für jeden Betrieb, der vor Ort gefunden werden will“ (8 Branchen + „Fragen Sie trotzdem“). Einstieg: Text oben, großer Bildschirm-Screenshot darunter.

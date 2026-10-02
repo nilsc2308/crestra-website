@@ -145,46 +145,19 @@
     });
   } else $$('.auf').forEach(e => { e.style.opacity = 1; e.style.transform = 'none'; });
 
-  /* ---------- Einstieg: Geräte ---------- */
+  /* ---------- Einstieg: Bildschirm ---------- */
   const buehne = $('.einstieg .buehne');
   if (buehne && hatGsap && !ruhig) {
-    gsap.from($('.browser', buehne), { y: 60, opacity: 0, duration: 1.3, ease: 'expo.out', delay: .3 });
-    gsap.from($('.handy', buehne), { y: 120, opacity: 0, duration: 1.4, ease: 'expo.out', delay: .55 });
-    gsap.to($('.handy', buehne), { yPercent: -14, ease: 'none', scrollTrigger: { trigger: buehne, start: 'top top+=80', end: 'bottom top', scrub: .8 } });
-  }
-
-  /* ---------- Handy-Probe ---------- */
-  const probe = $('.probe');
-  if (probe && hatGsap && !ruhig) {
-    const [t1, t2, t3] = $$('.texte p', probe);
-    const desk = $('.desk', probe), ph = $('.ph', probe), echt = $('.echt', probe), mini = $('.mini', probe);
-    const mm = gsap.matchMedia();
-    mm.add('(min-width: 0px)', () => {
-      const deskW = desk.getBoundingClientRect().width, phW = ph.getBoundingClientRect().width;
-      const faktor = phW / deskW;
-      const tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: probe, start: 'top top', end: 'bottom bottom', scrub: .8 } });
-      gsap.set(echt, { opacity: 1, yPercent: 100 });
-      tl.to({}, { duration: .5 })
-        .to(t1, { opacity: 0, y: -16, duration: .35 })
-        .to(desk, { scale: faktor, duration: 1, ease: 'power2.inOut' }, '<')
-        .to(desk, { opacity: 0, duration: .25 }, '>-0.05')
-        .fromTo(ph, { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: .6, ease: 'power2.out' }, '>')
-        .fromTo(t2, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .35 }, '<+0.15')
-        .to({}, { duration: .9 })
-        .to(t2, { opacity: 0, y: -16, duration: .35 })
-        .to(echt, { yPercent: 0, duration: .9, ease: 'power2.inOut' }, '>')
-        .to(mini, { yPercent: -100, duration: .9, ease: 'power2.inOut' }, '<')
-        .fromTo(t3, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .35 }, '<+0.3')
-        .to({}, { duration: .9 });
-      return () => tl.scrollTrigger && tl.scrollTrigger.kill();
-    });
+    const br = $('.browser', buehne);
+    gsap.from(br, { y: 70, opacity: 0, duration: 1.3, ease: 'expo.out', delay: .35 });
+    gsap.fromTo(br, { scale: .94 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: buehne, start: 'top bottom', end: 'center center', scrub: .8 } });
   }
 
   /* ---------- Arbeiten-Umschalter ---------- */
   const ARBEITEN = window.CRESTRA_ARBEITEN || {};
   const bild = (id, art, alt) => art === 'd'
     ? `<picture><source type="image/webp" srcset="img/arbeiten/${id}-d-1200.webp 1200w, img/arbeiten/${id}-d-2400.webp 2400w" sizes="(max-width:900px) 92vw, 760px"><img src="img/arbeiten/${id}-d-1200.webp" width="1200" height="750" alt="${alt}" loading="lazy" decoding="async"></picture>`
-    : `<img src="img/arbeiten/${id}-m-600.webp" srcset="img/arbeiten/${id}-m-600.webp 600w, img/arbeiten/${id}-m-1170.webp 1170w" sizes="200px" width="600" height="1299" alt="" loading="lazy" decoding="async">`;
+    : '';
   $$('[data-umschalter]').forEach(box => {
     const knoepfe = $$('.reiter button', box), tafel = $('.tafel', box);
     const zeige = (key, fokus) => {
@@ -193,7 +166,7 @@
       const fuelle = () => {
         tafel.innerHTML = `<div class="arbeit">
           <div class="geraete"><div class="browser"><div class="leiste"><i><b></b><b></b><b></b></i><span>${a.adresse}</span></div>${bild(a.d, 'd', a.alt)}</div>
-          <div class="handy"><div class="schirm">${bild(a.m, 'm', '')}</div></div></div>
+</div>
           <div class="info"><span class="etikett">${a.etikett}</span><h3>${a.titel}</h3><p class="klein" style="font-size:16px;color:var(--ink-2)">${a.text}</p>
           <ul>${a.punkte.map(p => `<li><strong>${p[0]}</strong><span>${p[1]}</span></li>`).join('')}</ul>
           ${a.link ? `<a class="link" href="${a.link}" target="_blank" rel="noopener">${a.linkText}</a>` : `<a class="link" href="${a.seite}">${a.seiteText}</a>`}</div></div>`;
@@ -203,7 +176,7 @@
       tafel.classList.add('wechselt');
       setTimeout(() => {
         fuelle(); tafel.classList.remove('wechselt');
-        if (hatGsap) { gsap.from($('.browser', tafel), { y: 26, duration: .7, ease: 'expo.out' }); gsap.from($('.handy', tafel), { y: 50, duration: .8, ease: 'expo.out' }); }
+        if (hatGsap) { gsap.from($('.browser', tafel), { y: 26, duration: .7, ease: 'expo.out' }); }
       }, 230);
     };
     knoepfe.forEach((k, i) => {
@@ -245,16 +218,6 @@
     $$('.vorlagen button', r).forEach(b => b.addEventListener('click', () => { wert.value = Number(b.dataset.w).toLocaleString('de-DE'); marge.value = b.dataset.m; rechne(); }));
     rechne();
   }
-
-  /* ---------- Ansicht Bildschirm/Handy ---------- */
-  $$('[data-ansicht]').forEach(box => {
-    const kn = $$('.ansicht button', box), teile = $$('[data-teil]', box);
-    kn.forEach(k => k.addEventListener('click', () => {
-      kn.forEach(x => x.setAttribute('aria-pressed', x === k));
-      teile.forEach(t => { t.hidden = t.dataset.teil !== k.dataset.zeige; });
-      nachLaden();
-    }));
-  });
 
   /* ---------- Formular ---------- */
   const SB = 'https://mvcwhvntbvnldqimjiki.supabase.co/rest/v1/anfragen';

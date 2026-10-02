@@ -10,7 +10,7 @@ window.CRESTRA_ARBEITEN = {
       ['Leistungen einzeln erklärt', 'Module, Montage, Speicher und Zähler auf eigenen, kurzen Seiten.'],
       ['Ratgeber für Google', 'Artikel zu Fragen, die Hausbesitzer vor dem Kauf stellen.']
     ],
-    seite: 'solar.html', seiteText: 'Websites für Solarbetriebe'
+    seite: 'kontakt.html', seiteText: 'Entwurf für Ihren Betrieb anfordern'
   },
   makler: {
     titel: 'Immobilienmakler mit Hausverwaltung', adresse: 'ihr-betrieb.de', d: 'makler', m: 'makler',
@@ -22,7 +22,7 @@ window.CRESTRA_ARBEITEN = {
       ['Eigener Bereich für Verkäufer', 'Bewertung anfragen, Ablauf des Verkaufs, wartende Suchaufträge.'],
       ['Hausverwaltung getrennt', 'Eigentümer und Mieter finden ihre Ansprechpartner ohne Umweg.']
     ],
-    seite: 'immobilien.html', seiteText: 'Websites für Makler'
+    seite: 'kontakt.html', seiteText: 'Entwurf für Ihren Betrieb anfordern'
   },
   auto: {
     titel: 'Autohaus mit Werkstatt', adresse: 'ihr-betrieb.de/fahrzeuge', d: 'auto-fahrzeuge', m: 'auto',
@@ -34,7 +34,7 @@ window.CRESTRA_ARBEITEN = {
       ['Suchen wie im Portal', 'Filter nach Marke, Preis, Kraftstoff und Aufbau.'],
       ['Werkstatt und Service', 'HU, Aufbereitung, Finanzierung – jeweils mit eigener Seite und Anfrage.']
     ],
-    seite: 'autohandel.html', seiteText: 'Websites für Autohäuser'
+    seite: 'kontakt.html', seiteText: 'Entwurf für Ihren Betrieb anfordern'
   },
   energie: {
     titel: 'Energieberatung für Hausbesitzer', adresse: 'ihr-betrieb.de', d: 'energie', m: 'energie',
@@ -46,7 +46,7 @@ window.CRESTRA_ARBEITEN = {
       ['Beispiel-Fahrplan', 'Ein Sanierungsfahrplan zum Durchklicken, bevor jemand anfragt.'],
       ['Erstgespräch buchen', 'Der wichtigste Knopf steht ganz oben.']
     ],
-    seite: 'energieberatung.html', seiteText: 'Websites für Energieberater'
+    seite: 'kontakt.html', seiteText: 'Entwurf für Ihren Betrieb anfordern'
   },
   b2b: {
     titel: 'Energieberatung für Unternehmen', adresse: 'ihr-betrieb.de', d: 'b2b', m: 'b2b',
@@ -58,7 +58,7 @@ window.CRESTRA_ARBEITEN = {
       ['Der Strompreis erklärt', 'Die Startseite zeigt Schritt für Schritt, woraus sich der Preis zusammensetzt.'],
       ['Jede Leistung eine Seite', 'Einkauf, Verträge, Steueranträge, Effizienz und Contracting.']
     ],
-    seite: 'energieberatung.html', seiteText: 'Websites für Energieberater'
+    seite: 'kontakt.html', seiteText: 'Entwurf für Ihren Betrieb anfordern'
   },
   carwash: {
     titel: 'Euregio Carwash, Stolberg', adresse: 'euregiowash.de', d: 'carwash', m: 'carwash',

@@ -2,7 +2,7 @@
 """crestra – Seitengenerator. Aufruf: python3 _build.py  (schreibt alle .html-Dateien neu)"""
 import json, os
 
-V = "20261002c"
+V = "20261002d"
 BASE = "https://crestra.de/"
 HIER = os.path.dirname(os.path.abspath(__file__))
 
@@ -17,14 +17,8 @@ LOGO = ('<svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height=
         '<path d="M262.46 372.76Q232.64 372.76 211.22 363.73Q189.8 354.7 176.36 338.74Q162.92 322.78 156.62 302.2Q150.32 281.62 150.32 258.52Q150.32 235 156.62 213.79Q162.92 192.58 176.15 175.57Q189.38 158.56 210.59 148.9Q231.8 139.24 261.62 139.24Q296.9 139.24 318.53 152.47Q340.16 165.7 348.77 186.7Q357.38 207.7 353.6 232.06L294.8 236.68Q295.64 221.56 291.65 211.69Q287.66 201.82 279.68 196.99Q271.7 192.16 260.36 192.16Q250.28 192.16 242.51 195.94Q234.74 199.72 229.49 207.49Q224.24 215.26 221.51 227.02Q218.78 238.78 218.78 255.16Q218.78 276.16 223.61 291.28Q228.44 306.4 238.31 314.38Q248.18 322.36 263.3 322.36Q278.84 322.36 286.82 314.8Q294.8 307.24 297.32 295.69Q299.84 284.14 298.16 272.8L360.74 275.74Q363.26 294.22 359.06 311.65Q354.86 329.08 342.89 342.94Q330.92 356.8 310.97 364.78Q291.02 372.76 262.46 372.76Z" fill="#fff"/></svg>')
 MARKE = f'<a class="marke" href="index.html" aria-label="crestra – zur Startseite">{LOGO}<span>crestra</span></a>'
 
-BRANCHEN = [
-    ("solar.html", "Solar & Photovoltaik", "Anfragen mit den richtigen Angaben"),
-    ("immobilien.html", "Immobilienmakler", "Angebote automatisch aus dem Portal"),
-    ("autohandel.html", "Autohandel", "Bestand aus mobile.de auf der eigenen Seite"),
-    ("energieberatung.html", "Energieberatung", "Förderung verständlich erklären"),
-]
-NAV = [("arbeiten.html", "Arbeiten"), ("leistung.html", "Leistung & Preis"), ("BRANCHEN", "Branchen"),
-       ("ablauf.html", "Ablauf"), ("ueber-uns.html", "Über crestra"), ("faq.html", "Fragen")]
+NAV = [("arbeiten.html", "Arbeiten"), ("leistung.html", "Leistung & Preis"), ("ablauf.html", "Ablauf"),
+       ("ueber-uns.html", "Über crestra"), ("faq.html", "Fragen"), ("ratgeber.html", "Ratgeber")]
 
 ORG = {
     "@context": "https://schema.org", "@type": "ProfessionalService", "@id": BASE + "#crestra",
@@ -40,30 +34,11 @@ ORG = {
 
 
 def nav_html(aktiv):
-    teile = []
-    for href, text in NAV:
-        if href == "BRANCHEN":
-            akt = ' class="aktiv"' if aktiv in [b[0] for b in BRANCHEN] else ""
-            links = "".join(
-                f'<a href="{h}"{" aria-current=page" if h == aktiv else ""}><strong>{t}</strong><span>{s}</span></a>' for h, t, s in BRANCHEN)
-            teile.append(f'<div class="aus"><button type="button" aria-expanded="false" aria-haspopup="true"{akt}>Branchen <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5L6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button><div class="ausklapp">{links}</div></div>')
-        else:
-            cur = ' aria-current="page"' if href == aktiv else ""
-            teile.append(f'<a href="{href}"{cur}>{text}</a>')
-    return "".join(teile)
+    return "".join(f'<a href="{h}"{" aria-current=page" if h == aktiv else ""}>{t}</a>' for h, t in NAV)
 
 
 def menue_html(aktiv):
-    out = []
-    for href, text in NAV:
-        if href == "BRANCHEN":
-            for h, t, _ in BRANCHEN:
-                out.append(f'<a class="unter" href="{h}"{" aria-current=page" if h == aktiv else ""}>{t}</a>')
-        else:
-            out.insert(len(out), f'<a href="{href}"{" aria-current=page" if href == aktiv else ""}>{text}</a>')
-    # Branchen-Überschrift vor die Unterpunkte
-    i = next(i for i, x in enumerate(out) if 'class="unter"' in x)
-    out.insert(i, '<a href="solar.html">Branchen</a>')
+    out = [f'<a href="{h}"{" aria-current=page" if h == aktiv else ""}>{t}</a>' for h, t in NAV]
     out.append(f'<a href="kontakt.html"{" aria-current=page" if aktiv == "kontakt.html" else ""}>Kontakt</a>')
     return "".join(out)
 
@@ -117,7 +92,6 @@ def kopf(titel, beschreibung, datei, aktiv=None, jsonld=None, noindex=False, sta
 
 
 def fuss(cta=True):
-    branchen = "".join(f'<li><a href="{h}">{t}</a></li>' for h, t, _ in BRANCHEN)
     kc = f'<div class="klebe-cta"><a class="btn" href="kontakt.html">Kostenlosen Entwurf anfordern {PFEIL}</a></div>' if cta else ""
     return f'''</main>
 <footer class="fuss">
@@ -129,7 +103,6 @@ def fuss(cta=True):
         <p>{FIRMA["strasse"]}, {FIRMA["plz"]} {FIRMA["ort"]}<br><a href="mailto:{FIRMA["mail"]}">{FIRMA["mail"]}</a><br><a href="tel:{FIRMA["tel_link"]}">{FIRMA["tel"]}</a></p>
       </div>
       <div><h4>Angebot</h4><ul><li><a href="leistung.html">Leistung &amp; Preis</a></li><li><a href="arbeiten.html">Arbeiten</a></li><li><a href="ablauf.html">Ablauf</a></li><li><a href="faq.html">Fragen</a></li></ul></div>
-      <div><h4>Branchen</h4><ul>{branchen}</ul></div>
       <div><h4>Mehr</h4><ul><li><a href="ueber-uns.html">Über crestra</a></li><li><a href="ratgeber.html">Ratgeber</a></li><li><a href="kontakt.html">Kontakt</a></li><li><a href="impressum.html">Impressum</a></li><li><a href="datenschutz.html">Datenschutz</a></li></ul></div>
     </div>
     <div class="unten"><span>© <span data-jahr>2026</span> crestra · {FIRMA["inhaber"]}</span><span>Ohne Cookies, ohne Tracking.</span></div>
@@ -161,11 +134,6 @@ def browser(id_d, adresse, alt, eager=False, sizes="(max-width:900px) 92vw, 760p
     return f'''<div class="browser"><div class="leiste"><i><b></b><b></b><b></b></i><span>{adresse}</span></div><picture><source type="image/webp" srcset="img/arbeiten/{id_d}-d-1200.webp 1200w, img/arbeiten/{id_d}-d-2400.webp 2400w" sizes="{sizes}"><img src="img/arbeiten/{id_d}-d-1200.webp" width="1200" height="750" alt="{alt}" {lad} decoding="async"></picture></div>'''
 
 
-def handy(id_m, alt="", eager=False, sizes="200px"):
-    lad = '' if eager else 'loading="lazy"'
-    return f'''<div class="handy"><div class="schirm"><img src="img/arbeiten/{id_m}-m-600.webp" srcset="img/arbeiten/{id_m}-m-600.webp 600w, img/arbeiten/{id_m}-m-1170.webp 1170w" sizes="{sizes}" width="600" height="1299" alt="{alt}" {lad} decoding="async"></div></div>'''
-
-
 def cta_band(titel="Wie sähe Ihre neue Website aus?", text="Schicken Sie uns Ihre jetzige Adresse. Sie bekommen einen Entwurf Ihrer Startseite – kostenlos und unverbindlich.", branche=None):
     q = f"?branche={branche}" if branche else ""
     return f'''<section class="abschnitt" style="padding-top:0"><div class="wrap"><div class="cta-band auf">
@@ -174,8 +142,9 @@ def cta_band(titel="Wie sähe Ihre neue Website aus?", text="Schicken Sie uns Ih
 </div></div></section>'''
 
 
-BRANCHE_OPTS = [("", "Bitte wählen"), ("solar", "Solar & Photovoltaik"), ("immobilien", "Immobilien"), ("autohandel", "Autohandel"),
-                ("energieberatung", "Energieberatung"), ("handwerk", "Handwerk"), ("gastronomie", "Gastronomie"), ("sonstiges", "Etwas anderes")]
+BRANCHE_OPTS = [("", "Bitte wählen"), ("handwerk", "Handwerk"), ("gastronomie", "Gastronomie"), ("auto", "Autohaus & Werkstatt"),
+                ("immobilien", "Immobilien"), ("energie", "Solar, Energie & Haustechnik"), ("gesundheit", "Praxis & Gesundheit"),
+                ("handel", "Handel & Geschäfte"), ("dienstleistung", "Dienstleistung"), ("sonstiges", "Etwas anderes")]
 
 
 def formular(kontext="seite"):
@@ -195,8 +164,8 @@ def formular(kontext="seite"):
 </form>'''
 
 
-def rechner(wert="20.000", marge="15", hinweis=True):
-    vorl = [("Solaranlage", 20000, 15), ("Gebrauchtwagen", 15000, 8), ("Maklerprovision", 9000, 60), ("Energieberatung", 1500, 50)]
+def rechner(wert="4.000", marge="25", hinweis=True):
+    vorl = [("Handwerksauftrag", 4000, 25), ("Solaranlage", 20000, 15), ("Gebrauchtwagen", 15000, 8), ("Maklerprovision", 9000, 60), ("Stammkunde im Jahr", 800, 30)]
     knoepfe = "".join(f'<button type="button" data-w="{w}" data-m="{m}">{t}</button>' for t, w, m in vorl)
     return f'''<div class="rechner" data-rechner>
   <div class="felder">
@@ -233,46 +202,45 @@ reiter_html = "".join(
     f'<button type="button" role="tab" id="tab-{k}" data-key="{k}" aria-selected="{"true" if i == 0 else "false"}" aria-controls="tafel">{t}</button>' for i, (k, t) in enumerate(REITER))
 
 seite("index.html", "crestra – Websites für Betriebe in der Region Aachen",
-      "Websites für Solarbetriebe, Makler, Autohäuser und Energieberater. 250 € einmalig, 59 € im Monat – Hosting, Domain und Pflege inklusive.",
+      "Websites für Betriebe aus der Region Aachen, von Hand gebaut. 250 € einmalig, 59 € im Monat – Hosting, Domain und Pflege inklusive.",
       f'''
 <section class="einstieg"><div class="wrap">
-  <div>
+  <div class="einstieg-text">
     <h1 class="wr">Websites, die Ihnen <em class="a">Aufträge</em> bringen.</h1>
-    <p class="lead auf">Für Solarbetriebe, Makler, Autohäuser und Energieberater aus der Region Aachen. Sie sehen Ihren Entwurf, bevor Sie sich entscheiden.</p>
-    <div class="knoepfe auf" data-v=".1"><a class="btn" href="#anfrage">Kostenlosen Entwurf anfordern {PFEIL}</a><a class="btn zwei" href="#arbeiten">Arbeiten ansehen</a></div>
-    <dl class="eckdaten auf" data-v=".2">
-      <div><dt>Einmalig</dt><dd>250 €</dd></div>
-      <div><dt>Im Monat</dt><dd>59 €</dd></div>
-      <div><dt>Inklusive</dt><dd>Hosting, Domain, Pflege</dd></div>
-    </dl>
+    <div>
+      <p class="lead auf">Für Betriebe aus der Region Aachen – vom Handwerker bis zum Autohaus. Sie sehen Ihren Entwurf, bevor Sie sich entscheiden.</p>
+      <div class="knoepfe auf" data-v=".1"><a class="btn" href="#anfrage">Kostenlosen Entwurf anfordern {PFEIL}</a><a class="btn zwei" href="#arbeiten">Arbeiten ansehen</a></div>
+      <dl class="eckdaten auf" data-v=".2">
+        <div><dt>Einmalig</dt><dd>250 €</dd></div>
+        <div><dt>Im Monat</dt><dd>59 €</dd></div>
+        <div><dt>Inklusive</dt><dd>Hosting, Domain, Pflege</dd></div>
+      </dl>
+    </div>
   </div>
   <figure class="buehne" style="margin:0">
-    {browser("carwash", "euregiowash.de", "Startseite von Euregio Carwash in Stolberg auf einem Bildschirm", eager=True, sizes="(max-width:900px) 92vw, 640px")}
-    {handy("carwash", "Dieselbe Seite auf dem Handy", eager=True)}
+    {browser("carwash", "euregiowash.de", "Startseite von Euregio Carwash in Stolberg", eager=True, sizes="(max-width:1300px) 92vw, 1180px")}
     <figcaption>Euregio Carwash, Stolberg – live unter <a href="https://euregiowash.de/" target="_blank" rel="noopener">euregiowash.de</a></figcaption>
   </figure>
 </div></section>
 
-<section class="probe night" aria-label="Warum die Handy-Fassung entscheidet">
-  <div class="klebt">
-    <div class="texte">
-      <p>Websites werden am großen Bildschirm geplant.</p>
-      <p>Ihre Kunden sehen sie auf dem <em class="a">Handy</em>. Ohne Handy-Fassung sieht das so aus.</p>
-      <p>Darum bauen wir jede Seite für beides – und prüfen sie auf dem Handy zuerst.</p>
-    </div>
-    <div class="feld">
-      <div class="desk">{browser("energie", "ihr-betrieb.de", "Beispielseite einer Energieberatung am Bildschirm", sizes="(max-width:700px) 92vw, 1000px")}</div>
-      <div class="ph handy"><div class="schirm">
-        <div class="mini"><img src="img/arbeiten/energie-d-1200.webp" width="1200" height="750" alt="Dieselbe Seite ohne Handy-Fassung: winzig und kaum lesbar" loading="lazy" decoding="async"></div>
-        <div class="echt"><img src="img/arbeiten/energie-m-600.webp" srcset="img/arbeiten/energie-m-600.webp 600w, img/arbeiten/energie-m-1170.webp 1170w" sizes="300px" width="600" height="1299" alt="Dieselbe Seite mit echter Handy-Fassung: groß und gut lesbar" loading="lazy" decoding="async"></div>
-      </div></div>
-    </div>
-    <p class="hinweis">Beispielentwurf – Name und Logo geändert</p>
-  </div>
-</section>
+<section class="abschnitt night" id="fuer-wen"><div class="wrap">
+  <div class="kopfzeile"><h2 class="wr">Für jeden Betrieb, der <em class="a">vor Ort</em> gefunden werden will.</h2>
+    <p class="lead auf">Jede Branche braucht etwas anderes. Darum gibt es bei uns keine Vorlage – sondern eine Seite, die zu Ihrem Betrieb passt.</p></div>
+  <ul class="fuer">
+    <li class="auf"><strong>Handwerk</strong><span>Anfragen mit Fotos vom Schaden, damit der erste Termin sitzt.</span></li>
+    <li class="auf"><strong>Gastronomie</strong><span>Speisekarte, Öffnungszeiten und Anruf mit einem Tipp.</span></li>
+    <li class="auf"><strong>Autohäuser und Werkstätten</strong><span>Fahrzeugbestand aus mobile.de direkt auf der eigenen Seite.</span></li>
+    <li class="auf"><strong>Makler und Hausverwaltungen</strong><span>Angebote automatisch aus dem Immobilienportal.</span></li>
+    <li class="auf"><strong>Solar, Energie und Haustechnik</strong><span>Leistungen verständlich erklärt, Anfrage mit den richtigen Angaben.</span></li>
+    <li class="auf"><strong>Praxen und Gesundheit</strong><span>Leistungen, Team und Sprechzeiten auf einen Blick.</span></li>
+    <li class="auf"><strong>Handel und Geschäfte</strong><span>Sortiment, Anfahrt und aktuelle Angebote.</span></li>
+    <li class="auf"><strong>Dienstleister</strong><span>Vom Reinigungsdienst bis zur Kanzlei: klar sagen, was Sie tun.</span></li>
+  </ul>
+  <p class="auf" style="margin-top:40px;color:var(--night-ink-2)">Ihre Branche ist nicht dabei? <a class="link" href="#anfrage">Fragen Sie trotzdem.</a></p>
+</div></section>
 
-<section class="abschnitt rund" id="arbeiten" style="background:var(--paper)"><div class="wrap">
-  <div class="kopfzeile"><h2 class="wr">Gebaut für Betriebe, bei denen <em class="a">ein</em> Kunde viel wert ist.</h2>
+<section class="abschnitt" id="arbeiten"><div class="wrap">
+  <div class="kopfzeile"><h2 class="wr">Ein paar unserer <em class="a">Arbeiten</em></h2>
     <p class="lead auf">Zwei Seiten sind schon bei Kunden live. Die übrigen sind Entwürfe für echte Betriebe aus der Region – hier ohne Namen und Logo.</p></div>
   <div data-umschalter class="auf">
     <div class="reiter" role="tablist" aria-label="Arbeiten nach Branche">{reiter_html}</div>
@@ -283,7 +251,7 @@ seite("index.html", "crestra – Websites für Betriebe in der Region Aachen",
 
 <section class="abschnitt grau" id="rechner"><div class="wrap">
   <div class="kopfzeile"><h2 class="wr">Rechnet sich <em class="a">das?</em></h2>
-    <p class="lead auf">Tragen Sie ein, was ein Auftrag bei Ihnen wert ist. Dann sehen Sie, wie wenig die Website leisten muss, um sich zu bezahlen.</p></div>
+    <p class="lead auf">Tragen Sie ein, was ein Auftrag oder ein Kunde bei Ihnen wert ist. Dann sehen Sie, wie wenig die Website leisten muss, um sich zu bezahlen.</p></div>
   <div class="auf">{rechner()}</div>
 </div></section>
 
@@ -320,17 +288,17 @@ seite("index.html", "crestra – Websites für Betriebe in der Region Aachen",
 # =====================================================================  ARBEITEN
 WERKE = [
     ("solar", "solar", "Photovoltaik-Betrieb", "Beispielentwurf – Name und Logo geändert", "ihr-betrieb.de",
-     "Hell und freundlich, geschrieben für Hausbesitzer. Jede Leistung bekommt eine eigene kurze Seite, der Anfrage-Knopf ist überall sichtbar.", "solar.html", "Websites für Solarbetriebe"),
+     "Hell und freundlich, geschrieben für Hausbesitzer. Jede Leistung bekommt eine eigene kurze Seite, der Anfrage-Knopf ist überall sichtbar.", "kontakt.html", "Entwurf für Ihren Betrieb anfordern"),
     ("makler", "makler", "Immobilienmakler mit Hausverwaltung", "Beispielentwurf – Name und Logo geändert", "ihr-betrieb.de",
-     "Zwei Wege gleich am Anfang: Käufer zu den Angeboten, Eigentümer zur Bewertung. Die Angebote kommen automatisch aus dem Immobilienportal.", "immobilien.html", "Websites für Makler"),
+     "Zwei Wege gleich am Anfang: Käufer zu den Angeboten, Eigentümer zur Bewertung. Die Angebote kommen automatisch aus dem Immobilienportal.", "kontakt.html", "Entwurf für Ihren Betrieb anfordern"),
     ("makler-angebote", "makler-angebote", "Makler: Angebotsseite", "Beispielentwurf – Name und Logo geändert", "ihr-betrieb.de/angebote",
-     "Die Objekte werden über das immowelt-Homepagemodul geladen. Stellt der Makler ein neues Haus ins Portal, erscheint es auch auf seiner Seite.", "immobilien.html", "Websites für Makler"),
+     "Die Objekte werden über das immowelt-Homepagemodul geladen. Stellt der Makler ein neues Haus ins Portal, erscheint es auch auf seiner Seite.", "kontakt.html", "Entwurf für Ihren Betrieb anfordern"),
     ("auto-fahrzeuge", "auto-fahrzeuge", "Autohaus: Fahrzeugbestand", "Beispielentwurf – Name und Logo geändert", "ihr-betrieb.de/fahrzeuge",
-     "Der Bestand wird aus mobile.de übernommen und lässt sich nach Marke, Preis, Kraftstoff und Aufbau filtern – jedes Fahrzeug mit eigener Seite.", "autohandel.html", "Websites für Autohäuser"),
+     "Der Bestand wird aus mobile.de übernommen und lässt sich nach Marke, Preis, Kraftstoff und Aufbau filtern – jedes Fahrzeug mit eigener Seite.", "kontakt.html", "Entwurf für Ihren Betrieb anfordern"),
     ("energie", "energie", "Energieberatung für Hausbesitzer", "Beispielentwurf – Name und Logo geändert", "ihr-betrieb.de",
-     "Förderung, Sanierungsfahrplan und Energieausweis verständlich erklärt, mit Förderrechner und Beispiel-Fahrplan zum Durchklicken.", "energieberatung.html", "Websites für Energieberater"),
+     "Förderung, Sanierungsfahrplan und Energieausweis verständlich erklärt, mit Förderrechner und Beispiel-Fahrplan zum Durchklicken.", "kontakt.html", "Entwurf für Ihren Betrieb anfordern"),
     ("b2b", "b2b", "Energieberatung für Unternehmen", "Beispielentwurf – Name und Logo geändert", "ihr-betrieb.de",
-     "Für Geschäftsführer: kurz und sachlich, mit „Rechnung prüfen lassen“ als konkretem Einstieg.", "energieberatung.html", "Websites für Energieberater"),
+     "Für Geschäftsführer: kurz und sachlich, mit „Rechnung prüfen lassen“ als konkretem Einstieg.", "kontakt.html", "Entwurf für Ihren Betrieb anfordern"),
     ("carwash", "carwash", "Euregio Carwash, Stolberg", "Kunde – live seit September 2026", "euregiowash.de",
      "Handwäsche und Fahrzeugpflege vom Kleinwagen bis zum Sattelzug, mit echten Videos aus der eigenen Halle.", "https://euregiowash.de/", "euregiowash.de ansehen"),
     ("aspendos", "aspendos", "Aspendos Grill & Pizzeria, Stolberg-Breinig", "Kunde – live seit September 2026", "aspendos.info",
@@ -338,15 +306,14 @@ WERKE = [
 ]
 werke_html = ""
 for d_id, m_id, titel, etikett, adr, text, link, ltext in WERKE:
-    m_use = "auto" if m_id == "auto-fahrzeuge" else ("makler-angebote" if m_id == "makler-angebote" else m_id)
     ext = ' target="_blank" rel="noopener"' if link.startswith("http") else ""
     werke_html += f'''<article class="werk">
-  <div class="geraete auf">{browser(d_id, adr, "Ansicht am Bildschirm: " + titel)}{handy(m_use, "Ansicht auf dem Handy: " + titel)}</div>
+  <div class="geraete auf">{browser(d_id, adr, "Startseite: " + titel)}</div>
   <div class="auf"><span class="klein" style="font-weight:600;color:var(--ink-2);padding-left:12px;border-left:2.5px solid var(--blue)">{etikett}</span><h2>{titel}</h2><p style="color:var(--ink-2)">{text}</p><a class="link" href="{link}"{ext}>{ltext}</a></div>
 </article>'''
 
 seite("arbeiten.html", "Arbeiten – Websites von crestra",
-      "Websites für Solarbetriebe, Makler, Autohäuser, Energieberater und Lokalbetriebe – live bei Kunden und als Entwurf.",
+      "Websites von crestra für Handwerk, Gastronomie, Autohandel, Makler, Energie und mehr – live bei Kunden und als Entwurf.",
       seitenkopf([("index.html", "Start"), (None, "Arbeiten")], "Arbeiten", "Zwei Seiten sind bei Kunden live. Die übrigen sind Entwürfe für echte Betriebe aus der Region. Die Namen und Logos sind ersetzt, weil diese Betriebe (noch) keine Kunden sind.")
       + f'<section><div class="wrap">{werke_html}</div></section>' + cta_band())
 
@@ -393,76 +360,6 @@ seite("leistung.html", "Leistung & Preis – crestra",
   <div class="auf">{rechner()}</div>
 </div></section>
 ''' + cta_band())
-
-# =====================================================================  BRANCHEN
-def branchen_seite(datei, key, titel, h1, lead, beschreibung, punkte, bsp_d, bsp_m, bsp_alt, bsp_adr, bsp_text, wert, marge, extra=""):
-    pk = "".join(f'<li><strong>{a}</strong><span>{b}</span></li>' for a, b in punkte)
-    inhalt = seitenkopf([("index.html", "Start"), (None, titel)], h1, lead) + f'''
-<section class="abschnitt"><div class="wrap zwei-sp">
-  <div><h2 class="wr">Worauf es <em class="a">ankommt</em></h2><p class="lead auf" style="margin-top:20px">Was eine Website in Ihrer Branche leisten muss, damit aus Besuchern Anfragen werden.</p></div>
-  <ul class="liste auf">{pk}</ul>
-</div></section>
-<section class="abschnitt grau"><div class="wrap">
-  <div class="kopfzeile"><h2 class="wr">So kann das aussehen</h2><p class="lead auf">{bsp_text}</p></div>
-  <div data-ansicht class="auf">
-    <div class="ansicht" role="group" aria-label="Ansicht wählen"><button type="button" aria-pressed="true" data-zeige="d">Bildschirm</button><button type="button" aria-pressed="false" data-zeige="m">Handy</button></div>
-    <div class="ansicht-buehne">
-      <div data-teil="d">{browser(bsp_d, bsp_adr, bsp_alt, sizes="(max-width:1300px) 92vw, 1180px")}</div>
-      <div data-teil="m" hidden>{handy(bsp_m, bsp_alt + " (Handy)", sizes="320px")}</div>
-    </div>
-    <p class="klein" style="margin-top:16px">Beispielentwurf – Name und Logo geändert.</p>
-  </div>
-</div></section>{extra}
-<section class="abschnitt"><div class="wrap">
-  <div class="kopfzeile"><h2 class="wr">Rechnet sich <em class="a">das?</em></h2><p class="lead auf">Mit einem Beispielwert für Ihre Branche. Ändern Sie die Zahlen auf Ihre eigenen.</p></div>
-  <div class="auf">{rechner(wert, marge)}</div>
-</div></section>''' + cta_band(branche=key)
-    seite(datei, titel + " – Websites von crestra", beschreibung, inhalt)
-
-
-branchen_seite("solar.html", "solar", "Solar & Photovoltaik", "Websites für <em class=\"a\">Solarbetriebe</em>",
-               "Hausbesitzer vergleichen mehrere Anbieter, meistens auf dem Handy. Ihre Seite muss Vertrauen schaffen und die Anfrage leicht machen.",
-               "Websites für Photovoltaik- und Solarbetriebe aus der Region Aachen: verständlich, schnell, mit Anfrage aus jeder Seite.",
-               [("Die Anfrage bringt die richtigen Angaben mit", "Dachform, ungefährer Stromverbrauch, Speicher oder Wallbox – so wird Ihr erster Rückruf kürzer."),
-                ("Jede Leistung eine eigene Seite", "Photovoltaik, Speicher, Wallbox, Service. Kurze Seiten werden besser gefunden als eine lange."),
-                ("Referenzen aus der Region", "Echte Anlagen in echten Orten wirken stärker als jedes Symbolbild."),
-                ("Antworten auf typische Fragen", "Ratgeber-Artikel zu Fragen, die Hausbesitzer vor dem Kauf stellen – und bei Google suchen."),
-                ("Auf dem Handy zuerst", "Große Schrift, Anruf und Anfrage mit einem Tipp.")],
-               "solar", "solar", "Startseite eines Photovoltaik-Betriebs", "ihr-betrieb.de",
-               "Ein Entwurf für einen Photovoltaik-Betrieb aus dem Dreiländereck: hell, freundlich, wenig Technik auf der Startseite.", "20.000", "15")
-
-branchen_seite("immobilien.html", "immobilien", "Immobilienmakler", "Websites für <em class=\"a\">Makler</em>",
-               "Käufer wollen Angebote sehen, Eigentümer wollen wissen, ob Sie der richtige Makler sind. Ihre Seite sollte beides können.",
-               "Websites für Immobilienmakler und Hausverwaltungen: Angebote automatisch aus dem Portal, eigener Bereich für Verkäufer.",
-               [("Angebote kommen automatisch", "Ihre Objekte werden aus dem Immobilienportal übernommen. Beim Entwurf haben wir das immowelt-Homepagemodul angebunden; andere Portale prüfen wir vorab."),
-                ("Ein Weg für Verkäufer", "Eigentümer sind Ihre wichtigsten Kunden. Bewertung anfragen, Ablauf des Verkaufs, Suchaufträge – auf eigenen Seiten."),
-                ("Hausverwaltung getrennt", "Eigentümer und Mieter finden ihre Ansprechpartner ohne Umweg."),
-                ("Pflichtangaben vollständig", "Im Impressum gehören bei Maklern auch die Erlaubnis nach § 34c GewO und die zuständige Behörde dazu."),
-                ("Fotos in voller Schärfe", "Häuser verkaufen sich über Bilder. Wir binden sie in hoher Auflösung ein.")],
-               "makler-angebote", "makler", "Angebotsseite eines Maklers", "ihr-betrieb.de/angebote",
-               "Ein Entwurf für einen Makler mit Hausverwaltung. Die Angebote kommen direkt aus immowelt.", "9.000", "60")
-
-branchen_seite("autohandel.html", "autohandel", "Autohandel", "Websites für <em class=\"a\">Autohäuser</em>",
-               "Ihr Bestand steht auf mobile.de – aber Ihre eigene Seite sollte ihn auch zeigen. Ohne dass Sie zwei Mal pflegen müssen.",
-               "Websites für Autohäuser und Gebrauchtwagenhändler: Bestand aus mobile.de, Filter, Fahrzeugseiten, Werkstatt und Service.",
-               [("Bestand aus mobile.de", "Ihre Fahrzeuge werden über die offizielle Schnittstelle von mobile.de übernommen. Dafür braucht es Ihre Händler-Zugangsdaten."),
-                ("Suchen wie im Portal", "Filter nach Marke, Preis, Kraftstoff und Aufbau, jedes Fahrzeug mit eigener Seite."),
-                ("Werkstatt und Service sichtbar", "HU, Aufbereitung, Reifen, Finanzierung – Leistungen, die auf Portalen untergehen."),
-                ("Anruf und WhatsApp mit einem Tipp", "Auf dem Handy immer erreichbar, ohne die Nummer abtippen zu müssen."),
-                ("Öffnungszeiten, die stimmen", "Pflege ist im Preis enthalten. Schicken Sie uns Änderungen einfach per E-Mail.")],
-               "auto-fahrzeuge", "auto-fahrzeuge", "Fahrzeug-Übersicht eines Autohauses", "ihr-betrieb.de/fahrzeuge",
-               "Ein Entwurf für ein Autohaus mit Werkstatt. Der Bestand kommt aus mobile.de und lässt sich filtern.", "15.000", "8")
-
-branchen_seite("energieberatung.html", "energieberatung", "Energieberatung", "Websites für <em class=\"a\">Energieberater</em>",
-               "Förderung, Fahrplan, Energieausweis: Ihre Kunden verstehen das Thema oft erst auf Ihrer Seite. Dort muss es einfach werden.",
-               "Websites für Energieberater, für Hausbesitzer und für Unternehmen: Förderung verständlich erklärt, mit Rechnern und klarer Anfrage.",
-               [("Förderung verständlich", "Ein Rechner auf der Seite zeigt, was ein Vorhaben ungefähr bringen kann. Das senkt die Hürde für das Erstgespräch."),
-                ("Jede Leistung eine Seite", "Sanierungsfahrplan, Energieausweis, Baubegleitung, Thermografie – einzeln erklärt und einzeln auffindbar."),
-                ("Für Unternehmen eigener Einstieg", "Geschäftsführer wollen nicht lesen, sondern wissen, was es bringt. Zum Beispiel: „Rechnung prüfen lassen“."),
-                ("Ratgeber mit echten Antworten", "Artikel zu Pflichten, Fristen und Förderprogrammen bringen Besucher über Google."),
-                ("Termin statt Formular-Wüste", "Ein klarer Knopf für das Erstgespräch, auf jeder Seite.")],
-               "energie", "energie", "Startseite einer Energieberatung", "ihr-betrieb.de",
-               "Ein Entwurf für eine Energieberatung für Hausbesitzer. Ein zweiter Entwurf für Unternehmen ist unter Arbeiten zu sehen.", "1.500", "50")
 
 # =====================================================================  ABLAUF
 seite("ablauf.html", "Ablauf – vom Entwurf zur fertigen Website | crestra",
@@ -518,7 +415,8 @@ FAQ = [
     ("Kann ich meine bisherige Domain behalten?", "In den meisten Fällen ja. Wir prüfen das vor dem Livegang mit Ihnen gemeinsam."),
     ("Woher kommen die Fotos?", "Am besten von Ihnen – echte Fotos aus Ihrem Betrieb wirken am stärksten. Haben Sie keine, verwenden wir lizenzfreie Bilder."),
     ("Brauche ich einen Cookie-Banner?", "Oft nicht. Wir bauen Seiten so, dass sie ohne Tracking und ohne fremde Dienste auskommen: Schriften liegen auf dem eigenen Server, Karten laden erst auf Klick. Wünschen Sie eine Besucherstatistik, kann ein Hinweis nötig werden."),
-    ("Für wen ist das Angebot?", "Für Unternehmen, Gewerbetreibende und Freiberufler. An Privatpersonen verkaufen wir nicht."),
+    ("Für wen ist das Angebot?", "Für Unternehmen jeder Branche, Gewerbetreibende und Freiberufler – vom Handwerksbetrieb über das Restaurant bis zur Kanzlei. An Privatpersonen verkaufen wir nicht."),
+    ("Machen Sie auch Websites für meine Branche?", "Ja. Wir bauen keine Vorlagen, sondern jede Seite passend zum Betrieb. Schicken Sie uns einfach Ihre Anfrage."),
     ("Muss ich telefonieren?", "Nein. Anfrage, Entwurf und Abstimmung funktionieren komplett per E-Mail. Wenn Sie lieber sprechen, geht das natürlich auch."),
 ]
 faq_html = "".join(f'<details class="auf"><summary>{q}<i aria-hidden="true"></i></summary><div class="antwort"><p>{a}</p></div></details>' for q, a in FAQ)
