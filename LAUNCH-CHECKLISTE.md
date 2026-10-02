@@ -1,28 +1,31 @@
-# crestra – Launch-Checkliste (Stand 2.10.2026)
+# crestra – Launch-Checkliste (geprüft 2.10.2026)
 
-## Offen – braucht Nils
-- [x] **Impressum: Umsatzsteuer** – keine USt-IdNr. vorhanden, daher keine Angabe nötig (§ 5 Abs. 1 Nr. 6 DDG). Falls später eine beantragt wird: ins Impressum aufnehmen.
-- [ ] **Domain crestra.de** – gehört sie dir schon? Alle Canonical-/OG-/Sitemap-Adressen zeigen auf https://crestra.de/. Danach DNS wie bei euregiowash.de (A 185.199.108.153, CNAME www → nilsc2308.github.io) und CNAME-Datei ins Repo.
-- [x] **E-Mail** – info@crestra.de (2.10.). Postfach muss eingerichtet sein und funktionieren; Anbieter in der Datenschutzerklärung eintragen (Platzhalter steht dort).
-- [ ] **Telefonnummer** – 0173 9128902 steht im Impressum (Pflicht: schneller Kontaktweg) und auf Kontakt/Über. Wenn du keine Anrufe willst: auf Kontakt/Über entfernen, im Impressum muss ein schneller Kontaktweg bleiben.
-- [x] **Gratis-Entwurf** ist auf Nils' Wunsch die Hauptbotschaft (2.10.).
-- [ ] **Supabase-Auftragsverarbeitung**: In den Supabase-Einstellungen den Auftragsverarbeitungsvertrag (DPA) annehmen; Datenschutzerklärung nennt Supabase (Irland).
-- [ ] **Datenschutz gegenlesen lassen** (GitHub Pages/DPF-Angabe, jsDelivr, Gmail).
-- [ ] **Anfragen lesen**: Formular-Anfragen landen in Supabase, Tabelle `anfragen` (Projekt „claude“). Noch keine Benachrichtigung – Vorschlag: im crestra-Board anzeigen.
+| Punkt | Stand | Ergebnis |
+|---|---|---|
+| Datenschutzerklärung | ⚠️ fast | Vorhanden, passt zur Seite (GitHub Pages, jsDelivr, Supabase-Formular, keine Cookies). **Offen:** Anbieter des Postfachs info@crestra.de eintragen (Platzhalter im Abschnitt „E-Mail“); Supabase-Auftragsverarbeitungsvertrag (DPA) in den Supabase-Einstellungen annehmen; gegenlesen lassen. |
+| Impressum | ✅ | § 5 DDG: Name, crestra, Anschrift, Telefon, E-Mail, Verantwortlicher § 18 MStV. Keine USt-IdNr. vorhanden → keine Angabe nötig (falls später eine kommt: nachtragen). |
+| Cookie Consent | ✅ nicht nötig | Test: `document.cookie` auf allen 14 Seiten leer. Kein Tracking, Schriften lokal, keine Karten/Videos von Dritten. Nur sessionStorage für das Intro (technisch nötig). |
+| Mobile Version | ✅ | Alle Seiten in Chrome + Safari bei 390 px getestet: 0 Fehler, kein seitliches Verrutschen, Burger-Menü, Knopf unten. |
+| Meta Titles | ✅ | Alle 14 Seiten 10–65 Zeichen, keine doppelten. |
+| Meta Descriptions | ✅ | Alle 50–155 Zeichen, keine doppelten (404 verlängert). |
+| Favicon / Logo im Tab | ✅ | favicon.ico (16/32/48 px), favicon.svg, apple-touch-icon (180 px), icon-192/512 + site.webmanifest – Logo im Browser-Tab, in Lesezeichen und auf dem Handy-Startbildschirm. |
+| Sitemap.xml | ✅ | 12 Seiten, alle vorhanden; danke.html und 404.html bewusst nicht drin. |
+| Robots.txt | ✅ | Alles erlaubt, Verweis auf Sitemap. danke/404 mit `noindex`. |
+| Canonical URLs | ✅ | Jede Seite zeigt auf sich selbst unter https://crestra.de/ – greift, sobald die Domain auf die Seite zeigt. |
+| 404-Seite | ✅ | Vorhanden, mit Wegen zu Start, Leistung & Preis, Kontakt. GitHub Pages zeigt sie automatisch. |
+| Broken Links | ✅ | 17 verschiedene Links geprüft, 0 kaputt. |
+| Performance | ✅ | Startseite bis „load“: 188 KB Desktop / 145 KB Handy (vorher 643 KB – Akzentschrift von 143 auf 21 KB verkleinert, Screenshots entfernt). Layout-Verschiebung (CLS) 0,006. |
+| Accessibility Basics | ✅ | axe-Test (WCAG 2 AA) auf allen Seiten: 0 Fehler nach dem Einblenden. Grau für Kleintext abgedunkelt (Kontrast ≥ 5:1), Überschriften-Reihenfolge korrigiert (Ablauf, Ratgeber), Formular mit Labels, Fokus-Rahmen, Tastatur-bedienbar, reduzierte Bewegung wird beachtet. |
+| Kontaktformular | ✅ | Pflichtfelder, E-Mail-Prüfung, Stil-Auswahl, Senden → danke.html, Eintrag in Supabase `anfragen` (Test angekommen + gelöscht), anonym nur Einfügen/kein Lesen, E-Mail-Ersatz, Spam-Falle. |
+| Alt-Texte | ✅ | Seite hat keine Bilder mehr (Beispiele entfernt); keine `img` ohne alt. |
+| Google Analytics / Tracking | ✅ bewusst keins | Kein Tracking → kein Cookie-Banner. Später möglich: cookielose Statistik – dann Datenschutz ergänzen. |
+| Open Graph Bild | ✅ | og.jpg 1200×630 mit Schriftzug + Claim, og:title/description/url/image auf allen Seiten. |
+| Lokale SEO-Daten | ⚠️ | Adresse, Telefon, E-Mail als strukturierte Daten (ProfessionalService) auf jeder Seite, dazu FAQPage + Article. Öffnungszeiten: keine (Arbeit per E-Mail). **Empfehlung:** Google-Unternehmensprofil anlegen (als Servicegebiet „Deutschland“, Adresse kann verborgen werden) – musst du selbst bei Google beantragen. |
+| Indexierung bei Google | ⏳ nach Launch | Erst möglich, wenn die Seite online ist: Google Search Console → crestra.de bestätigen → sitemap.xml einreichen → nach einigen Tagen „site:crestra.de“ prüfen. |
 
-## Geprüft (2.10.2026)
-| Punkt | Ergebnis |
-|---|---|
-| JS-Fehler | 0 – alle 14 Seiten, Chromium + WebKit, 1400 px + 390 px |
-| Horizontales Scrollen | keins (scrollWidth = clientWidth überall) |
-| Formular | Pflichtfelder + E-Mail-Prüfung, Branche per `?branche=` vorgewählt, Senden → danke.html, Eintrag in Supabase angekommen (Test gelöscht); Ersatz per E-Mail-Link, wenn Senden scheitert; Honeypot |
-| Datenbank | Tabelle `anfragen`: anonym nur Einfügen, Lesen gesperrt (getestet) |
-| Links | 23 interne/externe Links ohne Fehler |
-| Ladegröße Startseite bis „load“ | 643 KB (Ziel Desktop < 900 KB erfüllt; Handy-Ziel 500 KB knapp verfehlt – größter Posten: Newsreader-Kursivschrift 147 KB) |
-| Cookies | keine; nur sessionStorage für das Intro; Schriften lokal; kein Tracking → kein Banner nötig |
-| Meta | Titel ≤ 65, Beschreibungen ≤ 155 Zeichen (vom Generator erzwungen), Canonical, OG + og.jpg 1200×630 |
-| Strukturierte Daten | ProfessionalService auf allen Seiten, FAQPage, Article |
-| sitemap.xml, robots.txt, favicon.svg, apple-touch-icon.png, 404 | vorhanden |
-| prefers-reduced-motion | Szene wird statische Reihe, Reveals aus, Lenis aus |
-| Bilder | keine (Beispiele auf Nils' Wunsch entfernt) |
-| Analytics | keins (bewusst) |
+## Vor dem Online-Gang noch offen
+- [ ] Postfach-Anbieter von info@crestra.de nennen (für die Datenschutzerklärung) und Postfach testen
+- [ ] Domain crestra.de: DNS wie bei euregiowash.de (A 185.199.108.153, CNAME www → nilsc2308.github.io)
+- [ ] Telefonnummer 0173 9128902 steht im Impressum (Pflicht: schneller Kontaktweg) und auf Kontakt/Über – auf Kontakt/Über entfernen, wenn du keine Anrufe willst
+- [ ] Nils' Ja zum Veröffentlichen auf GitHub Pages
+- [ ] Neue Anfragen sichtbar machen (Vorschlag: im crestra-Board)
