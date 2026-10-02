@@ -6,7 +6,7 @@
   --paper:#ffffff;--paper-2:#f4f5f7;--paper-3:#e9ecf1;
   --ink:#111725;--ink-2:#4a5263;--ink-3:#6f7889;
   --line:#e1e5eb;--line-2:#c9cfd9;
-  --blue:#2446e8;--blue-deep:#1a33c4;--blue-soft:#e8ecff;
+  --blue:#0a7c9c;--blue-deep:#065f78;--blue-soft:#e2f3f6;
   --night:#0e1320;--night-2:#161d2e;--night-ink:#eef1f7;--night-ink-2:#a3adc2;--night-line:#283147;
   --ok:#12804a;--err:#c42b23;
   --wrap:1240px;--gut:clamp(20px,4vw,48px);
@@ -28,7 +28,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .skip:focus{top:12px}
 .wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 var(--gut)}
 em.a,.a{font-family:"Newsreader",Georgia,serif;font-style:italic;font-weight:500;letter-spacing:-.01em;color:var(--blue)}
-.night em.a{color:#8ea2ff}
+.night em.a{color:#6fd0de}
 
 /* ---------- Typo ---------- */
 h1,h2,h3,h4{margin:0;font-weight:680;letter-spacing:-.032em;line-height:1.04;text-wrap:balance}
@@ -66,15 +66,16 @@ p{margin:0 0 1em}
 .btn.voll{width:100%;justify-content:center}
 .link{color:var(--blue);font-weight:620;text-decoration:none;border-bottom:1.5px solid currentColor;padding-bottom:1px}
 .link:hover{color:var(--blue-deep)}
-.night .link{color:#8ea2ff}
+.night .link{color:#6fd0de}
 
 /* ---------- Kopfzeile ---------- */
 .kopf{position:fixed;inset:0 0 auto;z-index:80;height:var(--head);background:rgba(255,255,255,.92);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid transparent;transition:border-color .3s var(--ease),transform .4s var(--ease)}
 .kopf.linie{border-bottom-color:var(--line)}
 .kopf.weg{transform:translateY(-100%)}
 .kopf .wrap{height:100%;display:flex;align-items:center;gap:28px}
-.marke{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:760;font-size:23px;letter-spacing:-.045em;color:var(--ink)}
-.marke svg{width:30px;height:30px;flex:none}
+.marke{display:inline-flex;align-items:baseline;text-decoration:none;font-weight:780;font-size:26px;letter-spacing:-.05em;line-height:1;color:var(--ink)}
+.marke b{color:var(--blue);font-weight:inherit}
+.fuss .marke b{color:#6fd0de}
 .nav{display:flex;align-items:center;gap:4px;margin-left:auto}
 .nav>a,.nav .aus>button{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 12px;border:0;background:none;border-radius:var(--r);text-decoration:none;color:var(--ink-2);font-size:15.5px;font-weight:540;cursor:pointer;transition:color .2s,background-color .2s}
 .nav>a:hover,.nav .aus>button:hover,.nav .aus.offen>button{color:var(--ink);background:var(--paper-2)}
@@ -111,8 +112,7 @@ p{margin:0 0 1em}
 .vorhang.rein{transform:scaleY(1);transition:transform .45s var(--ease)}
 .vorhang.raus{transform:scaleY(0);transform-origin:50% 0;transition:transform .6s var(--ease)}
 .intro{position:fixed;inset:0;z-index:160;background:#fff;display:grid;place-items:center;pointer-events:none}
-.intro .marke{font-size:clamp(40px,8vw,84px);gap:18px}
-.intro .marke svg{width:clamp(48px,9vw,90px);height:auto}
+.intro .marke{font-size:clamp(48px,9vw,104px)}
 
 /* ---------- Abschnitte ---------- */
 main{display:block}
@@ -222,7 +222,7 @@ main{display:block}
 .night .formular label{color:var(--night-ink)}
 .night .formular label small{color:var(--night-ink-2)}
 .night .formular input,.night .formular select,.night .formular textarea{background:var(--night-2);border-color:var(--night-line);color:var(--night-ink)}
-.night .formular input:focus,.night .formular select:focus,.night .formular textarea:focus{border-color:#8ea2ff}
+.night .formular input:focus,.night .formular select:focus,.night .formular textarea:focus{border-color:#6fd0de}
 .night .formular .fehler-t{color:#ff8a80}
 .night .formular .falsch input,.night .formular .falsch select{border-color:#ff8a80}
 .honig{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
