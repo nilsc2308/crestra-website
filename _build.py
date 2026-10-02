@@ -2,7 +2,7 @@
 """crestra – Seitengenerator. Aufruf: python3 _build.py  (schreibt alle .html-Dateien neu)"""
 import json, os
 
-V = "20261002m"
+V = "20261002n"
 BASE = "https://crestra.de/"
 HIER = os.path.dirname(os.path.abspath(__file__))
 
@@ -563,7 +563,7 @@ seite("datenschutz.html", "Datenschutzerklärung – crestra", "Wie crestra beim
 <h2>Anfrageformular</h2>
 <p>Wenn Sie das Formular nutzen, speichern wir Ihre Angaben (Firma, Name, E-Mail, Telefon, Website, Branche, gewünschter Stil, Nachricht) und die Seite, von der Sie die Anfrage geschickt haben, um Ihre Anfrage zu bearbeiten und Ihnen einen Entwurf zu schicken. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Anbahnung eines Vertrags). Die Daten werden in einer Datenbank des Anbieters Supabase gespeichert (Supabase Inc.; Serverstandort Irland, EU) und gelöscht, wenn sie für die Bearbeitung nicht mehr erforderlich sind und keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
 <h2>E-Mail</h2>
-<p>Schreiben Sie uns per E-Mail, verarbeiten wir Ihre Nachricht zur Beantwortung (Art. 6 Abs. 1 lit. b bzw. f DSGVO). [E-Mail-Anbieter für info@crestra.de eintragen]</p>
+<p>Schreiben Sie uns per E-Mail, verarbeiten wir Ihre Nachricht zur Beantwortung (Art. 6 Abs. 1 lit. b bzw. f DSGVO). Unser E-Mail-Postfach wird bei der STRATO GmbH (Otto-Ostrowski-Straße 7, 10249 Berlin) mit Servern in Deutschland geführt.</p>
 <h2>Ihre Rechte</h2>
 <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch gegen Verarbeitungen auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Wenden Sie sich dafür einfach an die oben genannte Adresse. Außerdem können Sie sich bei einer Datenschutz-Aufsichtsbehörde beschweren, zum Beispiel bei der Landesbeauftragten für Datenschutz und Informationsfreiheit Nordrhein-Westfalen.</p>
 <p class="klein">Stand: Oktober 2026</p>

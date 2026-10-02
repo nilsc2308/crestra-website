@@ -2,7 +2,7 @@
 
 | Punkt | Stand | Ergebnis |
 |---|---|---|
-| Datenschutzerklärung | ⚠️ fast | Vorhanden, passt zur Seite (GitHub Pages, jsDelivr, Supabase-Formular, keine Cookies). **Offen:** Anbieter des Postfachs info@crestra.de eintragen (Platzhalter im Abschnitt „E-Mail“); Supabase-Auftragsverarbeitungsvertrag (DPA) in den Supabase-Einstellungen annehmen; gegenlesen lassen. |
+| Datenschutzerklärung | ⚠️ fast | Vorhanden, passt zur Seite (GitHub Pages, jsDelivr, Supabase-Formular, keine Cookies). Postfach bei STRATO eingetragen. **Offen:** im STRATO-Kundenlogin den Auftragsverarbeitungsvertrag (AVV) abschließen; Supabase-Auftragsverarbeitungsvertrag (DPA) in den Supabase-Einstellungen annehmen; gegenlesen lassen. |
 | Impressum | ✅ | § 5 DDG: Name, crestra, Anschrift, Telefon, E-Mail, Verantwortlicher § 18 MStV. Keine USt-IdNr. vorhanden → keine Angabe nötig (falls später eine kommt: nachtragen). |
 | Cookie Consent | ✅ nicht nötig | Test: `document.cookie` auf allen 14 Seiten leer. Kein Tracking, Schriften lokal, keine Karten/Videos von Dritten. Nur sessionStorage für das Intro (technisch nötig). |
 | Mobile Version | ✅ | Alle Seiten in Chrome + Safari bei 390 px getestet: 0 Fehler, kein seitliches Verrutschen, Burger-Menü, Knopf unten. |
@@ -24,8 +24,8 @@
 | Indexierung bei Google | ⏳ nach Launch | Erst möglich, wenn die Seite online ist: Google Search Console → crestra.de bestätigen → sitemap.xml einreichen → nach einigen Tagen „site:crestra.de“ prüfen. |
 
 ## Vor dem Online-Gang noch offen
-- [ ] Postfach-Anbieter von info@crestra.de nennen (für die Datenschutzerklärung) und Postfach testen
-- [ ] Domain crestra.de: DNS wie bei euregiowash.de (A 185.199.108.153, CNAME www → nilsc2308.github.io)
+- [x] Postfach info@crestra.de bei STRATO (in Datenschutz eingetragen) – einmal Testmail schicken
+- [ ] Domain crestra.de (gehört Nils, bei STRATO): DNS wie bei euregiowash.de (A 185.199.108.153, CNAME www → nilsc2308.github.io)
 - [ ] Telefonnummer 0173 9128902 steht im Impressum (Pflicht: schneller Kontaktweg) und auf Kontakt/Über – auf Kontakt/Über entfernen, wenn du keine Anrufe willst
 - [ ] Nils' Ja zum Veröffentlichen auf GitHub Pages
 - [ ] Neue Anfragen sichtbar machen (Vorschlag: im crestra-Board)
