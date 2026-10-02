@@ -2,7 +2,7 @@
 """crestra – Seitengenerator. Aufruf: python3 _build.py  (schreibt alle .html-Dateien neu)"""
 import json, os
 
-V = "20261002n"
+V = "20261002o"
 BASE = "https://crestra.de/"
 HIER = os.path.dirname(os.path.abspath(__file__))
 
@@ -62,7 +62,7 @@ def kopf(titel, beschreibung, datei, aktiv=None, jsonld=None, noindex=False, sta
 <meta property="og:title" content="{titel}"><meta property="og:description" content="{beschreibung}">
 <meta property="og:url" content="{url}"><meta property="og:image" content="{BASE}og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="favicon.ico" sizes="32x32"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="manifest" href="site.webmanifest">
+<link rel="icon" href="favicon.ico?v={V}" sizes="32x32"><link rel="icon" href="favicon.svg?v={V}" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png?v={V}"><link rel="manifest" href="site.webmanifest?v={V}">
 <link rel="preload" href="fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css?v={V}">
 <script>document.documentElement.classList.add('js')</script>
