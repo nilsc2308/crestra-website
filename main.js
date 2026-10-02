@@ -201,6 +201,7 @@
         firma: f.firma.value.trim(), name: f.name.value.trim() || null, email: f.email.value.trim(),
         telefon: f.telefon.value.trim() || null, website: f.website.value.trim() || null,
         branche: f.branche.value || null, nachricht: f.nachricht.value.trim() || null,
+        stil: $$('input[name=stil]:checked', f).map(i => i.value).join(', ') || null,
         quelle: (location.pathname.split('/').pop() || 'index.html').slice(0, 120)
       };
       knopf.disabled = true; status.className = 'status'; status.textContent = 'Wird gesendet …';
@@ -210,7 +211,7 @@
         location.href = 'danke.html';
       } catch (err) {
         knopf.disabled = false;
-        const text = encodeURIComponent(`Firma: ${daten.firma}\nName: ${daten.name || ''}\nE-Mail: ${daten.email}\nTelefon: ${daten.telefon || ''}\nWebsite: ${daten.website || ''}\nBranche: ${daten.branche || ''}\n\n${daten.nachricht || ''}`);
+        const text = encodeURIComponent(`Firma: ${daten.firma}\nName: ${daten.name || ''}\nE-Mail: ${daten.email}\nTelefon: ${daten.telefon || ''}\nWebsite: ${daten.website || ''}\nBranche: ${daten.branche || ''}\nStil: ${daten.stil || ''}\n\n${daten.nachricht || ''}`);
         status.className = 'status fehler';
         status.innerHTML = `Das Senden hat gerade nicht geklappt. <a class="link" href="mailto:info@crestra.de?subject=${encodeURIComponent('Entwurf anfordern: ' + daten.firma)}&body=${text}">Stattdessen per E-Mail schicken</a>`;
       }

@@ -2,7 +2,7 @@
 """crestra – Seitengenerator. Aufruf: python3 _build.py  (schreibt alle .html-Dateien neu)"""
 import json, os
 
-V = "20261002j"
+V = "20261002k"
 BASE = "https://crestra.de/"
 HIER = os.path.dirname(os.path.abspath(__file__))
 
@@ -141,8 +141,13 @@ BRANCHE_OPTS = [("", "Bitte wählen"), ("handwerk", "Handwerk"), ("gastronomie",
                 ("handel", "Handel & Geschäfte"), ("dienstleistung", "Dienstleistung"), ("sonstiges", "Etwas anderes")]
 
 
+STILE = [("Modern im Apple-Stil", "mit Animationen beim Scrollen"), ("Onepager", "alles auf einer Seite"), ("Mehrere Seiten", "eine Seite je Leistung"),
+         ("Schlicht und ruhig", "klar, ohne viel Bewegung"), ("Sie entscheiden", "überraschen Sie mich")]
+
+
 def formular(kontext="seite"):
     opts = "".join(f'<option value="{v}">{t}</option>' for v, t in BRANCHE_OPTS)
+    stil_chips = "".join(f'<label class="chip"><input type="checkbox" name="stil" value="{t}"><span><strong>{t}</strong><small>{u}</small></span></label>' for t, u in STILE)
     return f'''<form class="formular" data-anfrage novalidate>
   <div class="f"><label for="f-firma-{kontext}">Firma</label><input id="f-firma-{kontext}" name="firma" autocomplete="organization" required maxlength="200"><span class="fehler-t">Bitte den Firmennamen angeben.</span></div>
   <div class="f"><label for="f-name-{kontext}">Ihr Name <small>(optional)</small></label><input id="f-name-{kontext}" name="name" autocomplete="name" maxlength="200"></div>
@@ -150,7 +155,10 @@ def formular(kontext="seite"):
   <div class="f"><label for="f-tel-{kontext}">Telefon <small>(optional)</small></label><input id="f-tel-{kontext}" name="telefon" type="tel" autocomplete="tel" maxlength="60"></div>
   <div class="f"><label for="f-web-{kontext}">Jetzige Website <small>(falls vorhanden)</small></label><input id="f-web-{kontext}" name="website" inputmode="url" placeholder="z. B. ihre-firma.de" maxlength="300"></div>
   <div class="f"><label for="f-branche-{kontext}">Branche</label><select id="f-branche-{kontext}" name="branche">{opts}</select></div>
-  <div class="f ganz"><label for="f-text-{kontext}">Was ist Ihnen wichtig? <small>(optional)</small></label><textarea id="f-text-{kontext}" name="nachricht" maxlength="4000" placeholder="z. B. mehr Anfragen über das Handy, Angebote automatisch anzeigen …"></textarea></div>
+  <fieldset class="f ganz stilwahl"><legend>Wie soll Ihre Website aussehen? <small>(mehrere möglich)</small></legend>
+    <div class="chips">{stil_chips}</div>
+  </fieldset>
+  <div class="f ganz"><label for="f-text-{kontext}">Weitere Wünsche <small>(optional)</small></label><textarea id="f-text-{kontext}" name="nachricht" maxlength="4000" placeholder="z. B. Farben, eine Website, die Ihnen gefällt, bestimmte Funktionen …"></textarea></div>
   <div class="honig" aria-hidden="true"><label for="f-hp-{kontext}">Bitte leer lassen</label><input id="f-hp-{kontext}" name="firmenwebsite2" tabindex="-1" autocomplete="off"></div>
   <p class="zustimmung ganz">Mit dem Absenden werden Ihre Angaben gespeichert, um Ihre Anfrage zu bearbeiten. Mehr dazu in der <a class="link" href="datenschutz.html">Datenschutzerklärung</a>.</p>
   <div class="ganz"><button class="btn" type="submit">Gratis-Entwurf anfordern {PFEIL}</button></div>
@@ -197,7 +205,7 @@ seite("index.html", "crestra – Websites, die Ihnen Aufträge bringen",
   <div class="einstieg-text">
     <h1 class="wr">Websites, die Ihnen <em class="a">Aufträge</em> bringen.</h1>
     <div>
-      <p class="lead auf"><strong style="color:var(--ink)">Lassen Sie sich von uns gratis einen Entwurf Ihrer neuen Website erstellen.</strong> Unverbindlich, per E-Mail – für Betriebe in ganz Deutschland, vom Handwerker bis zum Autohaus.</p>
+      <p class="lead auf"><strong style="color:var(--ink)">Lassen Sie sich von uns gratis einen Entwurf Ihrer neuen Website erstellen.</strong> Unverbindlich und komplett per E-Mail – für Betriebe in ganz Deutschland.</p>
       <div class="knoepfe auf" data-v=".1"><a class="btn" href="#anfrage">Gratis-Entwurf anfordern {PFEIL}</a><a class="btn zwei" href="leistung.html">Leistung &amp; Preis</a></div>
       <dl class="eckdaten auf" data-v=".2">
         <div><dt>Einmalig</dt><dd>250 €</dd></div>
@@ -555,7 +563,7 @@ seite("datenschutz.html", "Datenschutzerklärung – crestra", "Wie crestra beim
 <h2>Cookies und Tracking</h2>
 <p>Diese Website setzt keine Cookies und verwendet keine Analyse- oder Werbedienste. Im Speicher Ihres Browsers (Session Storage) wird lediglich vermerkt, dass die Begrüßungsanimation schon gezeigt wurde; dieser Eintrag wird beim Schließen des Tabs gelöscht und ist für die gewünschte Darstellung erforderlich (§ 25 Abs. 2 TDDDG).</p>
 <h2>Anfrageformular</h2>
-<p>Wenn Sie das Formular nutzen, speichern wir Ihre Angaben (Firma, Name, E-Mail, Telefon, Website, Branche, Nachricht) und die Seite, von der Sie die Anfrage geschickt haben, um Ihre Anfrage zu bearbeiten und Ihnen einen Entwurf zu schicken. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Anbahnung eines Vertrags). Die Daten werden in einer Datenbank des Anbieters Supabase gespeichert (Supabase Inc.; Serverstandort Irland, EU) und gelöscht, wenn sie für die Bearbeitung nicht mehr erforderlich sind und keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
+<p>Wenn Sie das Formular nutzen, speichern wir Ihre Angaben (Firma, Name, E-Mail, Telefon, Website, Branche, gewünschter Stil, Nachricht) und die Seite, von der Sie die Anfrage geschickt haben, um Ihre Anfrage zu bearbeiten und Ihnen einen Entwurf zu schicken. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Anbahnung eines Vertrags). Die Daten werden in einer Datenbank des Anbieters Supabase gespeichert (Supabase Inc.; Serverstandort Irland, EU) und gelöscht, wenn sie für die Bearbeitung nicht mehr erforderlich sind und keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
 <h2>E-Mail</h2>
 <p>Schreiben Sie uns per E-Mail, verarbeiten wir Ihre Nachricht zur Beantwortung (Art. 6 Abs. 1 lit. b bzw. f DSGVO). [E-Mail-Anbieter für info@crestra.de eintragen]</p>
 <h2>Ihre Rechte</h2>
