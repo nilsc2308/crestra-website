@@ -2,7 +2,7 @@
 """crestra – Seitengenerator. Aufruf: python3 _build.py  (schreibt alle .html-Dateien neu)"""
 import json, os
 
-V = "20261002d"
+V = "20261002e"
 BASE = "https://crestra.de/"
 HIER = os.path.dirname(os.path.abspath(__file__))
 
@@ -23,12 +23,12 @@ NAV = [("arbeiten.html", "Arbeiten"), ("leistung.html", "Leistung & Preis"), ("a
 ORG = {
     "@context": "https://schema.org", "@type": "ProfessionalService", "@id": BASE + "#crestra",
     "name": "crestra", "url": BASE, "image": BASE + "og.jpg", "logo": BASE + "apple-touch-icon.png",
-    "description": "Websites für Betriebe aus der Region Aachen: Erstellung, Hosting, Domain und Pflege für 250 € einmalig und 59 € im Monat.",
+    "description": "Websites für Betriebe in ganz Deutschland: Erstellung, Hosting, Domain und Pflege für 250 € einmalig und 59 € im Monat.",
     "founder": {"@type": "Person", "name": FIRMA["inhaber"]},
     "telephone": FIRMA["tel_link"], "email": FIRMA["mail"],
     "address": {"@type": "PostalAddress", "streetAddress": FIRMA["strasse"], "postalCode": FIRMA["plz"],
                 "addressLocality": FIRMA["ort"], "addressCountry": "DE"},
-    "areaServed": ["Stolberg", "Aachen", "StädteRegion Aachen", "Kreis Düren"],
+    "areaServed": {"@type": "Country", "name": "Deutschland"},
     "priceRange": "250 € einmalig, 59 € monatlich",
 }
 
@@ -99,7 +99,7 @@ def fuss(cta=True):
     <div class="oben">
       <div>
         {MARKE}
-        <p>Websites für Betriebe aus der Region Aachen.<br>Inhaber {FIRMA["inhaber"]}</p>
+        <p>Websites für Betriebe in ganz Deutschland.<br>Inhaber {FIRMA["inhaber"]}</p>
         <p>{FIRMA["strasse"]}, {FIRMA["plz"]} {FIRMA["ort"]}<br><a href="mailto:{FIRMA["mail"]}">{FIRMA["mail"]}</a><br><a href="tel:{FIRMA["tel_link"]}">{FIRMA["tel"]}</a></p>
       </div>
       <div><h4>Angebot</h4><ul><li><a href="leistung.html">Leistung &amp; Preis</a></li><li><a href="arbeiten.html">Arbeiten</a></li><li><a href="ablauf.html">Ablauf</a></li><li><a href="faq.html">Fragen</a></li></ul></div>
@@ -197,18 +197,18 @@ def seite(datei, titel, beschreibung, inhalt, aktiv=None, jsonld=None, noindex=F
 
 # =====================================================================  STARTSEITE
 REITER = [("solar", "Solar"), ("makler", "Makler"), ("auto", "Autohandel"), ("energie", "Energieberatung"),
-          ("b2b", "Energie für Firmen"), ("carwash", "Autopflege · Kunde"), ("aspendos", "Gastronomie · Kunde")]
+          ("b2b", "Energie für Firmen"), ("carwash", "Autopflege"), ("aspendos", "Gastronomie")]
 reiter_html = "".join(
     f'<button type="button" role="tab" id="tab-{k}" data-key="{k}" aria-selected="{"true" if i == 0 else "false"}" aria-controls="tafel">{t}</button>' for i, (k, t) in enumerate(REITER))
 
-seite("index.html", "crestra – Websites für Betriebe in der Region Aachen",
-      "Websites für Betriebe aus der Region Aachen, von Hand gebaut. 250 € einmalig, 59 € im Monat – Hosting, Domain und Pflege inklusive.",
+seite("index.html", "crestra – Websites, die Ihnen Aufträge bringen",
+      "Websites für Betriebe jeder Branche, von Hand gebaut. 250 € einmalig, 59 € im Monat – Hosting, Domain und Pflege inklusive.",
       f'''
 <section class="einstieg"><div class="wrap">
   <div class="einstieg-text">
     <h1 class="wr">Websites, die Ihnen <em class="a">Aufträge</em> bringen.</h1>
     <div>
-      <p class="lead auf">Für Betriebe aus der Region Aachen – vom Handwerker bis zum Autohaus. Sie sehen Ihren Entwurf, bevor Sie sich entscheiden.</p>
+      <p class="lead auf">Für Betriebe in ganz Deutschland – vom Handwerker bis zum Autohaus. Alles läuft per E-Mail, und Sie sehen Ihren Entwurf, bevor Sie sich entscheiden.</p>
       <div class="knoepfe auf" data-v=".1"><a class="btn" href="#anfrage">Kostenlosen Entwurf anfordern {PFEIL}</a><a class="btn zwei" href="#arbeiten">Arbeiten ansehen</a></div>
       <dl class="eckdaten auf" data-v=".2">
         <div><dt>Einmalig</dt><dd>250 €</dd></div>
@@ -218,13 +218,13 @@ seite("index.html", "crestra – Websites für Betriebe in der Region Aachen",
     </div>
   </div>
   <figure class="buehne" style="margin:0">
-    {browser("carwash", "euregiowash.de", "Startseite von Euregio Carwash in Stolberg", eager=True, sizes="(max-width:1300px) 92vw, 1180px")}
-    <figcaption>Euregio Carwash, Stolberg – live unter <a href="https://euregiowash.de/" target="_blank" rel="noopener">euregiowash.de</a></figcaption>
+    {browser("carwash", "euregiowash.de", "Startseite von Euregio Carwash", eager=True, sizes="(max-width:1300px) 92vw, 1180px")}
+    <figcaption>Euregio Carwash – live unter <a href="https://euregiowash.de/" target="_blank" rel="noopener">euregiowash.de</a></figcaption>
   </figure>
 </div></section>
 
 <section class="abschnitt night" id="fuer-wen"><div class="wrap">
-  <div class="kopfzeile"><h2 class="wr">Für jeden Betrieb, der <em class="a">vor Ort</em> gefunden werden will.</h2>
+  <div class="kopfzeile"><h2 class="wr">Für jeden Betrieb, der <em class="a">gefunden</em> werden will.</h2>
     <p class="lead auf">Jede Branche braucht etwas anderes. Darum gibt es bei uns keine Vorlage – sondern eine Seite, die zu Ihrem Betrieb passt.</p></div>
   <ul class="fuer">
     <li class="auf"><strong>Handwerk</strong><span>Anfragen mit Fotos vom Schaden, damit der erste Termin sitzt.</span></li>
@@ -240,8 +240,8 @@ seite("index.html", "crestra – Websites für Betriebe in der Region Aachen",
 </div></section>
 
 <section class="abschnitt" id="arbeiten"><div class="wrap">
-  <div class="kopfzeile"><h2 class="wr">Ein paar unserer <em class="a">Arbeiten</em></h2>
-    <p class="lead auf">Zwei Seiten sind schon bei Kunden live. Die übrigen sind Entwürfe für echte Betriebe aus der Region – hier ohne Namen und Logo.</p></div>
+  <div class="kopfzeile"><h2 class="wr">So sehen unsere <em class="a">Websites</em> aus</h2>
+    <p class="lead auf">Jede Seite wird von Hand für den jeweiligen Betrieb gebaut – vom Restaurant bis zum Autohaus. Eine Auswahl.</p></div>
   <div data-umschalter class="auf">
     <div class="reiter" role="tablist" aria-label="Arbeiten nach Branche">{reiter_html}</div>
     <div class="tafel" id="tafel" role="tabpanel"></div>
@@ -287,21 +287,21 @@ seite("index.html", "crestra – Websites für Betriebe in der Region Aachen",
 
 # =====================================================================  ARBEITEN
 WERKE = [
-    ("solar", "solar", "Photovoltaik-Betrieb", "Beispielentwurf – Name und Logo geändert", "ihr-betrieb.de",
+    ("solar", "solar", "Photovoltaik-Betrieb", "Gestaltungsbeispiel", "ihr-betrieb.de",
      "Hell und freundlich, geschrieben für Hausbesitzer. Jede Leistung bekommt eine eigene kurze Seite, der Anfrage-Knopf ist überall sichtbar.", "kontakt.html", "Entwurf für Ihren Betrieb anfordern"),
-    ("makler", "makler", "Immobilienmakler mit Hausverwaltung", "Beispielentwurf – Name und Logo geändert", "ihr-betrieb.de",
+    ("makler", "makler", "Immobilienmakler mit Hausverwaltung", "Gestaltungsbeispiel", "ihr-betrieb.de",
      "Zwei Wege gleich am Anfang: Käufer zu den Angeboten, Eigentümer zur Bewertung. Die Angebote kommen automatisch aus dem Immobilienportal.", "kontakt.html", "Entwurf für Ihren Betrieb anfordern"),
-    ("makler-angebote", "makler-angebote", "Makler: Angebotsseite", "Beispielentwurf – Name und Logo geändert", "ihr-betrieb.de/angebote",
+    ("makler-angebote", "makler-angebote", "Makler: Angebotsseite", "Gestaltungsbeispiel", "ihr-betrieb.de/angebote",
      "Die Objekte werden über das immowelt-Homepagemodul geladen. Stellt der Makler ein neues Haus ins Portal, erscheint es auch auf seiner Seite.", "kontakt.html", "Entwurf für Ihren Betrieb anfordern"),
-    ("auto-fahrzeuge", "auto-fahrzeuge", "Autohaus: Fahrzeugbestand", "Beispielentwurf – Name und Logo geändert", "ihr-betrieb.de/fahrzeuge",
+    ("auto-fahrzeuge", "auto-fahrzeuge", "Autohaus: Fahrzeugbestand", "Gestaltungsbeispiel", "ihr-betrieb.de/fahrzeuge",
      "Der Bestand wird aus mobile.de übernommen und lässt sich nach Marke, Preis, Kraftstoff und Aufbau filtern – jedes Fahrzeug mit eigener Seite.", "kontakt.html", "Entwurf für Ihren Betrieb anfordern"),
-    ("energie", "energie", "Energieberatung für Hausbesitzer", "Beispielentwurf – Name und Logo geändert", "ihr-betrieb.de",
+    ("energie", "energie", "Energieberatung für Hausbesitzer", "Gestaltungsbeispiel", "ihr-betrieb.de",
      "Förderung, Sanierungsfahrplan und Energieausweis verständlich erklärt, mit Förderrechner und Beispiel-Fahrplan zum Durchklicken.", "kontakt.html", "Entwurf für Ihren Betrieb anfordern"),
-    ("b2b", "b2b", "Energieberatung für Unternehmen", "Beispielentwurf – Name und Logo geändert", "ihr-betrieb.de",
+    ("b2b", "b2b", "Energieberatung für Unternehmen", "Gestaltungsbeispiel", "ihr-betrieb.de",
      "Für Geschäftsführer: kurz und sachlich, mit „Rechnung prüfen lassen“ als konkretem Einstieg.", "kontakt.html", "Entwurf für Ihren Betrieb anfordern"),
-    ("carwash", "carwash", "Euregio Carwash, Stolberg", "Kunde – live seit September 2026", "euregiowash.de",
+    ("carwash", "carwash", "Euregio Carwash", "Live unter euregiowash.de", "euregiowash.de",
      "Handwäsche und Fahrzeugpflege vom Kleinwagen bis zum Sattelzug, mit echten Videos aus der eigenen Halle.", "https://euregiowash.de/", "euregiowash.de ansehen"),
-    ("aspendos", "aspendos", "Aspendos Grill & Pizzeria, Stolberg-Breinig", "Kunde – live seit September 2026", "aspendos.info",
+    ("aspendos", "aspendos", "Aspendos Grill & Pizzeria", "Live unter aspendos.info", "aspendos.info",
      "Speisekarte mit allen Allergenen, Kegelbahn und Anfahrt. Von einem Baukasten auf eigene Technik umgezogen, die Adresse blieb gleich.", "https://aspendos.info/", "aspendos.info ansehen"),
 ]
 werke_html = ""
@@ -314,7 +314,7 @@ for d_id, m_id, titel, etikett, adr, text, link, ltext in WERKE:
 
 seite("arbeiten.html", "Arbeiten – Websites von crestra",
       "Websites von crestra für Handwerk, Gastronomie, Autohandel, Makler, Energie und mehr – live bei Kunden und als Entwurf.",
-      seitenkopf([("index.html", "Start"), (None, "Arbeiten")], "Arbeiten", "Zwei Seiten sind bei Kunden live. Die übrigen sind Entwürfe für echte Betriebe aus der Region. Die Namen und Logos sind ersetzt, weil diese Betriebe (noch) keine Kunden sind.")
+      seitenkopf([("index.html", "Start"), (None, "Arbeiten")], "Arbeiten", "Jede Seite ist von Hand gebaut und passt zu ihrem Betrieb. Bei den Gestaltungsbeispielen sind Namen und Logos Platzhalter.")
       + f'<section><div class="wrap">{werke_html}</div></section>' + cta_band())
 
 # =====================================================================  LEISTUNG & PREIS
@@ -378,14 +378,14 @@ seite("ablauf.html", "Ablauf – vom Entwurf zur fertigen Website | crestra",
 
 # =====================================================================  ÜBER
 seite("ueber-uns.html", "Über crestra – Nils Cremerius, Stolberg",
-      "crestra baut Websites für Betriebe aus der Region Aachen. Inhaber Nils Cremerius, Stolberg. Jede Seite von Hand gebaut, ohne Baukasten.",
+      "crestra baut Websites für Betriebe in ganz Deutschland. Inhaber Nils Cremerius, Stolberg. Jede Seite von Hand gebaut, ohne Baukasten.",
       seitenkopf([("index.html", "Start"), (None, "Über crestra")], "Ein Ansprechpartner. <em class=\"a\">Kein</em> Baukasten.",
-                 "crestra ist ein kleines Website-Studio aus Stolberg. Inhaber ist Nils Cremerius.")
+                 "crestra ist ein Website-Studio aus Stolberg bei Aachen – für Betriebe in ganz Deutschland. Inhaber ist Nils Cremerius.")
       + f'''
 <section class="abschnitt"><div class="wrap zwei-sp">
   <div><h2 class="wr">Warum es crestra gibt</h2></div>
   <div class="prose auf">
-    <p>Viele Betriebe in der Region machen hervorragende Arbeit – und haben eine Website, die das nicht zeigt. Oft wurde sie vor Jahren mit einem Baukasten gebaut, ist auf dem Handy kaum lesbar, und niemand fühlt sich mehr zuständig.</p>
+    <p>Viele Betriebe machen hervorragende Arbeit – und haben eine Website, die das nicht zeigt. Oft wurde sie vor Jahren mit einem Baukasten gebaut, ist auf dem Handy kaum lesbar, und niemand fühlt sich mehr zuständig.</p>
     <p>crestra baut jede Seite von Hand, passend zum Betrieb, und kümmert sich danach weiter darum. Sie haben einen festen Ansprechpartner, und Änderungen schicken Sie einfach per E-Mail.</p>
     <p>Weil wir den Entwurf vorher bauen, müssen Sie sich nicht auf Versprechen verlassen. Sie sehen das Ergebnis, bevor Sie sich entscheiden.</p>
   </div>
@@ -597,7 +597,7 @@ seite("impressum.html", "Impressum – crestra", "Impressum von crestra, Inhaber
 <h2>Haftung für Links</h2>
 <p>Diese Seite enthält Links zu Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für diese Inhalte ist der jeweilige Anbieter verantwortlich. Bei Bekanntwerden von Rechtsverletzungen entfernen wir solche Links umgehend.</p>
 <h2>Abbildungen</h2>
-<p>Die gezeigten Websites wurden von crestra gestaltet und gebaut. Bei den als „Beispielentwurf“ gekennzeichneten Arbeiten wurden Namen, Logos und Kontaktdaten ersetzt.</p>
+<p>Die gezeigten Websites wurden von crestra gestaltet und gebaut. Bei den als „Gestaltungsbeispiel“ gekennzeichneten Arbeiten sind Namen, Logos und Kontaktdaten Platzhalter.</p>
 </div></div></section>''', noindex=False, cta=False)
 
 seite("datenschutz.html", "Datenschutzerklärung – crestra", "Wie crestra beim Besuch dieser Website und bei Anfragen mit Ihren Daten umgeht.",

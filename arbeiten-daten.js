@@ -3,7 +3,7 @@ window.CRESTRA_ARBEITEN = {
   solar: {
     titel: 'Photovoltaik-Betrieb', adresse: 'ihr-betrieb.de', d: 'solar', m: 'solar',
     alt: 'Startseite eines Photovoltaik-Betriebs: helles Hausdach, weiße Textkarte mit „Ihr Dach kann mehr.“',
-    etikett: 'Beispielentwurf – Name und Logo geändert',
+    etikett: 'Gestaltungsbeispiel',
     text: 'Hell, freundlich und für Hausbesitzer geschrieben. Jede Leistung hat eine eigene Seite, die Technik steht dort, wo sie jemand sucht.',
     punkte: [
       ['Anfrage aus jeder Seite', 'Der Knopf „Anlage anfragen“ ist immer sichtbar, auch auf dem Handy.'],
@@ -15,7 +15,7 @@ window.CRESTRA_ARBEITEN = {
   makler: {
     titel: 'Immobilienmakler mit Hausverwaltung', adresse: 'ihr-betrieb.de', d: 'makler', m: 'makler',
     alt: 'Startseite eines Maklers: großes Foto eines verkauften Hauses, zwei Wege „Ich suche ein Zuhause“ und „Ich möchte verkaufen“',
-    etikett: 'Beispielentwurf – Name und Logo geändert',
+    etikett: 'Gestaltungsbeispiel',
     text: 'Zwei klare Wege gleich am Anfang: Käufer finden die Angebote, Eigentümer den Weg zur Bewertung.',
     punkte: [
       ['Angebote kommen automatisch', 'Die Objekte werden aus dem Immobilienportal übernommen, hier über das immowelt-Homepagemodul.'],
@@ -27,7 +27,7 @@ window.CRESTRA_ARBEITEN = {
   auto: {
     titel: 'Autohaus mit Werkstatt', adresse: 'ihr-betrieb.de/fahrzeuge', d: 'auto-fahrzeuge', m: 'auto',
     alt: 'Fahrzeug-Übersicht eines Autohauses mit Filtern nach Marke, Preis und Aufbau',
-    etikett: 'Beispielentwurf – Name und Logo geändert',
+    etikett: 'Gestaltungsbeispiel',
     text: 'Der komplette Bestand direkt auf der eigenen Seite, mit Filtern und eigener Seite je Fahrzeug.',
     punkte: [
       ['Bestand aus mobile.de', 'Fahrzeuge werden über die offizielle Schnittstelle übernommen, mit Ihren Händler-Zugangsdaten.'],
@@ -39,7 +39,7 @@ window.CRESTRA_ARBEITEN = {
   energie: {
     titel: 'Energieberatung für Hausbesitzer', adresse: 'ihr-betrieb.de', d: 'energie', m: 'energie',
     alt: 'Startseite einer Energieberatung: Hausdach mit Solarmodulen, Überschrift „Energieberatung vom Experten vor Ort.“',
-    etikett: 'Beispielentwurf – Name und Logo geändert',
+    etikett: 'Gestaltungsbeispiel',
     text: 'Förderung, Sanierungsfahrplan und Energieausweis verständlich erklärt – mit Werkzeugen statt Textwüsten.',
     punkte: [
       ['Förderrechner auf der Seite', 'Besucher sehen selbst, was ihr Vorhaben ungefähr bringen kann.'],
@@ -51,7 +51,7 @@ window.CRESTRA_ARBEITEN = {
   b2b: {
     titel: 'Energieberatung für Unternehmen', adresse: 'ihr-betrieb.de', d: 'b2b', m: 'b2b',
     alt: 'Startseite einer Energieberatung für Unternehmen: Industriehalle, Überschrift „Nach dem Personal kommt oft schon die Energie.“',
-    etikett: 'Beispielentwurf – Name und Logo geändert',
+    etikett: 'Gestaltungsbeispiel',
     text: 'Für Geschäftsführer geschrieben: kurz, sachlich, mit einem klaren Einstieg über die eigene Stromrechnung.',
     punkte: [
       ['„Rechnung prüfen lassen“', 'Ein konkreter erster Schritt statt einer allgemeinen Kontaktseite.'],
@@ -61,9 +61,9 @@ window.CRESTRA_ARBEITEN = {
     seite: 'kontakt.html', seiteText: 'Entwurf für Ihren Betrieb anfordern'
   },
   carwash: {
-    titel: 'Euregio Carwash, Stolberg', adresse: 'euregiowash.de', d: 'carwash', m: 'carwash',
+    titel: 'Euregio Carwash', adresse: 'euregiowash.de', d: 'carwash', m: 'carwash',
     alt: 'Startseite von Euregio Carwash: dunkle Seite mit Video aus der Waschhalle',
-    etikett: 'Kunde – live seit September 2026',
+    etikett: 'Live unter euregiowash.de',
     text: 'Handwäsche und Fahrzeugpflege vom Kleinwagen bis zum Sattelzug. Die Seite zeigt echte Aufnahmen aus der eigenen Halle.',
     punkte: [
       ['Echte Videos aus der Halle', 'Keine Symbolbilder – Kunden sehen, wie dort gearbeitet wird.'],
@@ -73,9 +73,9 @@ window.CRESTRA_ARBEITEN = {
     link: 'https://euregiowash.de/', linkText: 'euregiowash.de ansehen'
   },
   aspendos: {
-    titel: 'Aspendos Grill & Pizzeria, Stolberg-Breinig', adresse: 'aspendos.info', d: 'aspendos', m: 'aspendos',
+    titel: 'Aspendos Grill & Pizzeria', adresse: 'aspendos.info', d: 'aspendos', m: 'aspendos',
     alt: 'Startseite von Aspendos: Foto der Theke, Überschrift „Mediterrane Küche aus Stolberg.“',
-    etikett: 'Kunde – live seit September 2026',
+    etikett: 'Live unter aspendos.info',
     text: 'Speisekarte, Kegelbahn und Anfahrt. Umgezogen von einem Baukasten auf eigene, schnelle Technik.',
     punkte: [
       ['Speisekarte mit Allergenen', 'Zu jedem Gericht lassen sich die Angaben aufklappen.'],
