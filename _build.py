@@ -539,8 +539,6 @@ seite("impressum.html", "Impressum – crestra", "Impressum von crestra, Inhaber
 <p>{FIRMA["inhaber"]}<br>crestra<br>{FIRMA["strasse"]}<br>{FIRMA["plz"]} {FIRMA["ort"]}<br>Deutschland</p>
 <h2>Kontakt</h2>
 <p>Telefon: <a href="tel:{FIRMA["tel_link"]}">{FIRMA["tel"]}</a><br>E-Mail: <a href="mailto:{FIRMA["mail"]}">{FIRMA["mail"]}</a></p>
-<h2>Umsatzsteuer</h2>
-<p>[USt-IdNr. bzw. Hinweis auf Kleinunternehmerregelung – bitte ergänzen]</p>
 <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
 <p>{FIRMA["inhaber"]}, Anschrift wie oben</p>
 <h2>Verbraucherstreitbeilegung</h2>

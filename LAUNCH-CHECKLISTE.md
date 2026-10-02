@@ -1,7 +1,7 @@
 # crestra – Launch-Checkliste (Stand 2.10.2026)
 
 ## Offen – braucht Nils
-- [ ] **Impressum: Umsatzsteuer** – USt-IdNr. eintragen oder Hinweis „Kleinunternehmer nach § 19 UStG“ (Platzhalter steht in `_build.py`, Abschnitt Impressum).
+- [x] **Impressum: Umsatzsteuer** – keine USt-IdNr. vorhanden, daher keine Angabe nötig (§ 5 Abs. 1 Nr. 6 DDG). Falls später eine beantragt wird: ins Impressum aufnehmen.
 - [ ] **Domain crestra.de** – gehört sie dir schon? Alle Canonical-/OG-/Sitemap-Adressen zeigen auf https://crestra.de/. Danach DNS wie bei euregiowash.de (A 185.199.108.153, CNAME www → nilsc2308.github.io) und CNAME-Datei ins Repo.
 - [x] **E-Mail** – info@crestra.de (2.10.). Postfach muss eingerichtet sein und funktionieren; Anbieter in der Datenschutzerklärung eintragen (Platzhalter steht dort).
 - [ ] **Telefonnummer** – 0173 9128902 steht im Impressum (Pflicht: schneller Kontaktweg) und auf Kontakt/Über. Wenn du keine Anrufe willst: auf Kontakt/Über entfernen, im Impressum muss ein schneller Kontaktweg bleiben.
