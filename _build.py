@@ -2,7 +2,7 @@
 """crestra – Seitengenerator. Aufruf: python3 _build.py  (schreibt alle .html-Dateien neu)"""
 import json, os
 
-V = "20261002k"
+V = "20261002m"
 BASE = "https://crestra.de/"
 HIER = os.path.dirname(os.path.abspath(__file__))
 
@@ -62,7 +62,7 @@ def kopf(titel, beschreibung, datei, aktiv=None, jsonld=None, noindex=False, sta
 <meta property="og:title" content="{titel}"><meta property="og:description" content="{beschreibung}">
 <meta property="og:url" content="{url}"><meta property="og:image" content="{BASE}og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="favicon.ico" sizes="32x32"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="manifest" href="site.webmanifest">
 <link rel="preload" href="fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css?v={V}">
 <script>document.documentElement.classList.add('js')</script>
@@ -319,12 +319,12 @@ seite("ablauf.html", "Ablauf – vom Entwurf zur fertigen Website | crestra",
                  "Sie müssen sich nichts vorstellen und kein Konzept lesen. Sie sehen Ihre Seite, bevor Sie etwas unterschreiben.")
       + '''
 <section class="abschnitt"><div class="wrap"><ol class="schritte">
-  <li class="auf"><h3>Anfrage</h3><div><p>Sie schicken uns Ihre Firma und Ihre jetzige Website über das Formular oder per E-Mail. Ein Anruf ist nicht nötig.</p></div></li>
-  <li class="auf"><h3>Entwurf</h3><div><p>Wir bauen einen Entwurf Ihrer Startseite mit Ihren Inhalten und schicken Ihnen einen Link. Sie sehen ihn sich in Ruhe an, am Bildschirm und auf dem Handy.</p><p>Der Entwurf ist gratis und unverbindlich.</p></div></li>
-  <li class="auf"><h3>Entscheidung</h3><div><p>Gefällt Ihnen der Entwurf, schließen wir den Vertrag: 250 € einmalig, 59 € im Monat, 12 Monate Mindestlaufzeit. Gefällt er Ihnen nicht, ist nichts passiert.</p></div></li>
-  <li class="auf"><h3>Inhalte</h3><div><p>Wir bauen die übrigen Seiten. Von Ihnen brauchen wir Fotos (wenn vorhanden), Angaben fürs Impressum und Ihre Korrekturen an den Texten.</p></div></li>
-  <li class="auf"><h3>Livegang</h3><div><p>Wir richten Domain und Hosting ein und schalten die Seite frei. Eine bestehende Adresse lässt sich meist übernehmen.</p></div></li>
-  <li class="auf"><h3>Pflege</h3><div><p>Neue Preise, Öffnungszeiten, Fotos oder Neuigkeiten schicken Sie per E-Mail – wir setzen sie ein. Größere Erweiterungen besprechen wir vorher.</p></div></li>
+  <li class="auf"><h2>Anfrage</h2><div><p>Sie schicken uns Ihre Firma und Ihre jetzige Website über das Formular oder per E-Mail. Ein Anruf ist nicht nötig.</p></div></li>
+  <li class="auf"><h2>Entwurf</h2><div><p>Wir bauen einen Entwurf Ihrer Startseite mit Ihren Inhalten und schicken Ihnen einen Link. Sie sehen ihn sich in Ruhe an, am Bildschirm und auf dem Handy.</p><p>Der Entwurf ist gratis und unverbindlich.</p></div></li>
+  <li class="auf"><h2>Entscheidung</h2><div><p>Gefällt Ihnen der Entwurf, schließen wir den Vertrag: 250 € einmalig, 59 € im Monat, 12 Monate Mindestlaufzeit. Gefällt er Ihnen nicht, ist nichts passiert.</p></div></li>
+  <li class="auf"><h2>Inhalte</h2><div><p>Wir bauen die übrigen Seiten. Von Ihnen brauchen wir Fotos (wenn vorhanden), Angaben fürs Impressum und Ihre Korrekturen an den Texten.</p></div></li>
+  <li class="auf"><h2>Livegang</h2><div><p>Wir richten Domain und Hosting ein und schalten die Seite frei. Eine bestehende Adresse lässt sich meist übernehmen.</p></div></li>
+  <li class="auf"><h2>Pflege</h2><div><p>Neue Preise, Öffnungszeiten, Fotos oder Neuigkeiten schicken Sie per E-Mail – wir setzen sie ein. Größere Erweiterungen besprechen wir vorher.</p></div></li>
 </ol></div></section>''' + cta_band())
 
 # =====================================================================  ÜBER
@@ -390,7 +390,7 @@ ARTIKEL = [
      "Einmal bezahlen oder monatlich? Die Unterschiede, Vor- und Nachteile beider Modelle – ehrlich verglichen.",
      "Website kaufen oder mieten? Ein ehrlicher Vergleich | crestra"),
 ]
-liste = "".join(f'<li class="auf"><a href="{h}"><div><h3>{t}</h3><p>{b}</p></div>{PFEIL}</a></li>' for h, t, b, _ in ARTIKEL)
+liste = "".join(f'<li class="auf"><a href="{h}"><div><h2>{t}</h2><p>{b}</p></div>{PFEIL}</a></li>' for h, t, b, _ in ARTIKEL)
 seite("ratgeber.html", "Ratgeber – Websites für Betriebe | crestra",
       "Kurze Antworten für Inhaber: Handy-Fassung, Impressum und Datenschutz, Website kaufen oder mieten.",
       seitenkopf([("index.html", "Start"), (None, "Ratgeber")], "Ratgeber", "Kurze, ehrliche Antworten auf Fragen, die Inhaber zu ihrer Website haben.")
@@ -525,7 +525,7 @@ seite("danke.html", "Danke für Ihre Anfrage – crestra", "Ihre Anfrage ist ang
       + '<section class="abschnitt"><div class="wrap"><div class="knoepfe"><a class="btn" href="index.html">Zur Startseite</a><a class="btn zwei" href="ratgeber.html">Zum Ratgeber</a></div></div></section>',
       noindex=True, cta=False)
 
-seite("404.html", "Seite nicht gefunden – crestra", "Diese Seite gibt es nicht (mehr).",
+seite("404.html", "Seite nicht gefunden – crestra", "Diese Seite gibt es nicht (mehr). Zur Startseite von crestra, zu Leistung und Preis oder zum Gratis-Entwurf.",
       seitenkopf([("index.html", "Start"), (None, "404")], "Diese Seite gibt es <em class=\"a\">nicht.</em>",
                  "Vielleicht hat sich die Adresse geändert. Hier geht es weiter:")
       + '<section class="abschnitt"><div class="wrap"><div class="knoepfe"><a class="btn" href="index.html">Zur Startseite</a><a class="btn zwei" href="leistung.html">Leistung &amp; Preis</a><a class="btn zwei" href="kontakt.html">Kontakt</a></div></div></section>',
