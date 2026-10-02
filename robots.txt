@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://crestra.de/sitemap.xml

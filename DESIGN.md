@@ -1,0 +1,32 @@
+# crestra – Design-Kontrakt (2.10.2026)
+
+**Leitidee: Schaufenster.** crestra erzählt nicht, crestra zeigt. Der Inhalt der Seite sind die
+gebauten Websites selbst: echte Screenshots, in echten Größen, scharf (2-fache Auflösung).
+Keine Stock- oder KI-Bilder – das einzige „Bildmaterial“ ist die eigene Arbeit.
+
+**Zielgruppe:** Inhaber von Betrieben mit hohem Auftragswert (Solar, Makler, Autohandel,
+Energieberatung). Tonlage: ruhig, sachlich, per Sie, keine Agentur-Floskeln.
+
+**Signature: Handy-Probe.** Gepinnter Abschnitt (kurz, ~240vh): Eine Seite im Browserfenster
+schrumpft in ein Handy und wird dort winzig und unlesbar – dann wechselt der Bildschirm auf die
+echte Handy-Fassung. Erzählt das Kernargument (Kunden kommen übers Handy) mit echtem Material.
+
+**Typo:** Hanken Grotesk (variabel, 400–800) für alles, eng gesetzte Überschriften;
+Newsreader kursiv für genau ein Akzentwort pro Überschrift. Bewusst nicht: Fraunces, Inter,
+Instrument, Schibsted, Archivo, Manrope, Figtree, Saira, Plex, Barlow, Public Sans, Bricolage.
+
+**Farbe:** crestra-Blau #2446e8 (aus dem App-Icon), Tinte #111725, Papier #fff / #f4f5f7,
+Nacht #0e1320 für die zwei dunklen Abschnitte (Handy-Probe, Kontakt).
+
+**Navigation:** klassische Kopfzeile, weiß, Wortmarke links, 5 klare Punkte + „Branchen“-
+Ausklappmenü, blauer Knopf „Entwurf anfordern“ rechts. Handy: Burger, Vollbild-Menü.
+
+**Bausteine Startseite (6):** ruhiger Einstieg mit Gerät (echte Kundenseite), Handy-Probe,
+Branchen-Umschalter (Klick, kein Scroll), Rechner „Rechnet sich das?“, Preis als Liste,
+Anfrage-Formular direkt im Abschnitt.
+
+**Bewusst nicht:** Foto-Scroll-Through aus Standbildern (Ritter-Lehre 1.10.: überzeugt nicht),
+Pillen, Karten-Schatten, Eyebrows mit Nummern, Zähler, Bento, Laufschrift, Custom-Cursor.
+
+**Regler:** Dichte 4 (luftig, aber kompakte Abschnitte) · Kontrast 7 (klares Hell/Dunkel) ·
+Bewegung 6 (eine starke Szene, sonst ruhige Reveals – die Arbeiten sollen wirken, nicht die Effekte).
