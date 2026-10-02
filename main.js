@@ -145,51 +145,6 @@
     });
   } else $$('.auf').forEach(e => { e.style.opacity = 1; e.style.transform = 'none'; });
 
-  /* ---------- Einstieg: Bildschirm ---------- */
-  const buehne = $('.einstieg .buehne');
-  if (buehne && hatGsap && !ruhig) {
-    const br = $('.browser', buehne);
-    gsap.from(br, { y: 70, opacity: 0, duration: 1.3, ease: 'expo.out', delay: .35 });
-    gsap.fromTo(br, { scale: .94 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: buehne, start: 'top bottom', end: 'center center', scrub: .8 } });
-  }
-
-  /* ---------- Arbeiten-Umschalter ---------- */
-  const ARBEITEN = window.CRESTRA_ARBEITEN || {};
-  const bild = (id, art, alt) => art === 'd'
-    ? `<picture><source type="image/webp" srcset="img/arbeiten/${id}-d-1200.webp 1200w, img/arbeiten/${id}-d-2400.webp 2400w" sizes="(max-width:900px) 92vw, 760px"><img src="img/arbeiten/${id}-d-1200.webp" width="1200" height="750" alt="${alt}" loading="lazy" decoding="async"></picture>`
-    : '';
-  $$('[data-umschalter]').forEach(box => {
-    const knoepfe = $$('.reiter button', box), tafel = $('.tafel', box);
-    const zeige = (key, fokus) => {
-      const a = ARBEITEN[key]; if (!a) return;
-      knoepfe.forEach(k => { const an = k.dataset.key === key; k.setAttribute('aria-selected', an); k.tabIndex = an ? 0 : -1; if (an && fokus) k.focus(); });
-      const fuelle = () => {
-        tafel.innerHTML = `<div class="arbeit">
-          <div class="geraete"><div class="browser"><div class="leiste"><i><b></b><b></b><b></b></i><span>${a.adresse}</span></div>${bild(a.d, 'd', a.alt)}</div>
-</div>
-          <div class="info"><span class="etikett">${a.etikett}</span><h3>${a.titel}</h3><p class="klein" style="font-size:16px;color:var(--ink-2)">${a.text}</p>
-          <ul>${a.punkte.map(p => `<li><strong>${p[0]}</strong><span>${p[1]}</span></li>`).join('')}</ul>
-          ${a.link ? `<a class="link" href="${a.link}" target="_blank" rel="noopener">${a.linkText}</a>` : `<a class="link" href="${a.seite}">${a.seiteText}</a>`}</div></div>`;
-        tafel.setAttribute('aria-labelledby', 'tab-' + key);
-      };
-      if (ruhig || !tafel.innerHTML) { fuelle(); return; }
-      tafel.classList.add('wechselt');
-      setTimeout(() => {
-        fuelle(); tafel.classList.remove('wechselt');
-        if (hatGsap) { gsap.from($('.browser', tafel), { y: 26, duration: .7, ease: 'expo.out' }); }
-      }, 230);
-    };
-    knoepfe.forEach((k, i) => {
-      k.addEventListener('click', () => zeige(k.dataset.key));
-      k.addEventListener('keydown', e => {
-        const n = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-        if (!n) return; e.preventDefault();
-        zeige(knoepfe[(i + n + knoepfe.length) % knoepfe.length].dataset.key, true);
-      });
-    });
-    zeige(knoepfe[0].dataset.key);
-  });
-
   /* ---------- Rechner ---------- */
   const r = $('[data-rechner]');
   if (r) {
@@ -257,7 +212,7 @@
         knopf.disabled = false;
         const text = encodeURIComponent(`Firma: ${daten.firma}\nName: ${daten.name || ''}\nE-Mail: ${daten.email}\nTelefon: ${daten.telefon || ''}\nWebsite: ${daten.website || ''}\nBranche: ${daten.branche || ''}\n\n${daten.nachricht || ''}`);
         status.className = 'status fehler';
-        status.innerHTML = `Das Senden hat gerade nicht geklappt. <a class="link" href="mailto:nilsc2308@gmail.com?subject=${encodeURIComponent('Entwurf anfordern: ' + daten.firma)}&body=${text}">Stattdessen per E-Mail schicken</a>`;
+        status.innerHTML = `Das Senden hat gerade nicht geklappt. <a class="link" href="mailto:info@crestra.de?subject=${encodeURIComponent('Entwurf anfordern: ' + daten.firma)}&body=${text}">Stattdessen per E-Mail schicken</a>`;
       }
     });
   });

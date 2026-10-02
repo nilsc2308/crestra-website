@@ -2,13 +2,13 @@
 """crestra – Seitengenerator. Aufruf: python3 _build.py  (schreibt alle .html-Dateien neu)"""
 import json, os
 
-V = "20261002e"
+V = "20261002g"
 BASE = "https://crestra.de/"
 HIER = os.path.dirname(os.path.abspath(__file__))
 
 FIRMA = {
     "name": "crestra", "inhaber": "Nils Cremerius", "strasse": "Rotsch 31", "plz": "52223", "ort": "Stolberg",
-    "tel": "0173 9128902", "tel_link": "+491739128902", "mail": "nilsc2308@gmail.com",
+    "tel": "0173 9128902", "tel_link": "+491739128902", "mail": "info@crestra.de",
 }
 
 PFEIL = '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11m-4.5-4.5L15 10l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'
@@ -17,7 +17,7 @@ LOGO = ('<svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height=
         '<path d="M262.46 372.76Q232.64 372.76 211.22 363.73Q189.8 354.7 176.36 338.74Q162.92 322.78 156.62 302.2Q150.32 281.62 150.32 258.52Q150.32 235 156.62 213.79Q162.92 192.58 176.15 175.57Q189.38 158.56 210.59 148.9Q231.8 139.24 261.62 139.24Q296.9 139.24 318.53 152.47Q340.16 165.7 348.77 186.7Q357.38 207.7 353.6 232.06L294.8 236.68Q295.64 221.56 291.65 211.69Q287.66 201.82 279.68 196.99Q271.7 192.16 260.36 192.16Q250.28 192.16 242.51 195.94Q234.74 199.72 229.49 207.49Q224.24 215.26 221.51 227.02Q218.78 238.78 218.78 255.16Q218.78 276.16 223.61 291.28Q228.44 306.4 238.31 314.38Q248.18 322.36 263.3 322.36Q278.84 322.36 286.82 314.8Q294.8 307.24 297.32 295.69Q299.84 284.14 298.16 272.8L360.74 275.74Q363.26 294.22 359.06 311.65Q354.86 329.08 342.89 342.94Q330.92 356.8 310.97 364.78Q291.02 372.76 262.46 372.76Z" fill="#fff"/></svg>')
 MARKE = f'<a class="marke" href="index.html" aria-label="crestra – zur Startseite">{LOGO}<span>crestra</span></a>'
 
-NAV = [("arbeiten.html", "Arbeiten"), ("leistung.html", "Leistung & Preis"), ("ablauf.html", "Ablauf"),
+NAV = [("leistung.html", "Leistung & Preis"), ("ablauf.html", "Ablauf"),
        ("ueber-uns.html", "Über crestra"), ("faq.html", "Fragen"), ("ratgeber.html", "Ratgeber")]
 
 ORG = {
@@ -76,14 +76,14 @@ def kopf(titel, beschreibung, datei, aktiv=None, jsonld=None, noindex=False, sta
   <div class="wrap">
     {MARKE}
     <nav class="nav" aria-label="Hauptmenü">{nav_html(aktiv)}</nav>
-    <a class="btn" href="kontakt.html" data-magnet="aus">Entwurf anfordern</a>
+    <a class="btn" href="kontakt.html" data-magnet="aus">Gratis-Entwurf</a>
     <button class="burger" type="button" aria-expanded="false" aria-controls="menue" aria-label="Menü öffnen"><span></span><span></span><span></span></button>
   </div>
 </header>
 <div class="menue" id="menue" aria-hidden="true">
   <nav aria-label="Menü">{menue_html(aktiv)}</nav>
   <div class="menue-fuss">
-    <a class="btn voll" href="kontakt.html">Kostenlosen Entwurf anfordern {PFEIL}</a>
+    <a class="btn voll" href="kontakt.html">Gratis-Entwurf anfordern {PFEIL}</a>
     <p>{FIRMA["inhaber"]} · <a href="mailto:{FIRMA["mail"]}">{FIRMA["mail"]}</a></p>
   </div>
 </div>
@@ -92,7 +92,7 @@ def kopf(titel, beschreibung, datei, aktiv=None, jsonld=None, noindex=False, sta
 
 
 def fuss(cta=True):
-    kc = f'<div class="klebe-cta"><a class="btn" href="kontakt.html">Kostenlosen Entwurf anfordern {PFEIL}</a></div>' if cta else ""
+    kc = f'<div class="klebe-cta"><a class="btn" href="kontakt.html">Gratis-Entwurf anfordern {PFEIL}</a></div>' if cta else ""
     return f'''</main>
 <footer class="fuss">
   <div class="wrap">
@@ -102,7 +102,7 @@ def fuss(cta=True):
         <p>Websites für Betriebe in ganz Deutschland.<br>Inhaber {FIRMA["inhaber"]}</p>
         <p>{FIRMA["strasse"]}, {FIRMA["plz"]} {FIRMA["ort"]}<br><a href="mailto:{FIRMA["mail"]}">{FIRMA["mail"]}</a><br><a href="tel:{FIRMA["tel_link"]}">{FIRMA["tel"]}</a></p>
       </div>
-      <div><h4>Angebot</h4><ul><li><a href="leistung.html">Leistung &amp; Preis</a></li><li><a href="arbeiten.html">Arbeiten</a></li><li><a href="ablauf.html">Ablauf</a></li><li><a href="faq.html">Fragen</a></li></ul></div>
+      <div><h4>Angebot</h4><ul><li><a href="leistung.html">Leistung &amp; Preis</a></li><li><a href="ablauf.html">Ablauf</a></li><li><a href="faq.html">Fragen</a></li></ul></div>
       <div><h4>Mehr</h4><ul><li><a href="ueber-uns.html">Über crestra</a></li><li><a href="ratgeber.html">Ratgeber</a></li><li><a href="kontakt.html">Kontakt</a></li><li><a href="impressum.html">Impressum</a></li><li><a href="datenschutz.html">Datenschutz</a></li></ul></div>
     </div>
     <div class="unten"><span>© <span data-jahr>2026</span> crestra · {FIRMA["inhaber"]}</span><span>Ohne Cookies, ohne Tracking.</span></div>
@@ -112,7 +112,6 @@ def fuss(cta=True):
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js" defer></script>
-<script src="arbeiten-daten.js?v={V}" defer></script>
 <script src="main.js?v={V}" defer></script>
 <script>addEventListener('pageshow',()=>{{const v=document.querySelector('.vorhang');if(v&&sessionStorage.getItem('crestra-intro')){{v.classList.add('rein');requestAnimationFrame(()=>requestAnimationFrame(()=>{{v.classList.remove('rein');v.classList.add('raus')}}))}}}})</script>
 </body>
@@ -129,16 +128,11 @@ def seitenkopf(pfad, h1, lead):
 </div></section>'''
 
 
-def browser(id_d, adresse, alt, eager=False, sizes="(max-width:900px) 92vw, 760px"):
-    lad = 'fetchpriority="high"' if eager else 'loading="lazy"'
-    return f'''<div class="browser"><div class="leiste"><i><b></b><b></b><b></b></i><span>{adresse}</span></div><picture><source type="image/webp" srcset="img/arbeiten/{id_d}-d-1200.webp 1200w, img/arbeiten/{id_d}-d-2400.webp 2400w" sizes="{sizes}"><img src="img/arbeiten/{id_d}-d-1200.webp" width="1200" height="750" alt="{alt}" {lad} decoding="async"></picture></div>'''
-
-
-def cta_band(titel="Wie sähe Ihre neue Website aus?", text="Schicken Sie uns Ihre jetzige Adresse. Sie bekommen einen Entwurf Ihrer Startseite – kostenlos und unverbindlich.", branche=None):
+def cta_band(titel="Lassen Sie sich gratis einen Entwurf erstellen.", text="Schicken Sie uns Ihre Firma und Ihre jetzige Website. Wir erstellen Ihnen einen Entwurf Ihrer neuen Startseite – gratis und unverbindlich.", branche=None):
     q = f"?branche={branche}" if branche else ""
     return f'''<section class="abschnitt" style="padding-top:0"><div class="wrap"><div class="cta-band auf">
   <div><h2>{titel}</h2><p>{text}</p></div>
-  <a class="btn" href="kontakt.html{q}">Entwurf anfordern {PFEIL}</a>
+  <a class="btn" href="kontakt.html{q}">Gratis-Entwurf anfordern {PFEIL}</a>
 </div></div></section>'''
 
 
@@ -159,7 +153,7 @@ def formular(kontext="seite"):
   <div class="f ganz"><label for="f-text-{kontext}">Was ist Ihnen wichtig? <small>(optional)</small></label><textarea id="f-text-{kontext}" name="nachricht" maxlength="4000" placeholder="z. B. mehr Anfragen über das Handy, Angebote automatisch anzeigen …"></textarea></div>
   <div class="honig" aria-hidden="true"><label for="f-hp-{kontext}">Bitte leer lassen</label><input id="f-hp-{kontext}" name="firmenwebsite2" tabindex="-1" autocomplete="off"></div>
   <p class="zustimmung ganz">Mit dem Absenden werden Ihre Angaben gespeichert, um Ihre Anfrage zu bearbeiten. Mehr dazu in der <a class="link" href="datenschutz.html">Datenschutzerklärung</a>.</p>
-  <div class="ganz"><button class="btn" type="submit">Entwurf anfordern {PFEIL}</button></div>
+  <div class="ganz"><button class="btn" type="submit">Gratis-Entwurf anfordern {PFEIL}</button></div>
   <p class="status ganz" role="status" aria-live="polite"></p>
 </form>'''
 
@@ -196,11 +190,6 @@ def seite(datei, titel, beschreibung, inhalt, aktiv=None, jsonld=None, noindex=F
 
 
 # =====================================================================  STARTSEITE
-REITER = [("solar", "Solar"), ("makler", "Makler"), ("auto", "Autohandel"), ("energie", "Energieberatung"),
-          ("b2b", "Energie für Firmen"), ("carwash", "Autopflege"), ("aspendos", "Gastronomie")]
-reiter_html = "".join(
-    f'<button type="button" role="tab" id="tab-{k}" data-key="{k}" aria-selected="{"true" if i == 0 else "false"}" aria-controls="tafel">{t}</button>' for i, (k, t) in enumerate(REITER))
-
 seite("index.html", "crestra – Websites, die Ihnen Aufträge bringen",
       "Websites für Betriebe jeder Branche, von Hand gebaut. 250 € einmalig, 59 € im Monat – Hosting, Domain und Pflege inklusive.",
       f'''
@@ -208,8 +197,8 @@ seite("index.html", "crestra – Websites, die Ihnen Aufträge bringen",
   <div class="einstieg-text">
     <h1 class="wr">Websites, die Ihnen <em class="a">Aufträge</em> bringen.</h1>
     <div>
-      <p class="lead auf">Für Betriebe in ganz Deutschland – vom Handwerker bis zum Autohaus. Alles läuft per E-Mail, und Sie sehen Ihren Entwurf, bevor Sie sich entscheiden.</p>
-      <div class="knoepfe auf" data-v=".1"><a class="btn" href="#anfrage">Kostenlosen Entwurf anfordern {PFEIL}</a><a class="btn zwei" href="#arbeiten">Arbeiten ansehen</a></div>
+      <p class="lead auf"><strong style="color:var(--ink)">Lassen Sie sich von uns gratis einen Entwurf Ihrer neuen Website erstellen.</strong> Unverbindlich, per E-Mail – für Betriebe in ganz Deutschland, vom Handwerker bis zum Autohaus.</p>
+      <div class="knoepfe auf" data-v=".1"><a class="btn" href="#anfrage">Gratis-Entwurf anfordern {PFEIL}</a><a class="btn zwei" href="leistung.html">Leistung &amp; Preis</a></div>
       <dl class="eckdaten auf" data-v=".2">
         <div><dt>Einmalig</dt><dd>250 €</dd></div>
         <div><dt>Im Monat</dt><dd>59 €</dd></div>
@@ -217,10 +206,6 @@ seite("index.html", "crestra – Websites, die Ihnen Aufträge bringen",
       </dl>
     </div>
   </div>
-  <figure class="buehne" style="margin:0">
-    {browser("carwash", "euregiowash.de", "Startseite von Euregio Carwash", eager=True, sizes="(max-width:1300px) 92vw, 1180px")}
-    <figcaption>Euregio Carwash – live unter <a href="https://euregiowash.de/" target="_blank" rel="noopener">euregiowash.de</a></figcaption>
-  </figure>
 </div></section>
 
 <section class="abschnitt night" id="fuer-wen"><div class="wrap">
@@ -237,16 +222,6 @@ seite("index.html", "crestra – Websites, die Ihnen Aufträge bringen",
     <li class="auf"><strong>Dienstleister</strong><span>Vom Reinigungsdienst bis zur Kanzlei: klar sagen, was Sie tun.</span></li>
   </ul>
   <p class="auf" style="margin-top:40px;color:var(--night-ink-2)">Ihre Branche ist nicht dabei? <a class="link" href="#anfrage">Fragen Sie trotzdem.</a></p>
-</div></section>
-
-<section class="abschnitt" id="arbeiten"><div class="wrap">
-  <div class="kopfzeile"><h2 class="wr">So sehen unsere <em class="a">Websites</em> aus</h2>
-    <p class="lead auf">Jede Seite wird von Hand für den jeweiligen Betrieb gebaut – vom Restaurant bis zum Autohaus. Eine Auswahl.</p></div>
-  <div data-umschalter class="auf">
-    <div class="reiter" role="tablist" aria-label="Arbeiten nach Branche">{reiter_html}</div>
-    <div class="tafel" id="tafel" role="tabpanel"></div>
-  </div>
-  <p style="margin-top:48px"><a class="link" href="arbeiten.html">Alle Arbeiten im Überblick</a></p>
 </div></section>
 
 <section class="abschnitt grau" id="rechner"><div class="wrap">
@@ -273,8 +248,8 @@ seite("index.html", "crestra – Websites, die Ihnen Aufträge bringen",
 
 <section class="abschnitt night rund" id="anfrage"><div class="wrap anfrage">
   <div>
-    <h2 class="wr">Sehen Sie Ihre <em class="a">neue</em> Website, bevor Sie sich entscheiden.</h2>
-    <p class="lead auf" style="margin-top:22px">Schicken Sie uns Ihre Firma und Ihre jetzige Adresse. Wir bauen einen Entwurf Ihrer Startseite – kostenlos und unverbindlich.</p>
+    <h2 class="wr">Ihr Entwurf. <em class="a">Gratis</em> und unverbindlich.</h2>
+    <p class="lead auf" style="margin-top:22px">Schicken Sie uns Ihre Firma und – falls vorhanden – Ihre jetzige Website. Wir erstellen Ihnen gratis einen Entwurf Ihrer neuen Startseite. Gefällt er Ihnen nicht, kostet Sie das nichts.</p>
     <ul class="weiter auf">
       <li><strong>Anfrage</strong><span>Ein paar Angaben genügen. Kein Anruf nötig.</span></li>
       <li><strong>Entwurf</strong><span>Sie bekommen einen Link und sehen sich die Seite in Ruhe an, auch auf dem Handy.</span></li>
@@ -284,38 +259,6 @@ seite("index.html", "crestra – Websites, die Ihnen Aufträge bringen",
   <div class="auf">{formular("start")}</div>
 </div></section>
 ''', startseite=True)
-
-# =====================================================================  ARBEITEN
-WERKE = [
-    ("solar", "solar", "Photovoltaik-Betrieb", "Gestaltungsbeispiel", "ihr-betrieb.de",
-     "Hell und freundlich, geschrieben für Hausbesitzer. Jede Leistung bekommt eine eigene kurze Seite, der Anfrage-Knopf ist überall sichtbar.", "kontakt.html", "Entwurf für Ihren Betrieb anfordern"),
-    ("makler", "makler", "Immobilienmakler mit Hausverwaltung", "Gestaltungsbeispiel", "ihr-betrieb.de",
-     "Zwei Wege gleich am Anfang: Käufer zu den Angeboten, Eigentümer zur Bewertung. Die Angebote kommen automatisch aus dem Immobilienportal.", "kontakt.html", "Entwurf für Ihren Betrieb anfordern"),
-    ("makler-angebote", "makler-angebote", "Makler: Angebotsseite", "Gestaltungsbeispiel", "ihr-betrieb.de/angebote",
-     "Die Objekte werden über das immowelt-Homepagemodul geladen. Stellt der Makler ein neues Haus ins Portal, erscheint es auch auf seiner Seite.", "kontakt.html", "Entwurf für Ihren Betrieb anfordern"),
-    ("auto-fahrzeuge", "auto-fahrzeuge", "Autohaus: Fahrzeugbestand", "Gestaltungsbeispiel", "ihr-betrieb.de/fahrzeuge",
-     "Der Bestand wird aus mobile.de übernommen und lässt sich nach Marke, Preis, Kraftstoff und Aufbau filtern – jedes Fahrzeug mit eigener Seite.", "kontakt.html", "Entwurf für Ihren Betrieb anfordern"),
-    ("energie", "energie", "Energieberatung für Hausbesitzer", "Gestaltungsbeispiel", "ihr-betrieb.de",
-     "Förderung, Sanierungsfahrplan und Energieausweis verständlich erklärt, mit Förderrechner und Beispiel-Fahrplan zum Durchklicken.", "kontakt.html", "Entwurf für Ihren Betrieb anfordern"),
-    ("b2b", "b2b", "Energieberatung für Unternehmen", "Gestaltungsbeispiel", "ihr-betrieb.de",
-     "Für Geschäftsführer: kurz und sachlich, mit „Rechnung prüfen lassen“ als konkretem Einstieg.", "kontakt.html", "Entwurf für Ihren Betrieb anfordern"),
-    ("carwash", "carwash", "Euregio Carwash", "Live unter euregiowash.de", "euregiowash.de",
-     "Handwäsche und Fahrzeugpflege vom Kleinwagen bis zum Sattelzug, mit echten Videos aus der eigenen Halle.", "https://euregiowash.de/", "euregiowash.de ansehen"),
-    ("aspendos", "aspendos", "Aspendos Grill & Pizzeria", "Live unter aspendos.info", "aspendos.info",
-     "Speisekarte mit allen Allergenen, Kegelbahn und Anfahrt. Von einem Baukasten auf eigene Technik umgezogen, die Adresse blieb gleich.", "https://aspendos.info/", "aspendos.info ansehen"),
-]
-werke_html = ""
-for d_id, m_id, titel, etikett, adr, text, link, ltext in WERKE:
-    ext = ' target="_blank" rel="noopener"' if link.startswith("http") else ""
-    werke_html += f'''<article class="werk">
-  <div class="geraete auf">{browser(d_id, adr, "Startseite: " + titel)}</div>
-  <div class="auf"><span class="klein" style="font-weight:600;color:var(--ink-2);padding-left:12px;border-left:2.5px solid var(--blue)">{etikett}</span><h2>{titel}</h2><p style="color:var(--ink-2)">{text}</p><a class="link" href="{link}"{ext}>{ltext}</a></div>
-</article>'''
-
-seite("arbeiten.html", "Arbeiten – Websites von crestra",
-      "Websites von crestra für Handwerk, Gastronomie, Autohandel, Makler, Energie und mehr – live bei Kunden und als Entwurf.",
-      seitenkopf([("index.html", "Start"), (None, "Arbeiten")], "Arbeiten", "Jede Seite ist von Hand gebaut und passt zu ihrem Betrieb. Bei den Gestaltungsbeispielen sind Namen und Logos Platzhalter.")
-      + f'<section><div class="wrap">{werke_html}</div></section>' + cta_band())
 
 # =====================================================================  LEISTUNG & PREIS
 seite("leistung.html", "Leistung & Preis – crestra",
@@ -363,13 +306,13 @@ seite("leistung.html", "Leistung & Preis – crestra",
 
 # =====================================================================  ABLAUF
 seite("ablauf.html", "Ablauf – vom Entwurf zur fertigen Website | crestra",
-      "Erst sehen, dann entscheiden: Anfrage, kostenloser Entwurf, Entscheidung, Inhalte, Livegang und Pflege.",
+      "Erst sehen, dann entscheiden: Anfrage, Gratis-Entwurf, Entscheidung, Inhalte, Livegang und Pflege.",
       seitenkopf([("index.html", "Start"), (None, "Ablauf")], "Erst sehen, <em class=\"a\">dann</em> entscheiden.",
                  "Sie müssen sich nichts vorstellen und kein Konzept lesen. Sie sehen Ihre Seite, bevor Sie etwas unterschreiben.")
       + '''
 <section class="abschnitt"><div class="wrap"><ol class="schritte">
   <li class="auf"><h3>Anfrage</h3><div><p>Sie schicken uns Ihre Firma und Ihre jetzige Website über das Formular oder per E-Mail. Ein Anruf ist nicht nötig.</p></div></li>
-  <li class="auf"><h3>Entwurf</h3><div><p>Wir bauen einen Entwurf Ihrer Startseite mit Ihren Inhalten und schicken Ihnen einen Link. Sie sehen ihn sich in Ruhe an, am Bildschirm und auf dem Handy.</p><p>Der Entwurf ist kostenlos und unverbindlich.</p></div></li>
+  <li class="auf"><h3>Entwurf</h3><div><p>Wir bauen einen Entwurf Ihrer Startseite mit Ihren Inhalten und schicken Ihnen einen Link. Sie sehen ihn sich in Ruhe an, am Bildschirm und auf dem Handy.</p><p>Der Entwurf ist gratis und unverbindlich.</p></div></li>
   <li class="auf"><h3>Entscheidung</h3><div><p>Gefällt Ihnen der Entwurf, schließen wir den Vertrag: 250 € einmalig, 59 € im Monat, 12 Monate Mindestlaufzeit. Gefällt er Ihnen nicht, ist nichts passiert.</p></div></li>
   <li class="auf"><h3>Inhalte</h3><div><p>Wir bauen die übrigen Seiten. Von Ihnen brauchen wir Fotos (wenn vorhanden), Angaben fürs Impressum und Ihre Korrekturen an den Texten.</p></div></li>
   <li class="auf"><h3>Livegang</h3><div><p>Wir richten Domain und Hosting ein und schalten die Seite frei. Eine bestehende Adresse lässt sich meist übernehmen.</p></div></li>
@@ -408,7 +351,7 @@ seite("ueber-uns.html", "Über crestra – Nils Cremerius, Stolberg",
 FAQ = [
     ("Was kostet eine Website bei crestra?", "250 € einmalig und 59 € im Monat. Darin sind Erstellung, Hosting, Domain, die laufende Pflege im üblichen Umfang sowie Fehlerbehebung und Wartung enthalten."),
     ("Wie lange läuft der Vertrag?", "Die Mindestlaufzeit beträgt 12 Monate. Danach verlängert sich der Vertrag automatisch und ist monatlich kündbar."),
-    ("Kostet der Entwurf etwas?", "Nein. Der Entwurf Ihrer Startseite ist kostenlos und unverbindlich. Erst wenn er Ihnen gefällt, schließen wir einen Vertrag."),
+    ("Kostet der Entwurf etwas?", "Nein. Wir erstellen Ihnen den Entwurf Ihrer Startseite gratis und unverbindlich. Erst wenn er Ihnen gefällt, schließen wir einen Vertrag."),
     ("Was gehört zur Pflege?", "Änderungen an Texten, Preisen, Öffnungszeiten, Fotos und Neuigkeiten. Neue Seiten, neue Funktionen oder eine komplett neue Gestaltung gehören nicht dazu – das besprechen wir vorher und vereinbaren einen Preis."),
     ("Wem gehört die Domain?", "crestra registriert die Domain für die Dauer des Vertrags. Nach einer Kündigung wird sie auf Wunsch an Sie übertragen; die Kosten der Übertragung tragen Sie."),
     ("Was passiert nach einer Kündigung?", "Die Website geht offline. Die Domain können Sie übernehmen und mit einem anderen Anbieter weiter nutzen."),
@@ -551,10 +494,10 @@ artikel("ratgeber-kaufen-oder-mieten.html", '''
 ''')
 
 # =====================================================================  KONTAKT, DANKE, 404
-seite("kontakt.html", "Kostenlosen Entwurf anfordern – crestra",
-      "Schicken Sie uns Firma und jetzige Website. Sie bekommen einen kostenlosen, unverbindlichen Entwurf Ihrer Startseite.",
-      seitenkopf([("index.html", "Start"), (None, "Kontakt")], "Entwurf <em class=\"a\">anfordern</em>",
-                 "Ein paar Angaben genügen. Sie bekommen einen Link zu Ihrem Entwurf – kostenlos und unverbindlich.")
+seite("kontakt.html", "Gratis-Entwurf anfordern – crestra",
+      "Lassen Sie sich gratis einen Entwurf Ihrer neuen Website erstellen. Firma und jetzige Website schicken – unverbindlich.",
+      seitenkopf([("index.html", "Start"), (None, "Kontakt")], "Ihr <em class=\"a\">Gratis</em>-Entwurf",
+                 "Ein paar Angaben genügen. Wir erstellen Ihren Entwurf und schicken Ihnen den Link – gratis und unverbindlich.")
       + f'''
 <section class="abschnitt"><div class="wrap anfrage">
   <div>
@@ -571,13 +514,13 @@ seite("kontakt.html", "Kostenlosen Entwurf anfordern – crestra",
 seite("danke.html", "Danke für Ihre Anfrage – crestra", "Ihre Anfrage ist angekommen. Wir melden uns per E-Mail.",
       seitenkopf([("index.html", "Start"), (None, "Danke")], "Danke, Ihre Anfrage ist <em class=\"a\">angekommen.</em>",
                  "Wir sehen uns Ihre Angaben an und melden uns per E-Mail – mit dem Link zu Ihrem Entwurf oder mit einer Rückfrage.")
-      + '<section class="abschnitt"><div class="wrap"><div class="knoepfe"><a class="btn" href="arbeiten.html">Arbeiten ansehen</a><a class="btn zwei" href="index.html">Zur Startseite</a></div></div></section>',
+      + '<section class="abschnitt"><div class="wrap"><div class="knoepfe"><a class="btn" href="index.html">Zur Startseite</a><a class="btn zwei" href="ratgeber.html">Zum Ratgeber</a></div></div></section>',
       noindex=True, cta=False)
 
 seite("404.html", "Seite nicht gefunden – crestra", "Diese Seite gibt es nicht (mehr).",
       seitenkopf([("index.html", "Start"), (None, "404")], "Diese Seite gibt es <em class=\"a\">nicht.</em>",
                  "Vielleicht hat sich die Adresse geändert. Hier geht es weiter:")
-      + '<section class="abschnitt"><div class="wrap"><div class="knoepfe"><a class="btn" href="index.html">Zur Startseite</a><a class="btn zwei" href="arbeiten.html">Arbeiten</a><a class="btn zwei" href="kontakt.html">Kontakt</a></div></div></section>',
+      + '<section class="abschnitt"><div class="wrap"><div class="knoepfe"><a class="btn" href="index.html">Zur Startseite</a><a class="btn zwei" href="leistung.html">Leistung &amp; Preis</a><a class="btn zwei" href="kontakt.html">Kontakt</a></div></div></section>',
       noindex=True, cta=False)
 
 # =====================================================================  RECHTLICHES
@@ -596,8 +539,6 @@ seite("impressum.html", "Impressum – crestra", "Impressum von crestra, Inhaber
 <p>Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen. Unser Angebot richtet sich ausschließlich an Unternehmen.</p>
 <h2>Haftung für Links</h2>
 <p>Diese Seite enthält Links zu Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für diese Inhalte ist der jeweilige Anbieter verantwortlich. Bei Bekanntwerden von Rechtsverletzungen entfernen wir solche Links umgehend.</p>
-<h2>Abbildungen</h2>
-<p>Die gezeigten Websites wurden von crestra gestaltet und gebaut. Bei den als „Gestaltungsbeispiel“ gekennzeichneten Arbeiten sind Namen, Logos und Kontaktdaten Platzhalter.</p>
 </div></div></section>''', noindex=False, cta=False)
 
 seite("datenschutz.html", "Datenschutzerklärung – crestra", "Wie crestra beim Besuch dieser Website und bei Anfragen mit Ihren Daten umgeht.",
@@ -616,7 +557,7 @@ seite("datenschutz.html", "Datenschutzerklärung – crestra", "Wie crestra beim
 <h2>Anfrageformular</h2>
 <p>Wenn Sie das Formular nutzen, speichern wir Ihre Angaben (Firma, Name, E-Mail, Telefon, Website, Branche, Nachricht) und die Seite, von der Sie die Anfrage geschickt haben, um Ihre Anfrage zu bearbeiten und Ihnen einen Entwurf zu schicken. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Anbahnung eines Vertrags). Die Daten werden in einer Datenbank des Anbieters Supabase gespeichert (Supabase Inc.; Serverstandort Irland, EU) und gelöscht, wenn sie für die Bearbeitung nicht mehr erforderlich sind und keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
 <h2>E-Mail</h2>
-<p>Schreiben Sie uns per E-Mail, verarbeiten wir Ihre Nachricht zur Beantwortung (Art. 6 Abs. 1 lit. b bzw. f DSGVO). Unser E-Mail-Postfach wird bei Google (Gmail) geführt.</p>
+<p>Schreiben Sie uns per E-Mail, verarbeiten wir Ihre Nachricht zur Beantwortung (Art. 6 Abs. 1 lit. b bzw. f DSGVO). [E-Mail-Anbieter für info@crestra.de eintragen]</p>
 <h2>Ihre Rechte</h2>
 <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch gegen Verarbeitungen auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Wenden Sie sich dafür einfach an die oben genannte Adresse. Außerdem können Sie sich bei einer Datenschutz-Aufsichtsbehörde beschweren, zum Beispiel bei der Landesbeauftragten für Datenschutz und Informationsfreiheit Nordrhein-Westfalen.</p>
 <p class="klein">Stand: Oktober 2026</p>
