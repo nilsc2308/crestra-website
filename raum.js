@@ -86,7 +86,7 @@ const pMat = new THREE.ShaderMaterial({
       p.xy += normalize(d.xy + 1e-4) * smoothstep(1.5, 0., dl) * .7;
       vec4 mv = modelViewMatrix * vec4(p, 1.);
       gl_Position = projectionMatrix * mv;
-      float s = mix(mix(1.4, 4.0, z*z), 2.6, wC) * (1. + smoothstep(1.5, 0., dl));
+      float s = mix(mix(1.4, 4.0, z*z), 3.1, wC) * (1. + smoothstep(1.5, 0., dl));
       gl_PointSize = s * uPx * (14. / -mv.z);
       vA = smoothstep(42., 4., -mv.z) * mix(.35 + .65*z, 1.15, wC);
       vZ = z;
@@ -105,14 +105,13 @@ szene.add(punkte);
 
 /* ---------- Schriftzug „crestra|“ aus Partikeln ---------- */
 const bauWort = async () => {
-  try { await document.fonts.load('780 200px Hanken'); } catch (e) {}
+  try { await document.fonts.load('800 250px Hanken'); await document.fonts.ready; } catch (e) {}
   const W = 1400, H = 340, cnv = document.createElement('canvas'); cnv.width = W; cnv.height = H;
   const ctx = cnv.getContext('2d');
-  ctx.fillStyle = '#fff'; ctx.textBaseline = 'middle'; ctx.font = '780 260px Hanken, Helvetica, Arial, sans-serif';
-  ctx.letterSpacing = '4px';
-  const breite = ctx.measureText('crestra').width, x0 = (W - breite - 70) / 2;
+  ctx.fillStyle = '#fff'; ctx.textBaseline = 'middle'; ctx.font = '800 250px Hanken, Helvetica, Arial, sans-serif';
+  ctx.letterSpacing = '10px';
+  const breite = ctx.measureText('crestra').width, x0 = (W - breite) / 2;
   ctx.fillText('crestra', x0, H / 2 + 8);
-  ctx.fillRect(x0 + breite + 26, H / 2 - 92, 26, 190);
   const daten = ctx.getImageData(0, 0, W, H).data, voll = [];
   for (let y = 0; y < H; y += 2) for (let x = 0; x < W; x += 2) if (daten[(y * W + x) * 4 + 3] > 200) voll.push(x, y);
   if (!voll.length) return;
