@@ -55,10 +55,8 @@ for (let i = 0; i < N; i++) {
   // B: Wellenlandschaft
   const gx = zufall(-14, 14), gz = zufall(-14, 4);
   B[j] = gx; B[j + 2] = gz; B[j + 1] = -2.6 + Math.sin(gx * .55) * .6 + Math.cos(gz * .45 + gx * .2) * .7;
-  // C: c aus Partikeln (Torusoberfläche, groß)
-  const u = zufall(0, bogen) + (Math.PI * 2 - bogen) / 2, v = zufall(0, Math.PI * 2), R = 3.4, rr = 1.05 * Math.sqrt(Math.random());
-  if (i % 9 === 0) { C[j] = 5.8 + zufall(-.4, .4); C[j + 1] = zufall(-3.2, 3.2); C[j + 2] = zufall(-.4, .4) - 2; }
-  else { C[j] = (R + rr * Math.cos(v)) * Math.cos(u); C[j + 1] = (R + rr * Math.cos(v)) * Math.sin(u); C[j + 2] = rr * Math.sin(v) - 2; }
+  // C: wird nach dem Laden der Schrift mit dem Schriftzug „crestra|“ gefüllt (bauWort)
+  C[j] = A[j]; C[j + 1] = A[j + 1]; C[j + 2] = A[j + 2];
   // D: Tunnel
   const tw = zufall(0, Math.PI * 2), tr = zufall(4.2, 6.5);
   D[j] = Math.cos(tw) * tr; D[j + 1] = Math.sin(tw) * tr * .75; D[j + 2] = zufall(-40, 8);
@@ -85,12 +83,12 @@ const pMat = new THREE.ShaderMaterial({
       p.z += wD * mod(uFlug + uT*2., 48.) ; if (wD > .5 && p.z > 9.) p.z -= 48.;
       p += vec3(sin(uT*.5 + z*40.), cos(uT*.4 + z*31.), sin(uT*.3 + z*17.)) * (.12 + wA*.25);
       vec3 d = p - uMaus; float dl = length(d.xy);
-      p.xy += normalize(d.xy + 1e-4) * smoothstep(2.2, 0., dl) * 1.1;
+      p.xy += normalize(d.xy + 1e-4) * smoothstep(1.5, 0., dl) * .7;
       vec4 mv = modelViewMatrix * vec4(p, 1.);
       gl_Position = projectionMatrix * mv;
-      float s = mix(1.4, 4.0, z*z) * (1. + smoothstep(2.2, 0., dl));
+      float s = mix(1.4, 4.0, z*z) * (1. + smoothstep(1.5, 0., dl));
       gl_PointSize = s * uPx * (14. / -mv.z);
-      vA = smoothstep(42., 4., -mv.z) * (.35 + .65*z);
+      vA = smoothstep(42., 4., -mv.z) * (.35 + .65*z) * (1. + wC*.7);
       vZ = z;
     }`,
   fragmentShader: `
@@ -104,6 +102,31 @@ const pMat = new THREE.ShaderMaterial({
 });
 const punkte = new THREE.Points(geo, pMat);
 szene.add(punkte);
+
+/* ---------- Schriftzug „crestra|“ aus Partikeln ---------- */
+const bauWort = async () => {
+  try { await document.fonts.load('780 200px Hanken'); } catch (e) {}
+  const W = 1400, H = 340, cnv = document.createElement('canvas'); cnv.width = W; cnv.height = H;
+  const ctx = cnv.getContext('2d');
+  ctx.fillStyle = '#fff'; ctx.textBaseline = 'middle'; ctx.font = '780 260px Hanken, Helvetica, Arial, sans-serif';
+  ctx.letterSpacing = '-12px';
+  const breite = ctx.measureText('crestra').width, x0 = (W - breite - 70) / 2;
+  ctx.fillText('crestra', x0, H / 2 + 8);
+  ctx.fillRect(x0 + breite + 26, H / 2 - 92, 26, 190);
+  const daten = ctx.getImageData(0, 0, W, H).data, voll = [];
+  for (let y = 0; y < H; y += 2) for (let x = 0; x < W; x += 2) if (daten[(y * W + x) * 4 + 3] > 140) voll.push(x, y);
+  if (!voll.length) return;
+  const zielBreite = klein ? 5.6 : 12.5, mass = zielBreite / W;
+  const pc = geo.getAttribute('pC');
+  for (let i = 0; i < N; i++) {
+    const k = Math.floor(Math.random() * (voll.length / 2)) * 2;
+    pc.array[i * 3] = (voll[k] - W / 2 + Math.random() * 2) * mass;
+    pc.array[i * 3 + 1] = -(voll[k + 1] - H / 2 + Math.random() * 2) * mass + (klein ? .4 : .3);
+    pc.array[i * 3 + 2] = (Math.random() - .5) * .5 - 2;
+  }
+  pc.needsUpdate = true;
+};
+bauWort();
 
 /* ---------- Größe ---------- */
 const groesse = () => {
@@ -120,12 +143,13 @@ const ZIELE = {
   manifest: { stufe: 1, x: 4.6,  y: -1.2,z: -1,  s: .85,  dreh: .5 },
   spiel:    { stufe: 1, x: 5.4,  y: -3.1,z: -2,  s: .5,   dreh: .8 },
   weg:      { stufe: 3, x: 0,    y: 0,   z: -1.5,s: 1.0,  dreh: 2.2 },
-  wand:     { stufe: 2, x: 5.7,  y: -2.4,z: -1,  s: .65,  dreh: .6 },
+  marke:    { stufe: 2, x: 0,    y: -3.1,z: 0,   s: .45,  dreh: 1.4 },
+  wand:     { stufe: 1, x: 5.7,  y: -2.4,z: -1,  s: .65,  dreh: .6 },
   rechner:  { stufe: 0, x: 5.4,  y: -.6, z: -1.5,s: .75,  dreh: .4 },
-  preis:    { stufe: 2, x: 0,    y: 0,   z: -3,  s: 1.6,  dreh: .3 },
+  preis:    { stufe: 0, x: 0,    y: 0,   z: -3,  s: 1.6,  dreh: .3 },
   anfrage:  { stufe: 1, x: -5.0, y: -3.0,z: -2,  s: .55,  dreh: .5 },
 };
-const KLEIN = { held: { x: .2, y: 4.1, s: .82 }, manifest: { x: 3.1, y: 3.2, s: .6 }, spiel: { x: 3.1, y: -4, s: .55 }, weg: { x: 2.9, y: 3.6, s: .6 }, wand: { x: 3.1, y: 3.4, s: .6 }, rechner: { x: 3.1, y: -3.6, s: .55 }, preis: { x: 2.7, y: 3.9, s: .7 }, anfrage: { x: 3.1, y: 4.2, s: .55 } };
+const KLEIN = { held: { x: .2, y: 4.1, s: .82 }, manifest: { x: 3.1, y: 3.2, s: .6 }, spiel: { x: 3.1, y: -4, s: .55 }, weg: { x: 2.9, y: 3.6, s: .6 }, marke: { x: 0, y: -2.6, s: .4 }, wand: { x: 3.1, y: 3.4, s: .6 }, rechner: { x: 3.1, y: -3.6, s: .55 }, preis: { x: 2.7, y: 3.9, s: .7 }, anfrage: { x: 3.1, y: 4.2, s: .55 } };
 const ist = { stufe: 0, x: ZIELE.held.x, y: ZIELE.held.y, z: 0, s: ZIELE.held.s, dreh: .25 };
 if (klein) Object.assign(ist, KLEIN.held);
 const gehe = (name) => {
@@ -143,7 +167,8 @@ starte();
 
 /* ---------- Maus & Scrolltempo ---------- */
 let mx = 0, my = 0, zmx = 0, zmy = 0, tempo = 0, letzteY = scrollY;
-if (maus) addEventListener('pointermove', e => { zmx = e.clientX / innerWidth * 2 - 1; zmy = -(e.clientY / innerHeight * 2 - 1); });
+let bewegt = false;
+if (maus) addEventListener('pointermove', e => { bewegt = true; zmx = e.clientX / innerWidth * 2 - 1; zmy = -(e.clientY / innerHeight * 2 - 1); });
 const ray = new THREE.Raycaster(), ebene = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0), treffer = new THREE.Vector3();
 
 /* ---------- Schleife ---------- */
@@ -155,7 +180,7 @@ const bild = (now) => {
   const dy = scrollY - letzteY; letzteY = scrollY; tempo += (Math.min(60, Math.abs(dy)) - tempo) * .08;
   mx += (zmx - mx) * .06; my += (zmy - my) * .06;
   uni.uT.value = t; uni.uStufe.value = ist.stufe;
-  if (maus) { ray.setFromCamera({ x: mx, y: my }, kamera); ray.ray.intersectPlane(ebene, treffer); uni.uMaus.value.copy(treffer); }
+  if (maus && bewegt) { ray.setFromCamera({ x: mx, y: my }, kamera); ray.ray.intersectPlane(ebene, treffer); uni.uMaus.value.copy(treffer); }
   rot += (ist.dreh + tempo * .06) * .016;
   logo.position.set(ist.x + mx * .35, ist.y + my * .25 + Math.sin(t * .9) * .12, ist.z);
   logo.scale.setScalar(ist.s);

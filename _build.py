@@ -2,7 +2,7 @@
 """crestra – Seitengenerator. Aufruf: python3 _build.py  (schreibt alle .html-Dateien neu)"""
 import json, os
 
-V = "20261003p"
+V = "20261003t"
 BASE = "https://crestra.de/"
 HIER = os.path.dirname(os.path.abspath(__file__))
 
@@ -233,6 +233,8 @@ seite("index.html", "crestra – Websites, die Ihnen Aufträge bringen",
   </div>
   <p class="auf spiel-fuss">Das alles – und mehr – kann Ihre Website auch. <a class="link" href="#anfrage">Gratis-Entwurf anfordern</a></p>
 </div></section>
+
+<section class="marke-szene" data-szene="marke" aria-label="crestra"><p class="marke-unter auf">Websites, die bleiben.</p></section>
 
 <section class="weg" data-szene="weg" id="weg" aria-label="So bekommen Sie Ihren Gratis-Entwurf">
   <div class="weg-klebt">

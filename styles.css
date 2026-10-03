@@ -562,3 +562,7 @@ main{display:block}
   .seite-dunkel .held{justify-content:flex-end}
   .seite-dunkel .held-titel{max-width:none}
 }
+
+/* Bühne für den Partikel-Schriftzug */
+.marke-szene{position:relative;height:130vh;display:flex;align-items:flex-end;justify-content:center;padding-bottom:22vh}
+.marke-unter{margin:0;font-size:clamp(18px,1.6vw,22px);color:rgba(238,241,247,.7);letter-spacing:.01em}
