@@ -2,7 +2,7 @@
 """crestra – Seitengenerator. Aufruf: python3 _build.py  (schreibt alle .html-Dateien neu)"""
 import json, os
 
-V = "20261003k"
+V = "20261003p"
 BASE = "https://crestra.de/"
 HIER = os.path.dirname(os.path.abspath(__file__))
 
@@ -48,6 +48,9 @@ def kopf(titel, beschreibung, datei, aktiv=None, jsonld=None, noindex=False, sta
     ld = [ORG] + (jsonld or [])
     ld_html = "".join(f'<script type="application/ld+json">{json.dumps(x, ensure_ascii=False)}</script>' for x in ld)
     robots = '<meta name="robots" content="noindex">' if noindex else ""
+    importmap = '<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>\n' if startseite else ""
+    koerper = ' class="seite-dunkel"' if startseite else ""
+    raum = '<canvas class="raum" aria-hidden="true"></canvas>\n' if startseite else ""
     intro = f'<div class="intro" aria-hidden="true"><span class="marke">crestra<span class="cursor"></span></span></div>' if startseite else ""
     return f'''<!doctype html>
 <html lang="de">
@@ -66,10 +69,10 @@ def kopf(titel, beschreibung, datei, aktiv=None, jsonld=None, noindex=False, sta
 <link rel="preload" href="fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css?v={V}">
 <script>document.documentElement.classList.add('js')</script>
-{ld_html}
+{importmap}{ld_html}
 </head>
-<body>
-<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+<body{koerper}>
+{raum}<a class="skip" href="#inhalt">Zum Inhalt springen</a>
 {intro}<div class="fortschritt" aria-hidden="true"></div>
 <div class="vorhang" aria-hidden="true"></div>
 <header class="kopf">
@@ -91,7 +94,7 @@ def kopf(titel, beschreibung, datei, aktiv=None, jsonld=None, noindex=False, sta
 '''
 
 
-def fuss(cta=True):
+def fuss(cta=True, startseite=False):
     kc = f'<div class="klebe-cta"><a class="btn" href="kontakt.html">Gratis-Entwurf anfordern {PFEIL}</a></div>' if cta else ""
     return f'''</main>
 <footer class="fuss">
@@ -114,6 +117,7 @@ def fuss(cta=True):
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js" defer></script>
 <script src="welle.js?v={V}" defer></script>
 <script src="main.js?v={V}" defer></script>
+{'<script type="module" src="raum.js?v=' + V + '"></script>' if startseite else ""}
 <script>addEventListener('pageshow',()=>{{const v=document.querySelector('.vorhang');if(v&&sessionStorage.getItem('crestra-intro')){{v.classList.add('rein');requestAnimationFrame(()=>requestAnimationFrame(()=>{{v.classList.remove('rein');v.classList.add('raus')}}))}}}})</script>
 </body>
 </html>
@@ -195,15 +199,14 @@ SEITEN = {}
 def seite(datei, titel, beschreibung, inhalt, aktiv=None, jsonld=None, noindex=False, startseite=False, cta=True):
     assert len(titel) <= 65, (datei, len(titel), titel)
     assert len(beschreibung) <= 155, (datei, len(beschreibung))
-    SEITEN[datei] = kopf(titel, beschreibung, datei, aktiv or datei, jsonld, noindex, startseite) + inhalt + fuss(cta)
+    SEITEN[datei] = kopf(titel, beschreibung, datei, aktiv or datei, jsonld, noindex, startseite) + inhalt + fuss(cta, startseite)
 
 
 # =====================================================================  STARTSEITE
 seite("index.html", "crestra – Websites, die Ihnen Aufträge bringen",
       "Websites für Betriebe jeder Branche, von Hand gebaut. Gratis-Entwurf, dann 250 € einmalig und 59 € im Monat – Hosting, Domain und Pflege inklusive.",
       f'''
-<section class="held" data-dunkel>
-  <canvas class="welle" data-welle aria-hidden="true"></canvas>
+<section class="held" data-dunkel data-szene="held">
   <div class="held-licht" aria-hidden="true"></div>
   <div class="wrap held-inhalt">
     <h1 class="held-titel" data-buchstaben><span class="zl">Websites,</span> <span class="zl">die Ihnen</span> <span class="zl"><em class="a">Aufträge</em></span> <span class="zl">bringen.<span class="cursor" aria-hidden="true"></span></span></h1>
@@ -215,15 +218,11 @@ seite("index.html", "crestra – Websites, die Ihnen Aufträge bringen",
   <div class="held-fuss auf" data-v="1.2" aria-hidden="true"><span>250 € einmalig</span><span>59 € im Monat</span><span>Hosting, Domain, Pflege inklusive</span></div>
 </section>
 
-<section class="zoom" data-dunkel aria-label="Erst sehen, dann entscheiden">
-  <div class="zoom-klebt"><p class="zoom-text"><span class="zoom-worte">Erst sehen.<br>Dann entscheiden</span><span class="zoom-punkt" aria-hidden="true"></span><span class="sr">.</span></p><div class="zoom-blende" aria-hidden="true"></div></div>
-</section>
-
-<section class="manifest" aria-label="Worum es geht"><div class="wrap">
+<section class="manifest" data-szene="manifest" aria-label="Worum es geht"><div class="wrap">
   <p class="manifest-text" data-faerben>Die meisten Websites sehen aus wie alle anderen. Langsam, austauschbar, auf dem Handy kaum lesbar. Ihre Kunden entscheiden in Sekunden – und klicken weiter. <em class="a">Wir bauen Websites, bei denen sie bleiben.</em></p>
 </div></section>
 
-<section class="spiel" aria-label="Effekte zum Ausprobieren"><div class="wrap">
+<section class="spiel" data-szene="spiel" aria-label="Effekte zum Ausprobieren"><div class="wrap">
   <div class="kopfzeile"><h2 class="wr">Fühlen Sie <em class="a">mal.</em></h2>
     <p class="lead auf">Kleine Details, die Besucher länger bleiben lassen. Bewegen Sie die Maus darüber – oder tippen Sie auf dem Handy.</p></div>
   <div class="spiel-raster">
@@ -235,7 +234,7 @@ seite("index.html", "crestra – Websites, die Ihnen Aufträge bringen",
   <p class="auf spiel-fuss">Das alles – und mehr – kann Ihre Website auch. <a class="link" href="#anfrage">Gratis-Entwurf anfordern</a></p>
 </div></section>
 
-<section class="weg" id="weg" aria-label="So bekommen Sie Ihren Gratis-Entwurf">
+<section class="weg" data-szene="weg" id="weg" aria-label="So bekommen Sie Ihren Gratis-Entwurf">
   <div class="weg-klebt">
     <p class="weg-kopf wrap">So bekommen Sie Ihren Gratis-Entwurf</p>
     <div class="weg-spur">
@@ -248,7 +247,7 @@ seite("index.html", "crestra – Websites, die Ihnen Aufträge bringen",
   </div>
 </section>
 
-<section class="wand" data-dunkel id="fuer-wen"><div class="wrap">
+<section class="wand" data-dunkel data-szene="wand" id="fuer-wen"><div class="wrap">
   <p class="wand-kopf auf">Für jeden Betrieb, der <em class="a">gefunden</em> werden will.</p>
   <ul class="wand-liste">
     <li><strong>Handwerk</strong><span>Anfragen mit Fotos vom Schaden, damit der erste Termin sitzt.</span></li>
@@ -263,13 +262,13 @@ seite("index.html", "crestra – Websites, die Ihnen Aufträge bringen",
   <p class="wand-fuss auf">Ihre Branche ist nicht dabei? <a class="link" href="#anfrage">Fragen Sie trotzdem.</a></p>
 </div></section>
 
-<section class="abschnitt grau" id="rechner"><div class="wrap">
+<section class="abschnitt grau" data-szene="rechner" id="rechner"><div class="wrap">
   <div class="kopfzeile"><h2 class="wr">Rechnet sich <em class="a">das?</em></h2>
     <p class="lead auf">Tragen Sie ein, was ein Auftrag oder ein Kunde bei Ihnen wert ist. Dann sehen Sie, wie wenig die Website leisten muss, um sich zu bezahlen.</p></div>
   <div class="auf">{rechner()}</div>
 </div></section>
 
-<section class="preisbuehne" data-dunkel id="preis"><div class="wrap">
+<section class="preisbuehne" data-dunkel data-szene="preis" id="preis"><div class="wrap">
   <p class="preis-kopf auf">Ein Paket. <em class="a">Alles</em> drin.</p>
   <div class="preis-riesig">
     <div class="pr"><span class="pr-zahl" data-maske>250 €</span><span class="pr-text">einmalig</span></div>
@@ -284,8 +283,7 @@ seite("index.html", "crestra – Websites, die Ihnen Aufträge bringen",
   <p class="preis-klein auf">Mindestlaufzeit 12 Monate, danach monatlich kündbar. Nur für Unternehmen. <a class="link" href="leistung.html">Alle Details</a></p>
 </div></section>
 
-<section class="abschnitt night anfrage-held" data-dunkel id="anfrage">
-  <canvas class="welle welle-leise" data-welle aria-hidden="true"></canvas>
+<section class="abschnitt night anfrage-held" data-dunkel data-szene="anfrage" id="anfrage">
   <div class="wrap anfrage">
   <div>
     <h2 class="wr">Ihr Entwurf. <em class="a">Gratis</em> und unverbindlich.</h2>

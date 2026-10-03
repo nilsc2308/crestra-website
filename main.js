@@ -32,7 +32,7 @@
     if (kopf) kopf.classList.toggle('linie', y > 8);
     if (kopf) {
       const yk = 36;
-      kopf.classList.toggle('dunkel', dunkle.some(e => { if (!e.hasAttribute('data-dunkel') && !e.classList.contains('fuss')) return false; const r = e.getBoundingClientRect(); return r.top <= yk && r.bottom > yk; }));
+      kopf.classList.toggle('dunkel', d.body.classList.contains('seite-dunkel') || dunkle.some(e => { if (!e.hasAttribute('data-dunkel') && !e.classList.contains('fuss')) return false; const r = e.getBoundingClientRect(); return r.top <= yk && r.bottom > yk; }));
     }
     if (fort) fort.style.transform = `scaleX(${h > 0 ? Math.min(1, y / h) : 0})`;
     if (kc) {
@@ -173,9 +173,9 @@
     if (titel) { titel.setAttribute('aria-label', titel.textContent.replace(/\s+/g, ' ').trim()); zerlege(titel); [...titel.children].forEach(k => k.setAttribute('aria-hidden', 'true')); }
     if (hatGsap && !ruhig) {
       gsap.from(buchst, { yPercent: 110, rotate: 6, opacity: 0, duration: 1.15, ease: 'expo.out', stagger: .028, delay: .15 });
-      gsap.from($('.welle', held), { opacity: 0, scale: 1.08, duration: 2.2, ease: 'power2.out' });
+      if ($('.welle', held)) gsap.from($('.welle', held), { opacity: 0, scale: 1.08, duration: 2.2, ease: 'power2.out' });
       gsap.to($('.held-inhalt', held), { yPercent: -18, opacity: .15, ease: 'none', scrollTrigger: { trigger: held, start: 'top top', end: 'bottom top', scrub: .6 } });
-      gsap.to($('.welle', held), { scale: 1.18, ease: 'none', scrollTrigger: { trigger: held, start: 'top top', end: 'bottom top', scrub: .6 } });
+      if ($('.welle', held)) gsap.to($('.welle', held), { scale: 1.18, ease: 'none', scrollTrigger: { trigger: held, start: 'top top', end: 'bottom top', scrub: .6 } });
     }
     const licht = $('.held-licht', held);
     if (licht && matchMedia('(hover:hover)').matches) held.addEventListener('pointermove', e => {

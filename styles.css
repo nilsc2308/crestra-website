@@ -504,3 +504,61 @@ main{display:block}
 /* Überschrift reagiert */
 .held-titel .bs{transition:color .3s}
 .held-titel .bs.nah{color:#bdeef5}
+
+/* =================== 3D-Startseite (Noomo × Active Theory) =================== */
+.raum{position:fixed;inset:0;width:100vw;height:100vh;height:100lvh;z-index:0;display:block;pointer-events:none;background:#05080f}
+.seite-dunkel{background:#05080f;color:#eef1f7}
+.seite-dunkel main,.seite-dunkel .fuss{position:relative;z-index:1}
+.seite-dunkel .held,.seite-dunkel .manifest,.seite-dunkel .spiel,.seite-dunkel .weg,.seite-dunkel .wand,.seite-dunkel .preisbuehne,.seite-dunkel .anfrage-held,.seite-dunkel .abschnitt.grau{background:transparent}
+.seite-dunkel .preisbuehne::before{display:none}
+.seite-dunkel .fuss{background:rgba(5,8,15,.92)}
+/* Held: Text links, Logo rechts */
+.seite-dunkel .held{justify-content:center}
+.seite-dunkel .held-titel{max-width:9.5ch}
+/* Manifest dunkel */
+.seite-dunkel .manifest-text .mw{color:#fff}
+.seite-dunkel .manifest-text em.a{color:#6fd0de}
+.js .seite-dunkel .manifest-text .mw{opacity:.16}
+/* Spielwiese dunkel (Glas) */
+.seite-dunkel .spiel .wr,.seite-dunkel .spiel h2{color:#fff}
+.seite-dunkel .lead{color:rgba(238,241,247,.7)}
+.seite-dunkel .kachel{background:rgba(255,255,255,.035);border-color:rgba(255,255,255,.09);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.seite-dunkel .kachel-name{color:rgba(238,241,247,.6)}
+.seite-dunkel .scramble-wort{color:#fff}
+.seite-dunkel .scramble-wort .z{color:#6fd0de}
+.seite-dunkel .magnet-knopf{background:#fff;color:#05080f}
+.seite-dunkel .magnet-knopf:hover{background:#6fd0de}
+.seite-dunkel .kachel-dunkel{background:rgba(0,0,0,.35)}
+.seite-dunkel .spiel-fuss{color:rgba(238,241,247,.7)}
+.seite-dunkel .link{color:#6fd0de}
+/* Weg dunkel */
+.seite-dunkel .weg-kopf{color:rgba(238,241,247,.55)}
+.seite-dunkel .weg-wort{color:#fff;text-shadow:0 0 80px rgba(5,8,15,.8)}
+.seite-dunkel .weg-wort em.a{color:#6fd0de}
+.seite-dunkel .weg-tafel p{color:rgba(238,241,247,.72)}
+.seite-dunkel .weg-leiste{background:rgba(255,255,255,.12)}
+.seite-dunkel .weg-leiste i{background:#6fd0de}
+/* Rechner dunkel */
+.seite-dunkel #rechner h2{color:#fff}
+.seite-dunkel #rechner h2 em.a{color:#6fd0de}
+.seite-dunkel .feld-e label{color:#eef1f7}
+.seite-dunkel .feld-e .hilfe{color:rgba(238,241,247,.6)}
+.seite-dunkel .eingabe{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.16)}
+.seite-dunkel .eingabe:focus-within{border-color:#6fd0de}
+.seite-dunkel .eingabe input{color:#fff}
+.seite-dunkel .eingabe span{color:rgba(238,241,247,.6)}
+.seite-dunkel .vorlagen button{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.16);color:rgba(238,241,247,.85)}
+.seite-dunkel .vorlagen button:hover{border-color:#fff;color:#fff}
+.seite-dunkel .ergebnis{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.seite-dunkel .ergebnis .gross{color:#fff}
+.seite-dunkel .ergebnis .gross b{color:#6fd0de}
+.seite-dunkel .rechnung{border-color:rgba(255,255,255,.1)}
+.seite-dunkel .rechnung li{border-color:rgba(255,255,255,.1);color:rgba(238,241,247,.85)}
+.seite-dunkel .ergebnis .klein{color:rgba(238,241,247,.6)}
+/* Formular auf der 3D-Seite etwas abgesetzt */
+.seite-dunkel .anfrage-held .formular{background:rgba(5,8,15,.55);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:clamp(18px,2.5vw,32px);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.raum-an .seite-dunkel{}
+@media (max-width:760px){
+  .seite-dunkel .held{justify-content:flex-end}
+  .seite-dunkel .held-titel{max-width:none}
+}

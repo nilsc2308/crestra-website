@@ -48,3 +48,9 @@ Bewegung 6 (eine starke Szene, sonst ruhige Reveals – die Arbeiten sollen wirk
 - Leistung: Welle in 0,75-facher Auflösung, 4 statt 5 Rauschebenen, Verzerrung per sin statt Rauschen, max. ~45 Bilder/s → Messung 60 fps stehend und beim Scrollen (vorher 41). Lenis direkter (lerp .14), kein mix-blend-mode.
 - Neu: Überschrift weicht der Maus aus und leuchtet; „Erst sehen. Dann entscheiden.“ – Flug in den Punkt (scharfe Kreis-Blende per clip-path, füllt den Bildschirm weiß → Manifest); Spielwiese „Fühlen Sie mal.“ (Text würfelt, 3D-Karte mit Glanz, Magnet-Knopf, Lichtspur).
 - Gepinnt: Punkt-Flug (kurz, sticky) + waagerechte Fahrt.
+
+## 3.10.2026 abends – 3D (Nils wählte Noomo + Active Theory als Vorbild)
+- Startseite komplett dunkel; `raum.js` (Three.js 0.170 per Importmap/jsDelivr): fester Hintergrund mit 14 000 Partikeln (Handy 6 500), die je Abschnitt die Form wechseln (Wolke → Wellenlandschaft → Tunnel bei der waagerechten Fahrt → „c“ aus Partikeln bei Branchen/Preis), weichen der Maus aus.
+- Logo als 3D-Objekt: chromfarbenes, schillerndes „c“ + leuchtender, blinkender Cursor-Strich; fliegt je Abschnitt an eine neue Stelle (`ZIELE`/`KLEIN` in raum.js), dreht sich mit Maus und Scrolltempo.
+- Punkt-Flug entfernt (weißer Blitz passte nicht in die dunkle Seite). Abschnitte transparent, Rechner/Formular als Glas.
+- Leistung: echte GPU (M4) ~570 fps ohne Bildratenbegrenzung → reichlich Luft. Headless-Tests laufen mit Software-Grafik (SwiftShader) und sind dafür nicht aussagekräftig – für Messungen `perf-gpu.js` (headed) nutzen.
