@@ -2,7 +2,7 @@
 """crestra – Seitengenerator. Aufruf: python3 _build.py  (schreibt alle .html-Dateien neu)"""
 import json, os
 
-V = "20261002o"
+V = "20261003g"
 BASE = "https://crestra.de/"
 HIER = os.path.dirname(os.path.abspath(__file__))
 
@@ -112,6 +112,7 @@ def fuss(cta=True):
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js" defer></script>
+<script src="welle.js?v={V}" defer></script>
 <script src="main.js?v={V}" defer></script>
 <script>addEventListener('pageshow',()=>{{const v=document.querySelector('.vorhang');if(v&&sessionStorage.getItem('crestra-intro')){{v.classList.add('rein');requestAnimationFrame(()=>requestAnimationFrame(()=>{{v.classList.remove('rein');v.classList.add('raus')}}))}}}})</script>
 </body>
@@ -122,7 +123,7 @@ def fuss(cta=True):
 def seitenkopf(pfad, h1, lead):
     pf = ' <span aria-hidden="true">/</span> '.join(
         [f'<a href="{h}">{t}</a>' if h else f'<span aria-current="page">{t}</span>' for h, t in pfad])
-    return f'''<section class="seitenkopf"><div class="wrap">
+    return f'''<section class="seitenkopf" data-dunkel><canvas class="welle welle-leise" data-welle aria-hidden="true"></canvas><div class="wrap">
   <nav class="pfad" aria-label="Brotkrümel">{pf}</nav>
   <div class="reihe"><h1 class="wr">{h1}</h1><p class="lead auf">{lead}</p></div>
 </div></section>'''
@@ -199,37 +200,51 @@ def seite(datei, titel, beschreibung, inhalt, aktiv=None, jsonld=None, noindex=F
 
 # =====================================================================  STARTSEITE
 seite("index.html", "crestra – Websites, die Ihnen Aufträge bringen",
-      "Websites für Betriebe jeder Branche, von Hand gebaut. 250 € einmalig, 59 € im Monat – Hosting, Domain und Pflege inklusive.",
+      "Websites für Betriebe jeder Branche, von Hand gebaut. Gratis-Entwurf, dann 250 € einmalig und 59 € im Monat – Hosting, Domain und Pflege inklusive.",
       f'''
-<section class="einstieg"><div class="wrap">
-  <div class="einstieg-text">
-    <h1 class="wr">Websites, die Ihnen <em class="a">Aufträge</em> bringen.</h1>
-    <div>
-      <p class="lead auf"><strong style="color:var(--ink)">Lassen Sie sich von uns gratis einen Entwurf Ihrer neuen Website erstellen.</strong> Unverbindlich und komplett per E-Mail – für Betriebe in ganz Deutschland.</p>
-      <div class="knoepfe auf" data-v=".1"><a class="btn" href="#anfrage">Gratis-Entwurf anfordern {PFEIL}</a><a class="btn zwei" href="leistung.html">Leistung &amp; Preis</a></div>
-      <dl class="eckdaten auf" data-v=".2">
-        <div><dt>Einmalig</dt><dd>250 €</dd></div>
-        <div><dt>Im Monat</dt><dd>59 €</dd></div>
-        <div><dt>Inklusive</dt><dd>Hosting, Domain, Pflege</dd></div>
-      </dl>
+<section class="held" data-dunkel>
+  <canvas class="welle" data-welle aria-hidden="true"></canvas>
+  <div class="held-licht" aria-hidden="true"></div>
+  <div class="wrap held-inhalt">
+    <h1 class="held-titel" data-buchstaben><span class="zl">Websites,</span> <span class="zl">die Ihnen</span> <span class="zl"><em class="a">Aufträge</em></span> <span class="zl">bringen.<span class="cursor" aria-hidden="true"></span></span></h1>
+    <div class="held-unten">
+      <p class="held-lead auf" data-v=".9"><strong>Lassen Sie sich gratis einen Entwurf Ihrer neuen Website erstellen.</strong> Unverbindlich, komplett per E-Mail – für Betriebe in ganz Deutschland.</p>
+      <div class="knoepfe auf" data-v="1.05"><a class="btn hell" href="#anfrage">Gratis-Entwurf anfordern {PFEIL}</a><a class="btn zwei" href="#weg">So funktioniert's</a></div>
     </div>
   </div>
+  <div class="held-fuss auf" data-v="1.2" aria-hidden="true"><span>250 € einmalig</span><span>59 € im Monat</span><span>Hosting, Domain, Pflege inklusive</span></div>
+</section>
+
+<section class="manifest" aria-label="Worum es geht"><div class="wrap">
+  <p class="manifest-text" data-faerben>Die meisten Websites sehen aus wie alle anderen. Langsam, austauschbar, auf dem Handy kaum lesbar. Ihre Kunden entscheiden in Sekunden – und klicken weiter. <em class="a">Wir bauen Websites, bei denen sie bleiben.</em></p>
 </div></section>
 
-<section class="abschnitt night" id="fuer-wen"><div class="wrap">
-  <div class="kopfzeile"><h2 class="wr">Für jeden Betrieb, der <em class="a">gefunden</em> werden will.</h2>
-    <p class="lead auf">Jede Branche braucht etwas anderes. Darum gibt es bei uns keine Vorlage – sondern eine Seite, die zu Ihrem Betrieb passt.</p></div>
-  <ul class="fuer">
-    <li class="auf"><strong>Handwerk</strong><span>Anfragen mit Fotos vom Schaden, damit der erste Termin sitzt.</span></li>
-    <li class="auf"><strong>Gastronomie</strong><span>Speisekarte, Öffnungszeiten und Anruf mit einem Tipp.</span></li>
-    <li class="auf"><strong>Autohäuser und Werkstätten</strong><span>Fahrzeugbestand aus mobile.de direkt auf der eigenen Seite.</span></li>
-    <li class="auf"><strong>Makler und Hausverwaltungen</strong><span>Angebote automatisch aus dem Immobilienportal.</span></li>
-    <li class="auf"><strong>Solar, Energie und Haustechnik</strong><span>Leistungen verständlich erklärt, Anfrage mit den richtigen Angaben.</span></li>
-    <li class="auf"><strong>Praxen und Gesundheit</strong><span>Leistungen, Team und Sprechzeiten auf einen Blick.</span></li>
-    <li class="auf"><strong>Handel und Geschäfte</strong><span>Sortiment, Anfahrt und aktuelle Angebote.</span></li>
-    <li class="auf"><strong>Dienstleister</strong><span>Vom Reinigungsdienst bis zur Kanzlei: klar sagen, was Sie tun.</span></li>
+<section class="weg" id="weg" aria-label="So bekommen Sie Ihren Gratis-Entwurf">
+  <div class="weg-klebt">
+    <p class="weg-kopf wrap">So bekommen Sie Ihren Gratis-Entwurf</p>
+    <div class="weg-spur">
+      <article class="weg-tafel"><h2 class="weg-wort">Anfrage</h2><p>Sie schicken uns Ihre Firma und – falls vorhanden – Ihre jetzige Website. Ein paar Angaben genügen, kein Anruf nötig.</p></article>
+      <article class="weg-tafel"><h2 class="weg-wort">Entwurf</h2><p>Wir bauen Ihre neue Startseite. Gratis. Sie bekommen einen Link und sehen sie sich in Ruhe an – am Bildschirm und auf dem Handy.</p></article>
+      <article class="weg-tafel"><h2 class="weg-wort">Entscheidung</h2><p>Gefällt sie Ihnen, machen wir sie fertig. Gefällt sie Ihnen nicht, ist nichts passiert. Kein Risiko, kein Kleingedrucktes.</p></article>
+      <article class="weg-tafel"><h2 class="weg-wort"><em class="a">Live.</em></h2><p>Domain, Hosting, Pflege – wir kümmern uns. Änderungen schicken Sie einfach per E-Mail.</p><a class="btn" href="#anfrage">Jetzt Entwurf anfordern {PFEIL}</a></article>
+    </div>
+    <div class="weg-leiste" aria-hidden="true"><i></i></div>
+  </div>
+</section>
+
+<section class="wand" data-dunkel id="fuer-wen"><div class="wrap">
+  <p class="wand-kopf auf">Für jeden Betrieb, der <em class="a">gefunden</em> werden will.</p>
+  <ul class="wand-liste">
+    <li><strong>Handwerk</strong><span>Anfragen mit Fotos vom Schaden, damit der erste Termin sitzt.</span></li>
+    <li><strong>Gastronomie</strong><span>Speisekarte, Öffnungszeiten und Anruf mit einem Tipp.</span></li>
+    <li><strong>Autohäuser</strong><span>Fahrzeugbestand aus mobile.de direkt auf der eigenen Seite.</span></li>
+    <li><strong>Makler</strong><span>Angebote automatisch aus dem Immobilienportal.</span></li>
+    <li><strong>Solar &amp; Energie</strong><span>Leistungen verständlich erklärt, Anfrage mit den richtigen Angaben.</span></li>
+    <li><strong>Praxen</strong><span>Leistungen, Team und Sprechzeiten auf einen Blick.</span></li>
+    <li><strong>Handel</strong><span>Sortiment, Anfahrt und aktuelle Angebote.</span></li>
+    <li><strong>Dienstleister</strong><span>Vom Reinigungsdienst bis zur Kanzlei: klar sagen, was Sie tun.</span></li>
   </ul>
-  <p class="auf" style="margin-top:40px;color:var(--night-ink-2)">Ihre Branche ist nicht dabei? <a class="link" href="#anfrage">Fragen Sie trotzdem.</a></p>
+  <p class="wand-fuss auf">Ihre Branche ist nicht dabei? <a class="link" href="#anfrage">Fragen Sie trotzdem.</a></p>
 </div></section>
 
 <section class="abschnitt grau" id="rechner"><div class="wrap">
@@ -238,31 +253,27 @@ seite("index.html", "crestra – Websites, die Ihnen Aufträge bringen",
   <div class="auf">{rechner()}</div>
 </div></section>
 
-<section class="abschnitt" id="preis"><div class="wrap preis">
-  <div>
-    <h2 class="wr">Ein Paket. <em class="a">Alles</em> drin.</h2>
-    <div class="preiszahl auf"><div><strong>250 €</strong><span>einmalig</span></div><div><strong>59 €</strong><span>im Monat</span></div></div>
-    <p class="auf" style="color:var(--ink-2)">Mindestlaufzeit 12 Monate, danach monatlich kündbar. Nur für Unternehmen.</p>
-    <p class="auf"><a class="link" href="leistung.html">Was genau enthalten ist</a></p>
+<section class="preisbuehne" data-dunkel id="preis"><div class="wrap">
+  <p class="preis-kopf auf">Ein Paket. <em class="a">Alles</em> drin.</p>
+  <div class="preis-riesig">
+    <div class="pr"><span class="pr-zahl" data-maske>250 €</span><span class="pr-text">einmalig</span></div>
+    <div class="pr"><span class="pr-zahl" data-maske>59 €</span><span class="pr-text">im Monat</span></div>
   </div>
-  <ul class="drin">
-    <li class="auf">{HAKEN}<div><strong>Ihre Website, von Hand gebaut</strong><span>Kein Baukasten. Aufbau, Texte und Gestaltung passend zu Ihrem Betrieb.</span></div></li>
-    <li class="auf">{HAKEN}<div><strong>Hosting und Domain</strong><span>Wir kümmern uns um Adresse, Server und Sicherheitszertifikat.</span></div></li>
-    <li class="auf">{HAKEN}<div><strong>Laufende Pflege</strong><span>Neue Texte, Preise, Öffnungszeiten, Fotos und Neuigkeiten – Sie schicken sie, wir setzen sie ein.</span></div></li>
-    <li class="auf">{HAKEN}<div><strong>Fehlerbehebung und Wartung</strong><span>Wenn etwas nicht funktioniert, beheben wir es.</span></div></li>
-    <li class="auf">{HAKEN}<div><strong>Impressum und Datenschutz</strong><span>Rechtliche Seiten nach Ihren Angaben, ohne Cookie-Banner wo möglich.</span></div></li>
+  <ul class="preis-drin">
+    <li class="auf">{HAKEN}<div><strong>Ihre Website, von Hand gebaut</strong><span>Kein Baukasten. Aufbau und Gestaltung passend zu Ihrem Betrieb.</span></div></li>
+    <li class="auf">{HAKEN}<div><strong>Hosting und Domain</strong><span>Adresse, Server und Sicherheitszertifikat – erledigt.</span></div></li>
+    <li class="auf">{HAKEN}<div><strong>Laufende Pflege</strong><span>Texte, Preise, Öffnungszeiten, Fotos – Sie schicken, wir setzen ein.</span></div></li>
+    <li class="auf">{HAKEN}<div><strong>Wartung und Fehlerbehebung</strong><span>Wenn etwas nicht läuft, beheben wir es.</span></div></li>
   </ul>
+  <p class="preis-klein auf">Mindestlaufzeit 12 Monate, danach monatlich kündbar. Nur für Unternehmen. <a class="link" href="leistung.html">Alle Details</a></p>
 </div></section>
 
-<section class="abschnitt night rund" id="anfrage"><div class="wrap anfrage">
+<section class="abschnitt night anfrage-held" data-dunkel id="anfrage">
+  <canvas class="welle welle-leise" data-welle aria-hidden="true"></canvas>
+  <div class="wrap anfrage">
   <div>
     <h2 class="wr">Ihr Entwurf. <em class="a">Gratis</em> und unverbindlich.</h2>
     <p class="lead auf" style="margin-top:22px">Schicken Sie uns Ihre Firma und – falls vorhanden – Ihre jetzige Website. Wir erstellen Ihnen gratis einen Entwurf Ihrer neuen Startseite. Gefällt er Ihnen nicht, kostet Sie das nichts.</p>
-    <ul class="weiter auf">
-      <li><strong>Anfrage</strong><span>Ein paar Angaben genügen. Kein Anruf nötig.</span></li>
-      <li><strong>Entwurf</strong><span>Sie bekommen einen Link und sehen sich die Seite in Ruhe an, auch auf dem Handy.</span></li>
-      <li><strong>Entscheidung</strong><span>Gefällt sie Ihnen, machen wir sie fertig. Wenn nicht, ist nichts passiert.</span></li>
-    </ul>
   </div>
   <div class="auf">{formular("start")}</div>
 </div></section>

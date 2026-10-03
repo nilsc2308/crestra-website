@@ -34,3 +34,12 @@ Bewegung 6 (eine starke Szene, sonst ruhige Reveals – die Arbeiten sollen wirk
 ## Änderung 2.10.2026 abends (Nils' Feedback)
 - Alle Handy-Rahmen entfernt (Einstieg, Arbeiten, Handy-Probe-Szene, Ansichts-Umschalter): „sehen aus, als würde die Website nicht aufs Handy passen“. Lehre: keine Handy-Mockups mit verkleinerten Screenshots.
 - Keine Branchen-Einschränkung mehr: 4 Branchenseiten + Menü „Branchen“ gestrichen, neuer dunkler Abschnitt „Für jeden Betrieb, der vor Ort gefunden werden will“ (8 Branchen + „Fragen Sie trotzdem“). Einstieg: Text oben, großer Bildschirm-Screenshot darunter.
+
+## Fassung 3.10.2026 – „viel krasser“ (Nils: „wir verkaufen Websites, das muss alles noch viel krasser sein“)
+- Einstieg dunkel, bildschirmfüllend: live gerechnete WebGL2-Wellenlandschaft (`welle.js`, Höhenlinien in Türkis, folgt der Maus, pausiert außerhalb des Bildes), Überschrift Buchstabe für Buchstabe, blinkender Cursor aus dem Logo, Lichtkegel folgt der Maus.
+- Manifest-Text färbt sich beim Scrollen Wort für Wort.
+- „So bekommen Sie Ihren Gratis-Entwurf“: gepinnte waagerechte Fahrt mit Riesenwörtern (Anfrage → Entwurf → Entscheidung → Live.), Fortschrittslinie; Handy: senkrecht.
+- Branchen-Wand: Riesenwörter leuchten nacheinander auf.
+- Preis-Bühne dunkel mit Zahlen aus der Maske (Verlauf Weiß→Türkis).
+- Anfrage + alle Unterseiten-Köpfe mit leiser Welle im Hintergrund. Kopfzeile schaltet über dunklen Abschnitten auf hell.
+- Gepinnt nur die waagerechte Fahrt (Warin-Regel).

@@ -26,9 +26,14 @@
   /* ---------- Kopfzeile, Fortschritt, Sticky-CTA ---------- */
   const kopf = $('.kopf'), fort = $('.fortschritt'), kc = $('.klebe-cta');
   const ziel = $('#anfrage') || $('.fuss');
+  const dunkle = $$('[data-dunkel], .fuss');
   const beimScrollen = () => {
     const y = scrollY, h = d.documentElement.scrollHeight - innerHeight;
     if (kopf) kopf.classList.toggle('linie', y > 8);
+    if (kopf) {
+      const yk = 36;
+      kopf.classList.toggle('dunkel', dunkle.some(e => { const r = e.getBoundingClientRect(); return r.top <= yk && r.bottom > yk; }));
+    }
     if (fort) fort.style.transform = `scaleX(${h > 0 ? Math.min(1, y / h) : 0})`;
     if (kc) {
       const zielTop = ziel ? ziel.getBoundingClientRect().top : Infinity;
@@ -144,6 +149,80 @@
         scrollTrigger: sofort ? null : { trigger: e, start: 'top 90%' } });
     });
   } else $$('.auf').forEach(e => { e.style.opacity = 1; e.style.transform = 'none'; });
+
+
+  /* ---------- Held: Buchstaben, Licht, Ausfahrt ---------- */
+  const held = $('.held');
+  if (held) {
+    const titel = $('[data-buchstaben]', held), buchst = [];
+    const zerlege = (knoten) => {
+      [...knoten.childNodes].forEach(c => {
+        if (c.nodeType === 3) {
+          const frag = d.createDocumentFragment();
+          c.nodeValue.split(/(\s+)/).forEach(wort => {
+            if (!wort) return;
+            if (/^\s+$/.test(wort)) { frag.appendChild(d.createTextNode(' ')); return; }
+            const wo = d.createElement('span'); wo.className = 'wo';
+            [...wort].forEach(z => { const b = d.createElement('span'); b.className = 'bs'; b.textContent = z; wo.appendChild(b); buchst.push(b); });
+            frag.appendChild(wo);
+          });
+          c.replaceWith(frag);
+        } else if (c.nodeType === 1 && !c.classList.contains('cursor')) zerlege(c);
+      });
+    };
+    if (titel) { titel.setAttribute('aria-label', titel.textContent.replace(/\s+/g, ' ').trim()); zerlege(titel); [...titel.children].forEach(k => k.setAttribute('aria-hidden', 'true')); }
+    if (hatGsap && !ruhig) {
+      gsap.from(buchst, { yPercent: 110, rotate: 6, opacity: 0, duration: 1.15, ease: 'expo.out', stagger: .028, delay: .15 });
+      gsap.from($('.welle', held), { opacity: 0, scale: 1.08, duration: 2.2, ease: 'power2.out' });
+      gsap.to($('.held-inhalt', held), { yPercent: -18, opacity: .15, ease: 'none', scrollTrigger: { trigger: held, start: 'top top', end: 'bottom top', scrub: .6 } });
+      gsap.to($('.welle', held), { scale: 1.18, ease: 'none', scrollTrigger: { trigger: held, start: 'top top', end: 'bottom top', scrub: .6 } });
+    }
+    const licht = $('.held-licht', held);
+    if (licht && matchMedia('(hover:hover)').matches) held.addEventListener('pointermove', e => {
+      const r = held.getBoundingClientRect();
+      licht.style.setProperty('--lx', (e.clientX - r.left) + 'px'); licht.style.setProperty('--ly', (e.clientY - r.top) + 'px');
+    });
+  }
+
+  /* ---------- Manifest: Wort für Wort einfärben ---------- */
+  $$('[data-faerben]').forEach(t => {
+    const woerter = [];
+    const geh = (n) => [...n.childNodes].forEach(c => {
+      if (c.nodeType === 3) {
+        const frag = d.createDocumentFragment();
+        c.nodeValue.split(/(\s+)/).forEach(w => { if (!w) return; if (/^\s+$/.test(w)) { frag.appendChild(d.createTextNode(w)); return; } const s = d.createElement('span'); s.className = 'mw'; s.textContent = w; frag.appendChild(s); woerter.push(s); });
+        c.replaceWith(frag);
+      } else if (c.nodeType === 1) geh(c);
+    });
+    geh(t);
+    if (!hatGsap || ruhig) { woerter.forEach(w => { w.style.opacity = 1; }); return; }
+    gsap.to(woerter, { opacity: 1, ease: 'none', stagger: .1, scrollTrigger: { trigger: t, start: 'top 78%', end: 'bottom 42%', scrub: .5 } });
+  });
+
+  /* ---------- Weg: waagerechte Fahrt ---------- */
+  const weg = $('.weg');
+  if (weg && hatGsap && !ruhig) {
+    const mmw = gsap.matchMedia();
+    mmw.add('(min-width: 761px)', () => {
+      const spur = $('.weg-spur', weg), leiste = $('.weg-leiste i', weg);
+      const weite = () => Math.max(0, spur.scrollWidth - innerWidth);
+      const tl = gsap.timeline({ scrollTrigger: { trigger: weg, start: 'top top', end: () => '+=' + weite(), pin: $('.weg-klebt', weg), scrub: .8, invalidateOnRefresh: true, anticipatePin: 1 } });
+      tl.to(spur, { x: () => -weite(), ease: 'none' }, 0).to(leiste, { scaleX: 1, ease: 'none' }, 0);
+      $$('.weg-wort', weg).forEach((w, i) => { if (i) gsap.from(w, { opacity: .15, x: 80, ease: 'none', scrollTrigger: { trigger: w, containerAnimation: tl, start: 'left 95%', end: 'left 45%', scrub: true } }); });
+      return () => tl.scrollTrigger && tl.scrollTrigger.kill();
+    });
+  }
+
+  /* ---------- Wand: Branchen leuchten auf ---------- */
+  $$('.wand-liste li').forEach(li => {
+    if (!hatGsap || ruhig) { li.classList.add('an'); return; }
+    ScrollTrigger.create({ trigger: li, start: 'top 66%', end: 'bottom 34%', toggleClass: 'an' });
+  });
+
+  /* ---------- Preis: Zahlen aus der Maske ---------- */
+  if (hatGsap && !ruhig) $$('[data-maske]').forEach((z, i) => {
+    gsap.fromTo(z, { clipPath: 'inset(0% 0% 100% 0%)', yPercent: 30 }, { clipPath: 'inset(0% 0% -10% 0%)', yPercent: 0, duration: 1.4, delay: i * .12, ease: 'expo.out', scrollTrigger: { trigger: z, start: 'top 88%' } });
+  });
 
   /* ---------- Rechner ---------- */
   const r = $('[data-rechner]');
