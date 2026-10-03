@@ -2,7 +2,7 @@
 """crestra – Seitengenerator. Aufruf: python3 _build.py  (schreibt alle .html-Dateien neu)"""
 import json, os
 
-V = "20261003g"
+V = "20261003k"
 BASE = "https://crestra.de/"
 HIER = os.path.dirname(os.path.abspath(__file__))
 
@@ -215,8 +215,24 @@ seite("index.html", "crestra – Websites, die Ihnen Aufträge bringen",
   <div class="held-fuss auf" data-v="1.2" aria-hidden="true"><span>250 € einmalig</span><span>59 € im Monat</span><span>Hosting, Domain, Pflege inklusive</span></div>
 </section>
 
+<section class="zoom" data-dunkel aria-label="Erst sehen, dann entscheiden">
+  <div class="zoom-klebt"><p class="zoom-text"><span class="zoom-worte">Erst sehen.<br>Dann entscheiden</span><span class="zoom-punkt" aria-hidden="true"></span><span class="sr">.</span></p><div class="zoom-blende" aria-hidden="true"></div></div>
+</section>
+
 <section class="manifest" aria-label="Worum es geht"><div class="wrap">
   <p class="manifest-text" data-faerben>Die meisten Websites sehen aus wie alle anderen. Langsam, austauschbar, auf dem Handy kaum lesbar. Ihre Kunden entscheiden in Sekunden – und klicken weiter. <em class="a">Wir bauen Websites, bei denen sie bleiben.</em></p>
+</div></section>
+
+<section class="spiel" aria-label="Effekte zum Ausprobieren"><div class="wrap">
+  <div class="kopfzeile"><h2 class="wr">Fühlen Sie <em class="a">mal.</em></h2>
+    <p class="lead auf">Kleine Details, die Besucher länger bleiben lassen. Bewegen Sie die Maus darüber – oder tippen Sie auf dem Handy.</p></div>
+  <div class="spiel-raster">
+    <div class="kachel auf" data-scramble tabindex="0"><span class="kachel-name">Text, der lebendig wird</span><p class="scramble-wort" data-wort="Aufmerksamkeit">Aufmerksamkeit</p></div>
+    <div class="kachel kachel-tief auf"><span class="kachel-name">Karten mit Tiefe</span><div class="tief-karte" data-kippen><div class="tief-glanz"></div><strong>59 €</strong><span>im Monat, alles drin</span></div></div>
+    <div class="kachel auf" data-magnet-feld><span class="kachel-name">Knöpfe, die anziehen</span><button type="button" class="magnet-knopf">Klick mich</button></div>
+    <div class="kachel kachel-dunkel auf" data-spur><span class="kachel-name">Licht, das folgt</span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+  <p class="auf spiel-fuss">Das alles – und mehr – kann Ihre Website auch. <a class="link" href="#anfrage">Gratis-Entwurf anfordern</a></p>
 </div></section>
 
 <section class="weg" id="weg" aria-label="So bekommen Sie Ihren Gratis-Entwurf">

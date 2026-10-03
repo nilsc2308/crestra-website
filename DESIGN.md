@@ -43,3 +43,8 @@ Bewegung 6 (eine starke Szene, sonst ruhige Reveals – die Arbeiten sollen wirk
 - Preis-Bühne dunkel mit Zahlen aus der Maske (Verlauf Weiß→Türkis).
 - Anfrage + alle Unterseiten-Köpfe mit leiser Welle im Hintergrund. Kopfzeile schaltet über dunklen Abschnitten auf hell.
 - Gepinnt nur die waagerechte Fahrt (Warin-Regel).
+
+## 3.10.2026 nachmittags – „lagged ein bisschen, immer noch zu unspannend“
+- Leistung: Welle in 0,75-facher Auflösung, 4 statt 5 Rauschebenen, Verzerrung per sin statt Rauschen, max. ~45 Bilder/s → Messung 60 fps stehend und beim Scrollen (vorher 41). Lenis direkter (lerp .14), kein mix-blend-mode.
+- Neu: Überschrift weicht der Maus aus und leuchtet; „Erst sehen. Dann entscheiden.“ – Flug in den Punkt (scharfe Kreis-Blende per clip-path, füllt den Bildschirm weiß → Manifest); Spielwiese „Fühlen Sie mal.“ (Text würfelt, 3D-Karte mit Glanz, Magnet-Knopf, Lichtspur).
+- Gepinnt: Punkt-Flug (kurz, sticky) + waagerechte Fahrt.

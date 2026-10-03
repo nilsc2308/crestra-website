@@ -369,11 +369,11 @@ main{display:block}
 .btn.hell::after{background:radial-gradient(120px circle at var(--mx,50%) var(--my,50%),rgba(34,179,201,.35),transparent 60%)}
 
 /* Welle */
-.welle{position:absolute;inset:0;width:100%;height:100%;display:block;background:radial-gradient(120% 90% at 75% 30%,#0d3341 0%,#070b14 60%)}
+.welle{position:absolute;inset:0;width:100%;height:100%;display:block;image-rendering:auto;background:radial-gradient(120% 90% at 75% 30%,#0d3341 0%,#070b14 60%)}
 
 /* Held */
 .held{position:relative;min-height:100vh;min-height:100svh;background:#070b14;color:#eef1f7;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:calc(var(--head) + 6vh) 0 0}
-.held-licht{position:absolute;inset:0;pointer-events:none;background:radial-gradient(700px circle at var(--lx,70%) var(--ly,35%),rgba(34,179,201,.10),transparent 60%);mix-blend-mode:screen}
+.held-licht{position:absolute;inset:0;pointer-events:none;background:radial-gradient(700px circle at var(--lx,70%) var(--ly,35%),rgba(34,179,201,.10),transparent 60%)}
 .held-inhalt{position:relative;z-index:2;padding-bottom:clamp(30px,6vh,70px)}
 .held-titel{font-size:clamp(54px,11.2vw,184px);line-height:.9;letter-spacing:-.055em;font-weight:720;margin:0 0 clamp(26px,4vh,46px);max-width:12ch;text-wrap:initial}
 .held-titel .zl{display:inline}
@@ -469,3 +469,38 @@ main{display:block}
 .seitenkopf .lead{color:rgba(238,241,247,.72)}
 .seitenkopf .pfad{color:rgba(238,241,247,.6)}
 .seitenkopf .pfad a:hover{color:#fff}
+
+/* Zoom durch den Punkt */
+.zoom{position:relative;height:230vh;background:#070b14}
+.zoom-klebt{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;place-items:center}
+.zoom-text{margin:0;padding:0 var(--gut);font-size:clamp(52px,10.5vw,176px);line-height:.95;letter-spacing:-.055em;font-weight:740;color:#eef1f7;text-align:center}
+.zoom-worte{display:inline;will-change:opacity}
+.zoom-punkt{display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#fff;margin-left:.04em;vertical-align:baseline}
+.zoom-blende{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:4;will-change:clip-path}
+
+/* Spielwiese */
+.spiel{padding:clamp(90px,12vw,170px) 0;background:var(--paper)}
+.spiel-raster{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.kachel{position:relative;min-height:clamp(240px,26vw,340px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper-2);overflow:hidden;display:grid;place-items:center;touch-action:pan-y;outline:none}
+.kachel:focus-visible{outline:2.5px solid var(--blue);outline-offset:3px}
+.kachel-name{position:absolute;left:20px;top:16px;font-size:14px;font-weight:620;color:var(--ink-3)}
+.scramble-wort{margin:0;font-size:clamp(30px,4.2vw,62px);font-weight:720;letter-spacing:-.04em;font-variant-numeric:tabular-nums;color:var(--ink);cursor:default;user-select:none}
+.scramble-wort .z{color:var(--blue)}
+.kachel-tief{perspective:900px}
+.tief-karte{position:relative;width:min(300px,70%);aspect-ratio:1.55;border-radius:16px;background:linear-gradient(135deg,#0d3341,#070b14 70%);color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:22px;transform-style:preserve-3d;transition:transform .5s var(--ease);will-change:transform;box-shadow:0 30px 60px -30px rgba(7,11,20,.6)}
+.tief-karte strong{font-size:44px;letter-spacing:-.04em;line-height:1;transform:translateZ(40px)}
+.tief-karte span{color:rgba(238,241,247,.7);font-size:14px;transform:translateZ(25px);margin-top:6px}
+.tief-glanz{position:absolute;inset:0;border-radius:inherit;background:radial-gradient(240px circle at var(--gx,50%) var(--gy,0%),rgba(111,208,222,.35),transparent 60%);pointer-events:none}
+.magnet-knopf{border:0;background:var(--ink);color:#fff;font-weight:650;font-size:17px;padding:0 30px;height:64px;border-radius:999px;cursor:pointer;will-change:transform;transition:background-color .2s}
+.magnet-knopf:hover{background:var(--blue)}
+.magnet-knopf.platz{animation:platz .5s var(--ease)}
+@keyframes platz{40%{transform:scale(.88)}}
+.kachel-dunkel{background:#070b14;border-color:#070b14}
+.kachel-dunkel .kachel-name{color:var(--night-ink-2)}
+.kachel-dunkel i{position:absolute;left:0;top:0;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:#6fd0de;will-change:transform;pointer-events:none;box-shadow:0 0 24px rgba(111,208,222,.8)}
+.spiel-fuss{margin:28px 0 0;color:var(--ink-2)}
+@media (max-width:760px){.spiel-raster{grid-template-columns:1fr}.kachel{min-height:220px}}
+
+/* Überschrift reagiert */
+.held-titel .bs{transition:color .3s}
+.held-titel .bs.nah{color:#bdeef5}

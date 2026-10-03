@@ -9,7 +9,7 @@
   let lenis = null;
   if (hatGsap) gsap.registerPlugin(ScrollTrigger);
   if (!ruhig && typeof window.Lenis !== 'undefined') {
-    lenis = new Lenis({ duration: 1.1, easing: t => 1 - Math.pow(1 - t, 3.2), smoothWheel: true });
+    lenis = new Lenis({ lerp: .14, smoothWheel: true, wheelMultiplier: 1.05 });
     if (hatGsap) {
       lenis.on('scroll', ScrollTrigger.update);
       gsap.ticker.add(t => lenis.raf(t * 1000));
@@ -32,7 +32,7 @@
     if (kopf) kopf.classList.toggle('linie', y > 8);
     if (kopf) {
       const yk = 36;
-      kopf.classList.toggle('dunkel', dunkle.some(e => { const r = e.getBoundingClientRect(); return r.top <= yk && r.bottom > yk; }));
+      kopf.classList.toggle('dunkel', dunkle.some(e => { if (!e.hasAttribute('data-dunkel') && !e.classList.contains('fuss')) return false; const r = e.getBoundingClientRect(); return r.top <= yk && r.bottom > yk; }));
     }
     if (fort) fort.style.transform = `scaleX(${h > 0 ? Math.min(1, y / h) : 0})`;
     if (kc) {
@@ -183,6 +183,96 @@
       licht.style.setProperty('--lx', (e.clientX - r.left) + 'px'); licht.style.setProperty('--ly', (e.clientY - r.top) + 'px');
     });
   }
+
+
+  /* ---------- Held: Buchstaben weichen der Maus ---------- */
+  if (held && hatGsap && !ruhig && matchMedia('(hover:hover)').matches) {
+    const bs = $$('.held-titel .bs', held);
+    let bereit = false, px = -9999, py = -9999, an = false;
+    setTimeout(() => { bereit = true; }, 2300);
+    const qy = bs.map(b => gsap.quickTo(b, 'y', { duration: .5, ease: 'power3' }));
+    const qs = bs.map(b => gsap.quickTo(b, 'scale', { duration: .5, ease: 'power3' }));
+    const rechne = () => {
+      an = false; if (!bereit) return;
+      bs.forEach((b, i) => {
+        const r = b.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+        const n = Math.max(0, 1 - Math.hypot(px - cx, py - cy) / 200);
+        qy[i](-n * 22); qs[i](1 + n * .1); b.classList.toggle('nah', n > .45);
+      });
+    };
+    held.addEventListener('pointermove', e => { px = e.clientX; py = e.clientY; if (!an) { an = true; requestAnimationFrame(rechne); } });
+    held.addEventListener('pointerleave', () => { px = py = -9999; requestAnimationFrame(rechne); });
+  }
+
+  /* ---------- Zoom durch den Punkt ---------- */
+  const zoom = $('.zoom');
+  if (zoom) {
+    const worte = $('.zoom-worte', zoom), punkt = $('.zoom-punkt', zoom), blende = $('.zoom-blende', zoom), klebt = $('.zoom-klebt', zoom);
+    if (hatGsap && !ruhig) {
+      let g = { x: 0, y: 0, r: 0, R: 0 };
+      const miss = () => {
+        const k = klebt.getBoundingClientRect(), p = punkt.getBoundingClientRect();
+        const x = p.left - k.left + p.width / 2, y = p.top - k.top + p.height / 2;
+        g = { x, y, r: p.width / 2, R: Math.max(Math.hypot(x, y), Math.hypot(k.width - x, y), Math.hypot(x, k.height - y), Math.hypot(k.width - x, k.height - y)) + 10 };
+      };
+      const tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: zoom, start: 'top top', end: 'bottom bottom', scrub: .4, invalidateOnRefresh: true,
+        onRefresh: miss, onUpdate: st => { if (st.progress > .97) zoom.removeAttribute('data-dunkel'); else zoom.setAttribute('data-dunkel', ''); } } });
+      miss();
+      tl.fromTo([worte, punkt], { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: .22, ease: 'power2.out' })
+        .to({}, { duration: .13 })
+        .fromTo(blende, { opacity: 1, clipPath: () => `circle(${g.r}px at ${g.x}px ${g.y}px)` }, { clipPath: () => `circle(${g.R}px at ${g.x}px ${g.y}px)`, duration: .65, ease: 'power3.in', immediateRender: false }, '>')
+        .to(worte, { opacity: 0, duration: .2 }, '<+.25');
+    }
+  }
+
+  /* ---------- Spielwiese ---------- */
+  const ZEICHEN = 'ABCDEFGHJKLMNPRSTUVWXYZ0123456789#%&*';
+  $$('[data-scramble]').forEach(k => {
+    const el = $('.scramble-wort', k), wort = el.dataset.wort; let laeuft = false;
+    const los = () => {
+      if (laeuft || ruhig) return; laeuft = true; const t0 = performance.now(), dauer = 900;
+      const schritt = (t) => {
+        const p = Math.min(1, (t - t0) / dauer), fertig = Math.floor(p * wort.length);
+        el.innerHTML = [...wort].map((z, i) => i < fertig ? z : `<span class="z">${ZEICHEN[Math.floor(Math.random() * ZEICHEN.length)]}</span>`).join('');
+        if (p < 1) requestAnimationFrame(schritt); else { el.textContent = wort; laeuft = false; }
+      };
+      requestAnimationFrame(schritt);
+    };
+    k.addEventListener('pointerenter', los); k.addEventListener('click', los); k.addEventListener('focus', los);
+  });
+  $$('[data-kippen]').forEach(karte => {
+    const feld = karte.parentElement;
+    feld.addEventListener('pointermove', e => {
+      const r = karte.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+      karte.style.transition = 'transform .12s linear';
+      karte.style.transform = `rotateY(${(x - .5) * 26}deg) rotateX(${(.5 - y) * 22}deg) scale(1.04)`;
+      karte.style.setProperty('--gx', x * 100 + '%'); karte.style.setProperty('--gy', y * 100 + '%');
+    });
+    feld.addEventListener('pointerleave', () => { karte.style.transition = ''; karte.style.transform = ''; });
+  });
+  $$('[data-magnet-feld]').forEach(feld => {
+    const kn = $('.magnet-knopf', feld);
+    if (!hatGsap) return;
+    const qx = gsap.quickTo(kn, 'x', { duration: .45, ease: 'power3' }), qy2 = gsap.quickTo(kn, 'y', { duration: .45, ease: 'power3' });
+    feld.addEventListener('pointermove', e => {
+      const r = feld.getBoundingClientRect();
+      qx((e.clientX - r.left - r.width / 2) * .45); qy2((e.clientY - r.top - r.height / 2) * .45);
+    });
+    feld.addEventListener('pointerleave', () => { gsap.to(kn, { x: 0, y: 0, duration: .9, ease: 'elastic.out(1,.4)', overwrite: true }); });
+    kn.addEventListener('click', () => { kn.classList.remove('platz'); void kn.offsetWidth; kn.classList.add('platz'); kn.textContent = kn.textContent === 'Klick mich' ? 'Nochmal!' : 'Klick mich'; });
+  });
+  $$('[data-spur]').forEach(feld => {
+    const punkte = $$('i', feld); let zx = 0, zy = 0, aktiv = false, sichtbar = false, letzte = 0;
+    const pos = punkte.map(() => ({ x: 0, y: 0 }));
+    feld.addEventListener('pointermove', e => { const r = feld.getBoundingClientRect(); zx = e.clientX - r.left; zy = e.clientY - r.top; aktiv = true; letzte = performance.now(); });
+    new IntersectionObserver(es => { sichtbar = es[0].isIntersecting; if (sichtbar) requestAnimationFrame(lauf); }).observe(feld);
+    const lauf = (t) => {
+      if (!sichtbar) return;
+      if (!aktiv || t - letzte > 2500) { const r = feld.getBoundingClientRect(); zx = r.width / 2 + Math.cos(t / 700) * r.width * .28; zy = r.height / 2 + Math.sin(t / 470) * r.height * .25; aktiv = false; }
+      pos.forEach((p, i) => { const v = i ? pos[i - 1] : { x: zx, y: zy }; p.x += (v.x - p.x) * .32; p.y += (v.y - p.y) * .32; punkte[i].style.transform = `translate(${p.x}px,${p.y}px) scale(${1 - i * .09})`; punkte[i].style.opacity = 1 - i * .1; });
+      requestAnimationFrame(lauf);
+    };
+  });
 
   /* ---------- Manifest: Wort für Wort einfärben ---------- */
   $$('[data-faerben]').forEach(t => {

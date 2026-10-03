@@ -8,12 +8,12 @@ out vec4 o;
 float h(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
 float n(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.-2.*f);
   return mix(mix(h(i), h(i+vec2(1,0)), f.x), mix(h(i+vec2(0,1)), h(i+vec2(1,1)), f.x), f.y); }
-float fbm(vec2 p){ float v = 0., a = .5; for (int i = 0; i < 5; i++){ v += a*n(p); p = p*2.03 + 1.7; a *= .5; } return v; }
+float fbm(vec2 p){ float v = 0., a = .5; for (int i = 0; i < 4; i++){ v += a*n(p); p = p*2.03 + 1.7; a *= .5; } return v; }
 void main(){
   vec2 uv = (gl_FragCoord.xy - .5*r) / r.y;
   vec2 q = uv * vec2(1.25, 1.9);
   q += vec2(t*.018, -t*.01);
-  vec2 w = vec2(fbm(q + t*.03), fbm(q + 4.1 - t*.025));
+  vec2 w = vec2(sin(q.y*1.7 + t*.21 + sin(q.x*1.3 - t*.13)), cos(q.x*1.5 - t*.17 + sin(q.y*1.1 + t*.11))) * .35;
   float d = length(uv - m);
   float e = fbm(q + 1.4*w) - .22*exp(-d*d*5.5);
   float k = e * 13.;
@@ -61,7 +61,7 @@ in vec2 p; void main(){ gl_Position = vec4(p, 0., 1.); }`;
     const uR = gl.getUniformLocation(prg, 'r'), uT = gl.getUniformLocation(prg, 't'), uM = gl.getUniformLocation(prg, 'm'), uL = gl.getUniformLocation(prg, 'leise');
     gl.uniform1f(uL, cv.classList.contains('welle-leise') ? 1 : 0);
     const klein = matchMedia('(max-width: 760px)').matches;
-    const dpr = Math.min(window.devicePixelRatio || 1, klein ? 1.25 : 1.5);
+    const dpr = klein ? .6 : .75;
     const groesse = () => {
       const b = cv.clientWidth, hh = cv.clientHeight;
       cv.width = Math.max(1, Math.round(b * dpr)); cv.height = Math.max(1, Math.round(hh * dpr));
@@ -80,6 +80,7 @@ in vec2 p; void main(){ gl_Position = vec4(p, 0., 1.); }`;
     new IntersectionObserver(es => { sichtbar = es[0].isIntersecting; if (sichtbar) requestAnimationFrame(tick); }).observe(cv);
     const tick = (now) => {
       if (!sichtbar || document.hidden) return;
+      if (now - letzte < 21) { requestAnimationFrame(tick); return; }
       const t = (now - start) / 1000;
       if (!matchMedia('(hover:hover)').matches) { zx = .35 * Math.sin(t * .2); zy = .12 * Math.cos(t * .17); }
       mx += (zx - mx) * .05; my += (zy - my) * .05;
