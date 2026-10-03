@@ -81,14 +81,14 @@ const pMat = new THREE.ShaderMaterial({
       vec3 p = position*wA + pB*wB + pC*wC + pD*wD;
       p.y += wB * (sin(p.x*.6 + uT*.8) * .35 + cos(p.z*.5 + uT*.6) * .3);
       p.z += wD * mod(uFlug + uT*2., 48.) ; if (wD > .5 && p.z > 9.) p.z -= 48.;
-      p += vec3(sin(uT*.5 + z*40.), cos(uT*.4 + z*31.), sin(uT*.3 + z*17.)) * (.12 + wA*.25);
+      p += vec3(sin(uT*.5 + z*40.), cos(uT*.4 + z*31.), sin(uT*.3 + z*17.)) * (.12 + wA*.25) * (1. - wC*.88);
       vec3 d = p - uMaus; float dl = length(d.xy);
       p.xy += normalize(d.xy + 1e-4) * smoothstep(1.5, 0., dl) * .7;
       vec4 mv = modelViewMatrix * vec4(p, 1.);
       gl_Position = projectionMatrix * mv;
-      float s = mix(1.4, 4.0, z*z) * (1. + smoothstep(1.5, 0., dl));
+      float s = mix(mix(1.4, 4.0, z*z), 2.6, wC) * (1. + smoothstep(1.5, 0., dl));
       gl_PointSize = s * uPx * (14. / -mv.z);
-      vA = smoothstep(42., 4., -mv.z) * (.35 + .65*z) * (1. + wC*.7);
+      vA = smoothstep(42., 4., -mv.z) * mix(.35 + .65*z, 1.15, wC);
       vZ = z;
     }`,
   fragmentShader: `
@@ -109,20 +109,20 @@ const bauWort = async () => {
   const W = 1400, H = 340, cnv = document.createElement('canvas'); cnv.width = W; cnv.height = H;
   const ctx = cnv.getContext('2d');
   ctx.fillStyle = '#fff'; ctx.textBaseline = 'middle'; ctx.font = '780 260px Hanken, Helvetica, Arial, sans-serif';
-  ctx.letterSpacing = '-12px';
+  ctx.letterSpacing = '4px';
   const breite = ctx.measureText('crestra').width, x0 = (W - breite - 70) / 2;
   ctx.fillText('crestra', x0, H / 2 + 8);
   ctx.fillRect(x0 + breite + 26, H / 2 - 92, 26, 190);
   const daten = ctx.getImageData(0, 0, W, H).data, voll = [];
-  for (let y = 0; y < H; y += 2) for (let x = 0; x < W; x += 2) if (daten[(y * W + x) * 4 + 3] > 140) voll.push(x, y);
+  for (let y = 0; y < H; y += 2) for (let x = 0; x < W; x += 2) if (daten[(y * W + x) * 4 + 3] > 200) voll.push(x, y);
   if (!voll.length) return;
-  const zielBreite = klein ? 5.6 : 12.5, mass = zielBreite / W;
+  const zielBreite = klein ? 7.0 : 12.5, mass = zielBreite / W;
   const pc = geo.getAttribute('pC');
   for (let i = 0; i < N; i++) {
     const k = Math.floor(Math.random() * (voll.length / 2)) * 2;
-    pc.array[i * 3] = (voll[k] - W / 2 + Math.random() * 2) * mass;
+    pc.array[i * 3] = (voll[k] - W / 2 + Math.random() * 1.5) * mass;
     pc.array[i * 3 + 1] = -(voll[k + 1] - H / 2 + Math.random() * 2) * mass + (klein ? .4 : .3);
-    pc.array[i * 3 + 2] = (Math.random() - .5) * .5 - 2;
+    pc.array[i * 3 + 2] = (Math.random() - .5) * .12 - 1;
   }
   pc.needsUpdate = true;
 };
@@ -186,8 +186,9 @@ const bild = (now) => {
   logo.scale.setScalar(ist.s);
   logo.rotation.set(-.25 + my * .35 + Math.sin(t * .5) * .08, rot * .6 + mx * .6, Math.sin(t * .4) * .1);
   strichMat.emissiveIntensity = (Math.floor(t / .55) % 2 === 0) ? 3.2 : 1.1;
-  punkte.rotation.y = mx * .08 + t * .01; punkte.rotation.x = my * .05;
-  kamera.position.x += (mx * .4 - kamera.position.x) * .04; kamera.position.y += (my * .25 - kamera.position.y) * .04;
+  const ruheWort = Math.max(0, 1 - Math.abs(ist.stufe - 2));
+  punkte.rotation.y = (mx * .08 + Math.sin(t * .12) * .12) * (1 - ruheWort); punkte.rotation.x = my * .05 * (1 - ruheWort);
+  kamera.position.x += (mx * .4 * (1 - ruheWort) - kamera.position.x) * .04; kamera.position.y += (my * .25 * (1 - ruheWort) - kamera.position.y) * .04;
   kamera.lookAt(0, 0, -2);
   renderer.render(szene, kamera);
   if (!ruhig) requestAnimationFrame(bild);
