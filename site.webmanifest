@@ -1,1 +1,1 @@
-{"name":"crestra","short_name":"crestra","icons":[{"src":"icon-192.png","sizes":"192x192","type":"image/png"},{"src":"icon-512.png","sizes":"512x512","type":"image/png"}],"theme_color":"#ffffff","background_color":"#ffffff","display":"browser","start_url":"./"}
+{"name":"crestra","short_name":"crestra","icons":[{"src":"icon-192.png","sizes":"192x192","type":"image/png"},{"src":"icon-512.png","sizes":"512x512","type":"image/png"}],"theme_color":"#05080f","background_color":"#05080f","display":"browser","start_url":"./"}

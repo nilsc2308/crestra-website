@@ -2,7 +2,7 @@
 """crestra – Seitengenerator. Aufruf: python3 _build.py  (schreibt alle .html-Dateien neu)"""
 import json, os
 
-V = "20261004b"
+V = "20261004c"
 BASE = "https://crestra.de/"
 HIER = os.path.dirname(os.path.abspath(__file__))
 
@@ -60,7 +60,7 @@ def kopf(titel, beschreibung, datei, aktiv=None, jsonld=None, noindex=False, sta
 <title>{titel}</title>
 <meta name="description" content="{beschreibung}">
 {robots}<link rel="canonical" href="{url}">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#05080f"><meta name="color-scheme" content="dark light">
 <meta property="og:type" content="website"><meta property="og:locale" content="de_DE"><meta property="og:site_name" content="crestra">
 <meta property="og:title" content="{titel}"><meta property="og:description" content="{beschreibung}">
 <meta property="og:url" content="{url}"><meta property="og:image" content="{BASE}og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
