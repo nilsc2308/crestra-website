@@ -142,13 +142,13 @@ groesse(); addEventListener('resize', groesse);
 /* ---------- Szenen je Abschnitt ---------- */
 const ZIELE = {
   held:     { stufe: 0, x: 2.7,  y: .25, z: 0,   s: 1.25, dreh: .25 },
-  manifest: { stufe: 1, x: 4.6,  y: -1.2,z: -1,  s: .85,  dreh: .5 },
-  spiel:    { stufe: 1, x: 5.4,  y: -3.1,z: -2,  s: .5,   dreh: .8 },
-  weg:      { stufe: 3, x: 0,    y: 0,   z: -1.5,s: 1.0,  dreh: 2.2 },
+  manifest: { stufe: 1, x: 5.7,  y: -2.3,z: -1,  s: .75,  dreh: .5 },
+  spiel:    { stufe: 1, x: 7.5,  y: -3.5,z: -2,  s: .0001,dreh: .8 },
+  weg:      { stufe: 3, x: 0,    y: -6,  z: -1.5,s: .0001,dreh: 2.2 },
   marke:    { stufe: 2, x: 0,    y: -3.1,z: 0,   s: .45,  dreh: 1.4 },
   wand:     { stufe: 1, x: 5.7,  y: -2.4,z: -1,  s: .65,  dreh: .6 },
-  rechner:  { stufe: 0, x: 5.4,  y: -.6, z: -1.5,s: .75,  dreh: .4 },
-  preis:    { stufe: 0, x: 0,    y: 0,   z: -3,  s: 1.6,  dreh: .3 },
+  rechner:  { stufe: 0, x: 7.5,  y: 0,   z: -1.5,s: .0001,dreh: .4 },
+  preis:    { stufe: 0, x: 5.6,  y: 3.1, z: -1,  s: .5,   dreh: .3 },
   anfrage:  { stufe: 1, x: -5.0, y: -3.0,z: -2,  s: .55,  dreh: .5 },
 };
 const WEG = { s: .0001 };

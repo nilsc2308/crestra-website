@@ -2,7 +2,7 @@
 """crestra – Seitengenerator. Aufruf: python3 _build.py  (schreibt alle .html-Dateien neu)"""
 import json, os
 
-V = "20261004c"
+V = "20261004g"
 BASE = "https://crestra.de/"
 HIER = os.path.dirname(os.path.abspath(__file__))
 
@@ -226,10 +226,10 @@ seite("index.html", "crestra – Websites, die Ihnen Aufträge bringen",
   <div class="kopfzeile"><h2 class="wr">Fühlen Sie <em class="a">mal.</em></h2>
     <p class="lead auf">Kleine Details, die Besucher länger bleiben lassen. Bewegen Sie die Maus darüber – oder tippen Sie auf dem Handy.</p></div>
   <div class="spiel-raster">
-    <div class="kachel auf" data-scramble tabindex="0"><span class="kachel-name">Text, der lebendig wird</span><p class="scramble-wort" data-wort="Aufmerksamkeit">Aufmerksamkeit</p></div>
-    <div class="kachel kachel-tief auf"><span class="kachel-name">Karten mit Tiefe</span><div class="tief-karte" data-kippen><div class="tief-glanz"></div><strong>59 €</strong><span>im Monat, alles drin</span></div></div>
-    <div class="kachel auf" data-magnet-feld><span class="kachel-name">Knöpfe, die anziehen</span><button type="button" class="magnet-knopf">Klick mich</button></div>
-    <div class="kachel kachel-dunkel auf" data-spur><span class="kachel-name">Licht, das folgt</span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="kachel auf" data-scramble tabindex="0"><span class="kachel-name">Text, der lebendig wird <em>Tippen</em></span><div class="buehne-k"><p class="scramble-wort" data-wort="Aufmerksamkeit">Aufmerksamkeit</p></div></div>
+    <div class="kachel auf"><span class="kachel-name">Karten mit Tiefe <em>Karte ziehen</em></span><div class="buehne-k kachel-tief"><div class="tief-karte" data-kippen><div class="tief-glanz"></div><strong>59 €</strong><span>im Monat, alles drin</span></div></div></div>
+    <div class="kachel auf"><span class="kachel-name">Knöpfe, die anziehen <em>Daneben tippen</em></span><div class="buehne-k" data-magnet-feld><button type="button" class="magnet-knopf">Klick mich</button></div></div>
+    <div class="kachel kachel-dunkel auf"><span class="kachel-name">Licht, das folgt <em>Mit dem Finger malen</em></span><div class="buehne-k" data-spur><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
   </div>
   <p class="auf spiel-fuss">Das alles – und mehr – kann Ihre Website auch. <a class="link" href="#anfrage">Gratis-Entwurf anfordern</a></p>
 </div></section>

@@ -139,7 +139,9 @@
       geh(h);
       if (ruhig) return;
       const sofort = h.closest('.einstieg, .seitenkopf');
+      h.classList.add('laeuft');
       gsap.from(teile, { yPercent: 105, duration: 1, ease: 'expo.out', stagger: .045, delay: sofort ? .15 : 0,
+        onComplete: () => h.classList.remove('laeuft'),
         scrollTrigger: sofort ? null : { trigger: h, start: 'top 88%' } });
     });
     if (ruhig) $$('.auf').forEach(e => { e.style.opacity = 1; e.style.transform = 'none'; });
@@ -225,51 +227,63 @@
     }
   }
 
-  /* ---------- Spielwiese ---------- */
-  const ZEICHEN = 'ABCDEFGHJKLMNPRSTUVWXYZ0123456789#%&*';
+  /* ---------- Spielwiese (Maus + Finger + läuft von allein) ---------- */
+  const ZEICHEN = 'ABCDEFGHJKLMNPRSTUVWXYZ';
+  const imBild = (el, an, aus) => new IntersectionObserver(es => es[0].isIntersecting ? an() : (aus && aus()), { threshold: .35 }).observe(el);
   $$('[data-scramble]').forEach(k => {
-    const el = $('.scramble-wort', k), wort = el.dataset.wort; let laeuft = false;
+    const el = $('.scramble-wort', k), wort = el.dataset.wort; let laeuft = false, uhr = null;
     const los = () => {
-      if (laeuft || ruhig) return; laeuft = true; const t0 = performance.now(), dauer = 900;
+      if (laeuft || ruhig) return; laeuft = true; const t0 = performance.now(), dauer = 1100;
       const schritt = (t) => {
         const p = Math.min(1, (t - t0) / dauer), fertig = Math.floor(p * wort.length);
-        el.innerHTML = [...wort].map((z, i) => i < fertig ? z : `<span class="z">${ZEICHEN[Math.floor(Math.random() * ZEICHEN.length)]}</span>`).join('');
+        el.innerHTML = [...wort].map((z, i) => i < fertig ? z : `<span class="z">${i === 0 ? ZEICHEN[Math.floor(Math.random() * ZEICHEN.length)] : ZEICHEN[Math.floor(Math.random() * ZEICHEN.length)].toLowerCase()}</span>`).join('');
         if (p < 1) requestAnimationFrame(schritt); else { el.textContent = wort; laeuft = false; }
       };
       requestAnimationFrame(schritt);
     };
-    k.addEventListener('pointerenter', los); k.addEventListener('click', los); k.addEventListener('focus', los);
+    k.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') los(); });
+    k.addEventListener('click', los); k.addEventListener('focus', los);
+    imBild(k, () => { los(); clearInterval(uhr); uhr = setInterval(los, 3800); }, () => clearInterval(uhr));
   });
   $$('[data-kippen]').forEach(karte => {
-    const feld = karte.parentElement;
-    feld.addEventListener('pointermove', e => {
-      const r = karte.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-      karte.style.transition = 'transform .12s linear';
-      karte.style.transform = `rotateY(${(x - .5) * 26}deg) rotateX(${(.5 - y) * 22}deg) scale(1.04)`;
+    const feld = karte.parentElement; let zuletzt = 0, sicht = false;
+    const kipp = (x, y, schnell) => {
+      karte.style.transition = schnell ? 'transform .12s linear' : 'transform .9s cubic-bezier(.16,1,.3,1)';
+      karte.style.transform = `rotateY(${(x - .5) * 30}deg) rotateX(${(.5 - y) * 24}deg) scale(1.04)`;
       karte.style.setProperty('--gx', x * 100 + '%'); karte.style.setProperty('--gy', y * 100 + '%');
-    });
-    feld.addEventListener('pointerleave', () => { karte.style.transition = ''; karte.style.transform = ''; });
+    };
+    const bei = e => { const r = karte.getBoundingClientRect(); zuletzt = performance.now(); kipp(Math.min(1.2, Math.max(-.2, (e.clientX - r.left) / r.width)), Math.min(1.2, Math.max(-.2, (e.clientY - r.top) / r.height)), true); };
+    feld.addEventListener('pointermove', e => { if (e.pointerType === 'mouse' || e.buttons) bei(e); });
+    karte.addEventListener('pointerdown', e => { karte.setPointerCapture(e.pointerId); bei(e); });
+    feld.addEventListener('pointerleave', () => { zuletzt = 0; });
+    imBild(feld, () => { sicht = true; requestAnimationFrame(leer); }, () => { sicht = false; });
+    const leer = (t) => {
+      if (!sicht) return;
+      if (!ruhig && performance.now() - zuletzt > 1800) { const w = t / 1000; kipp(.5 + Math.sin(w * .9) * .32, .5 + Math.cos(w * .7) * .28, true); }
+      requestAnimationFrame(leer);
+    };
   });
   $$('[data-magnet-feld]').forEach(feld => {
     const kn = $('.magnet-knopf', feld);
     if (!hatGsap) return;
     const qx = gsap.quickTo(kn, 'x', { duration: .45, ease: 'power3' }), qy2 = gsap.quickTo(kn, 'y', { duration: .45, ease: 'power3' });
-    feld.addEventListener('pointermove', e => {
-      const r = feld.getBoundingClientRect();
-      qx((e.clientX - r.left - r.width / 2) * .45); qy2((e.clientY - r.top - r.height / 2) * .45);
-    });
-    feld.addEventListener('pointerleave', () => { gsap.to(kn, { x: 0, y: 0, duration: .9, ease: 'elastic.out(1,.4)', overwrite: true }); });
+    const zu = (e, f) => { const r = feld.getBoundingClientRect(); qx((e.clientX - r.left - r.width / 2) * f); qy2((e.clientY - r.top - r.height / 2) * f); };
+    const zurueck = () => gsap.to(kn, { x: 0, y: 0, duration: 1, ease: 'elastic.out(1,.35)', overwrite: true });
+    feld.addEventListener('pointermove', e => { if (e.pointerType === 'mouse') zu(e, .45); });
+    feld.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') zurueck(); });
+    feld.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse' && e.target !== kn) { zu(e, .7); setTimeout(zurueck, 380); } });
     kn.addEventListener('click', () => { kn.classList.remove('platz'); void kn.offsetWidth; kn.classList.add('platz'); kn.textContent = kn.textContent === 'Klick mich' ? 'Nochmal!' : 'Klick mich'; });
   });
   $$('[data-spur]').forEach(feld => {
-    const punkte = $$('i', feld); let zx = 0, zy = 0, aktiv = false, sichtbar = false, letzte = 0;
+    const punkte = $$('i', feld); let zx = 0, zy = 0, letzte = -1e9, sichtbar = false;
     const pos = punkte.map(() => ({ x: 0, y: 0 }));
-    feld.addEventListener('pointermove', e => { const r = feld.getBoundingClientRect(); zx = e.clientX - r.left; zy = e.clientY - r.top; aktiv = true; letzte = performance.now(); });
-    new IntersectionObserver(es => { sichtbar = es[0].isIntersecting; if (sichtbar) requestAnimationFrame(lauf); }).observe(feld);
+    const setz = e => { const r = feld.getBoundingClientRect(); zx = e.clientX - r.left; zy = e.clientY - r.top; letzte = performance.now(); };
+    feld.addEventListener('pointermove', setz); feld.addEventListener('pointerdown', setz);
+    imBild(feld, () => { sichtbar = true; requestAnimationFrame(lauf); }, () => { sichtbar = false; });
     const lauf = (t) => {
       if (!sichtbar) return;
-      if (!aktiv || t - letzte > 2500) { const r = feld.getBoundingClientRect(); zx = r.width / 2 + Math.cos(t / 700) * r.width * .28; zy = r.height / 2 + Math.sin(t / 470) * r.height * .25; aktiv = false; }
-      pos.forEach((p, i) => { const v = i ? pos[i - 1] : { x: zx, y: zy }; p.x += (v.x - p.x) * .32; p.y += (v.y - p.y) * .32; punkte[i].style.transform = `translate(${p.x}px,${p.y}px) scale(${1 - i * .09})`; punkte[i].style.opacity = 1 - i * .1; });
+      if (t - letzte > 2200) { const r = feld.getBoundingClientRect(); zx = r.width / 2 + Math.cos(t / 650) * r.width * .3; zy = r.height / 2 + Math.sin(t / 430) * r.height * .26; }
+      pos.forEach((p, i) => { const v = i ? pos[i - 1] : { x: zx, y: zy }; p.x += (v.x - p.x) * .34; p.y += (v.y - p.y) * .34; punkte[i].style.transform = `translate(${p.x}px,${p.y}px) scale(${1 - i * .075})`; punkte[i].style.opacity = 1 - i * .085; });
       requestAnimationFrame(lauf);
     };
   });
