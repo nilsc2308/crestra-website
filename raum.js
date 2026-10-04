@@ -128,8 +128,11 @@ const bauWort = async () => {
 bauWort();
 
 /* ---------- Größe ---------- */
+let altB = 0, altH = 0;
 const groesse = () => {
   const b = innerWidth, h = innerHeight;
+  if (klein && b === altB && Math.abs(h - altH) < 180) return; // Safari-Adressleiste: nicht springen
+  altB = b; altH = h;
   renderer.setSize(b, h, false); kamera.aspect = b / h;
   kamera.position.z = b < 760 ? 15 : 11;
   kamera.updateProjectionMatrix();
@@ -148,7 +151,8 @@ const ZIELE = {
   preis:    { stufe: 0, x: 0,    y: 0,   z: -3,  s: 1.6,  dreh: .3 },
   anfrage:  { stufe: 1, x: -5.0, y: -3.0,z: -2,  s: .55,  dreh: .5 },
 };
-const KLEIN = { held: { x: .2, y: 4.1, s: .82 }, manifest: { x: 3.1, y: 3.2, s: .6 }, spiel: { x: 3.1, y: -4, s: .55 }, weg: { x: 2.9, y: 3.6, s: .6 }, marke: { x: 0, y: -2.6, s: .4 }, wand: { x: 3.1, y: 3.4, s: .6 }, rechner: { x: 3.1, y: -3.6, s: .55 }, preis: { x: 2.7, y: 3.9, s: .7 }, anfrage: { x: 3.1, y: 4.2, s: .55 } };
+const WEG = { s: .0001 };
+const KLEIN = { held: { x: 0, y: 3.55, s: .52 }, manifest: WEG, spiel: WEG, weg: WEG, marke: { x: 0, y: -2.5, s: .45 }, wand: WEG, rechner: WEG, preis: WEG, anfrage: WEG };
 const ist = { stufe: 0, x: ZIELE.held.x, y: ZIELE.held.y, z: 0, s: ZIELE.held.s, dreh: .25 };
 if (klein) Object.assign(ist, KLEIN.held);
 const gehe = (name) => {
@@ -181,7 +185,9 @@ const bild = (now) => {
   uni.uT.value = t; uni.uStufe.value = ist.stufe;
   if (maus && bewegt) { ray.setFromCamera({ x: mx, y: my }, kamera); ray.ray.intersectPlane(ebene, treffer); uni.uMaus.value.copy(treffer); }
   rot += (ist.dreh + tempo * .06) * .016;
-  logo.position.set(ist.x + mx * .35, ist.y + my * .25 + Math.sin(t * .9) * .12, ist.z);
+  let mitlauf = 0;
+  if (klein) { const sicht = 2 * (kamera.position.z - ist.z) * Math.tan(THREE.MathUtils.degToRad(kamera.fov / 2)); mitlauf = Math.min(scrollY, innerHeight * 1.3) * sicht / innerHeight; }
+  logo.position.set(ist.x + mx * .35, ist.y + my * .25 + Math.sin(t * .9) * .12 + mitlauf, ist.z);
   logo.scale.setScalar(ist.s);
   logo.rotation.set(-.25 + my * .35 + Math.sin(t * .5) * .08, rot * .6 + mx * .6, Math.sin(t * .4) * .1);
   strichMat.emissiveIntensity = (Math.floor(t / .55) % 2 === 0) ? 3.2 : 1.1;

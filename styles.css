@@ -559,8 +559,10 @@ main{display:block}
 .seite-dunkel .anfrage-held .formular{background:rgba(5,8,15,.55);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:clamp(18px,2.5vw,32px);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .raum-an .seite-dunkel{}
 @media (max-width:760px){
-  .seite-dunkel .held{justify-content:flex-end}
-  .seite-dunkel .held-titel{max-width:none}
+  .seite-dunkel .held{justify-content:flex-start;padding-top:calc(var(--head) + 150px)}
+  .seite-dunkel .held-titel{max-width:none;font-size:clamp(46px,12.4vw,64px)}
+  .seite-dunkel .held-fuss{display:none}
+  .raum{height:100lvh}
 }
 
 /* Bühne für den Partikel-Schriftzug */
